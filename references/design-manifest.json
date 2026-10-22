@@ -1,0 +1,38 @@
+[
+  {
+    "repository": "hayyi2/react-shadcn-starter",
+    "url": "https://github.com/hayyi2/react-shadcn-starter",
+    "description": "React + vite template for building apps with shadcn/ui.",
+    "license": "MIT",
+    "status": "cloned",
+    "commit": "800036c3c061479c2f2957cc29f21aaa6c53b88f",
+    "path": "references/hayyi2--react-shadcn-starter"
+  },
+  {
+    "repository": "satnaing/shadcn-admin",
+    "url": "https://github.com/satnaing/shadcn-admin",
+    "description": "Admin Dashboard UI built with Shadcn and Vite.",
+    "license": "MIT",
+    "status": "cloned",
+    "commit": "e16c87f213a5ba5e45964e9b67c792105ec74d26",
+    "path": "references/satnaing--shadcn-admin"
+  },
+  {
+    "repository": "andrico1234/beautiful-skill-tree",
+    "url": "https://github.com/andrico1234/beautiful-skill-tree",
+    "description": "🌲🌲🌲Create beautiful skill trees for your web apps",
+    "license": "GPL-3.0",
+    "status": "cloned",
+    "commit": "b77551e24c4417cbd84d7fc5930d5fb5c957f16a",
+    "path": "references/andrico1234--beautiful-skill-tree"
+  },
+  {
+    "repository": "Acamaeda/The-Modding-Tree",
+    "url": "https://github.com/Acamaeda/The-Modding-Tree",
+    "description": "Create your own tree (or non-tree) of prestige upgrades!",
+    "license": "NOASSERTION",
+    "status": "cloned",
+    "commit": "4d8a86cfb3c59ef3ef4c222f21ef4fbee980c621",
+    "path": "references/Acamaeda--The-Modding-Tree"
+  }
+]

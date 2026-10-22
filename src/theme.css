@@ -1,0 +1,25 @@
+/* Semantic token structure adapted from hayyi2/react-shadcn-starter (MIT).
+   Copyright (c) 2023 Hayyi. Full notice: licenses/react-shadcn-starter.txt.
+   Blue/white values are LearningTree's own theme. */
+:root {
+  --radius: 0.625rem;
+  --background: #f7f9fd;
+  --foreground: #253955;
+  --card: #ffffff;
+  --primary: #3478f6;
+  --primary-foreground: #ffffff;
+  --secondary: #eef4ff;
+  --secondary-foreground: #456594;
+  --muted-foreground: #7b8ba5;
+  --accent: #eaf2ff;
+  --border: #e4ebf5;
+  --input: #dce5f1;
+  --ring: #9bbcff;
+  --destructive: #bd4f61;
+  --sidebar: #ffffff;
+  --green: var(--primary);
+  --ink: var(--foreground);
+  --muted: var(--muted-foreground);
+  --paper: var(--card);
+  --soft: var(--secondary);
+}
