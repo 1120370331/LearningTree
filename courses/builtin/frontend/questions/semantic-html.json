@@ -1,0 +1,129 @@
+[
+  {
+    "id": "fe-semantic-html-single",
+    "type": "single",
+    "difficulty": "basic",
+    "prompt": "点击后打开当前页面中的设置面板，优先选择哪种元素？",
+    "explanation": "这是界面操作，原生 button 提供合适的语义与键盘行为。",
+    "options": [
+      "button",
+      "br",
+      "没有 href 的 a",
+      "div 加蓝色背景"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "fe-semantic-html-multiple",
+    "type": "multiple",
+    "difficulty": "applied",
+    "prompt": "哪些做法有助于清晰的文档结构？",
+    "explanation": "结构表达内容关系，视觉尺寸交给样式。",
+    "options": [
+      "为不同导航区域提供名称",
+      "仅为字号大而使用 h1",
+      "用标题层级表达章节关系",
+      "用 main 包裹主要内容"
+    ],
+    "correctIndices": [
+      2,
+      3,
+      0
+    ]
+  },
+  {
+    "id": "fe-semantic-html-boolean",
+    "type": "boolean",
+    "difficulty": "basic",
+    "prompt": "只要把 div 设置为蓝色并加上 cursor:pointer，它就具有完整的原生按钮行为。",
+    "explanation": "样式不能自动赋予按钮的焦点、键盘激活和语义。",
+    "options": [
+      "正确",
+      "错误"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "fe-semantic-html-fill",
+    "type": "fill",
+    "difficulty": "basic",
+    "prompt": "表示页面主要内容的原生元素是 ____。",
+    "explanation": "main 描述页面的主体内容。",
+    "acceptedAnswers": [
+      "main",
+      "<main>"
+    ],
+    "caseSensitive": false
+  },
+  {
+    "id": "fe-semantic-html-order",
+    "type": "order",
+    "difficulty": "applied",
+    "prompt": "按此文档的标题层级从外到内排列。",
+    "explanation": "层级取决于结构，不是默认字体大小。",
+    "options": [
+      "章节内小节标题 h3",
+      "页面主标题 h1",
+      "章节标题 h2"
+    ],
+    "correctOrder": [
+      1,
+      2,
+      0
+    ]
+  },
+  {
+    "id": "fe-semantic-html-code_reading",
+    "type": "code_reading",
+    "difficulty": "applied",
+    "prompt": "以下片段有几个原生按钮？只填数字。",
+    "explanation": "只有 button 是原生按钮；class 名不会改变 div 的语义。",
+    "code": "<button>保存</button>\n<a href=\"/help\">帮助</a>\n<div class=\"button\">取消</div>",
+    "language": "html",
+    "acceptedAnswers": [
+      "1"
+    ],
+    "caseSensitive": true
+  },
+  {
+    "id": "fe-semantic-html-short_answer",
+    "type": "short_answer",
+    "difficulty": "advanced",
+    "prompt": "如何判断一个界面动作应该用 a 还是 button？",
+    "explanation": "根据行为判断：导航到一个地址使用有 href 的链接；提交、展开、切换状态等操作使用按钮。再确认名称、键盘和表单上下文是否正确。",
+    "referenceAnswer": "根据行为判断：导航到一个地址使用有 href 的链接；提交、展开、切换状态等操作使用按钮。再确认名称、键盘和表单上下文是否正确。",
+    "rubric": [
+      "按行为而非外观区分",
+      "分别给出链接与按钮的例子",
+      "考虑键盘或表单语境"
+    ]
+  },
+  {
+    "id": "fe-semantic-html-code_fix",
+    "type": "code_fix",
+    "difficulty": "applied",
+    "prompt": "将这个伪按钮改为具备原生操作语义的元素，保留文字。",
+    "explanation": "修复应采用原生语义，而不是仅加 tabindex 后忽略其他行为。",
+    "code": "<div onclick=\"save()\">保存</div>",
+    "language": "html",
+    "referenceAnswer": "<button type=\"button\" onclick=\"save()\">保存</button>",
+    "rubric": [
+      "使用 button",
+      "在非提交操作中明确 type=\"button\"",
+      "保留清晰的操作名称"
+    ]
+  },
+  {
+    "id": "fe-semantic-html-project",
+    "type": "project",
+    "difficulty": "advanced",
+    "prompt": "把一篇文章改造成含导航、主体、章节标题和收藏操作的语义化页面。",
+    "explanation": "根据内容关系选择 main、article、nav 和标题层级；收藏用按钮，目录用链接。用键盘遍历所有可操作元素，并说明结构选择。",
+    "referenceAnswer": "根据内容关系选择 main、article、nav 和标题层级；收藏用按钮，目录用链接。用键盘遍历所有可操作元素，并说明结构选择。",
+    "rubric": [
+      "标题层级与内容关系一致",
+      "链接和按钮按真实行为区分",
+      "操作可通过键盘访问且名称明确"
+    ]
+  }
+]

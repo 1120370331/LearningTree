@@ -4,6 +4,8 @@ import { createEmptyCard, fsrs, type Card, type Grade } from "ts-fsrs";
 const id = z.string().min(1).max(100);
 const date = z.iso.datetime();
 const text = (max: number) => z.string().trim().max(max);
+const pointsSchema = z.number().int().min(1).max(1000);
+export const selfScoreSchema = z.number().min(0).max(1000).multipleOf(0.01);
 const cardSchema = z.object({
   due: date,
   stability: z.number().min(0).max(1e8),
@@ -16,28 +18,122 @@ const cardSchema = z.object({
   state: z.union([z.literal(0), z.literal(1), z.literal(2), z.literal(3)]),
   last_review: date.optional(),
 });
-const treeSchema = z.object({
+export const treeSchema = z.object({
   id,
   title: text(60).min(1),
   description: text(300),
   color: z.enum(["green", "blue", "amber"]),
   createdAt: date,
+  parentTreeId: id.nullable().default(null),
+  prerequisiteTreeIds: z.array(id).max(99).default([]),
 });
-const quizQuestionSchema = z.object({
-  id,
-  prompt: text(2000).min(1,"请填写测验题目"),
-  options: z.array(text(1000).min(1,"测验选项不能为空")).min(2).max(6),
-  correctIndex: z.number().int().min(0),
-  explanation: text(4000),
-}).refine(q => q.correctIndex < q.options.length, "测验的正确答案必须对应一个现有选项").refine(q=>new Set(q.options).size===q.options.length,"同一道测验题的选项不能重复");
+const quizQuestionSchema = z
+  .object({
+    id,
+    type: z
+      .enum([
+        "single",
+        "multiple",
+        "boolean",
+        "fill",
+        "order",
+        "short_answer",
+        "code_reading",
+        "code_fix",
+        "project",
+      ])
+      .optional(),
+    prompt: text(2000).min(1, "请填写测验题目"),
+    points: pointsSchema.optional(),
+    options: z.array(text(1000).min(1, "测验选项不能为空")).max(6).default([]),
+    correctIndex: z.number().int().min(0).default(0),
+    correctIndices: z.array(z.number().int().min(0)).max(6).optional(),
+    correctOrder: z.array(z.number().int().min(0)).max(6).optional(),
+    acceptedAnswers: z.array(text(2000).min(1)).max(20).optional(),
+    caseSensitive: z.boolean().optional(),
+    normalizeWhitespace: z.boolean().optional(),
+    code: text(12000).optional(),
+    language: text(30).optional(),
+    referenceAnswer: text(12000).optional(),
+    rubric: z.array(text(500).min(1)).min(2).max(8).optional(),
+    difficulty: z.enum(["basic", "applied", "advanced"]).optional(),
+    explanation: text(4000),
+  })
+  .superRefine((q, ctx) => {
+    const type = q.type ?? "single";
+    const fail = (message: string) => ctx.addIssue({ code: "custom", message });
+    if (
+      ["single", "boolean", "multiple", "order"].includes(type) &&
+      q.options.length < 2
+    )
+      fail("选择或排序题至少需要两个选项");
+    if (
+      ["single", "boolean"].includes(type) &&
+      q.correctIndex >= q.options.length
+    )
+      fail("测验的正确答案必须对应一个现有选项");
+    if (type === "boolean" && q.options.length !== 2)
+      fail("判断题必须有正确、错误两个选项");
+    if (type === "multiple") {
+      const values = q.correctIndices ?? [];
+      if (
+        !values.length ||
+        new Set(values).size !== values.length ||
+        values.some((i) => i >= q.options.length)
+      )
+        fail("多选题需要不重复且有效的正确选项索引");
+    }
+    if (type === "order") {
+      const values = q.correctOrder ?? [];
+      if (
+        values.length !== q.options.length ||
+        new Set(values).size !== values.length ||
+        values.some((i) => i >= q.options.length)
+      )
+        fail("排序答案必须包含每个选项且不重复");
+    }
+    if (["fill", "code_reading"].includes(type) && !q.acceptedAnswers?.length)
+      fail("填空和代码阅读题需要至少一个可接受答案");
+    if (
+      ["short_answer", "code_fix", "project"].includes(type) &&
+      (!q.referenceAnswer?.trim() || !q.rubric?.length)
+    )
+      fail("简答、改错和实战题需要参考答案与评分标准");
+    if (["code_reading", "code_fix"].includes(type) && !q.code?.trim())
+      fail("代码题需要提供代码片段");
+  })
+  .refine(
+    (q) => new Set(q.options).size === q.options.length,
+    "同一道测验题的选项不能重复",
+  );
 export type QuizQuestion = z.infer<typeof quizQuestionSchema>;
-const quizAnswerSchema = z.object({question:text(2000).min(1), selected:text(1000).min(1), correct:text(1000).min(1), explanation:text(4000), isCorrect:z.boolean()});
-const nodeSchema = z.object({
+const quizAnswerSchema = z.object({
+  questionId: id.optional(),
+  questionNumber: z.number().int().min(1).max(30).optional(),
+  points: pointsSchema.optional(),
+  selfScore: selfScoreSchema.optional(),
+  type: z.string().max(30).optional(),
+  grading: z.enum(["automatic", "self"]).optional(),
+  question: text(2000).min(1),
+  selected: text(12000).min(1),
+  correct: text(12000).min(1),
+  responseKey: text(12000).optional(),
+  answerKey: text(12000).optional(),
+  code: text(12000).optional(),
+  rubricResults: z
+    .array(z.object({ criterion: text(500), met: z.boolean() }))
+    .max(8)
+    .optional(),
+  explanation: text(4000),
+  isCorrect: z.boolean(),
+});
+export const nodeSchema = z.object({
   id,
   treeId: id,
   parentId: id.nullable(),
   title: text(80).min(1),
   note: text(4000),
+  learnedAt: date.optional(),
   content: text(30000).default(""),
   quiz: z.array(quizQuestionSchema).max(30).default([]),
   question: text(2000),
@@ -66,7 +162,30 @@ export const sessionSchema = z
       (s.correct === null && s.total === null) ||
       (s.correct !== null && s.total !== null && s.correct <= s.total),
     "正确题数不能超过总题数，且两者须同时填写",
-  ).refine(s => !s.quizAnswers || (s.total === s.quizAnswers.length && s.correct === s.quizAnswers.filter(a=>a.isCorrect).length && s.quizAnswers.every(a=>a.isCorrect === (a.selected===a.correct))), "测验成绩必须与逐题作答一致");
+  )
+  .refine((s) => {
+    if (!s.quizAnswers) return true;
+    const automatic = s.quizAnswers.filter((a) => a.grading !== "self");
+    return (
+      s.total === (automatic.length || null) &&
+      s.correct ===
+        (automatic.length
+          ? automatic.filter((a) => a.isCorrect).length
+          : null) &&
+      s.quizAnswers.every((a) =>
+        a.grading === "self"
+          ? !!a.rubricResults?.length &&
+            (a.selfScore === undefined || a.selfScore <= (a.points ?? 1)) &&
+            a.isCorrect ===
+              (a.selfScore === undefined
+                ? a.rubricResults.every((r) => r.met)
+                : a.selfScore === (a.points ?? 1))
+          : a.selfScore === undefined &&
+            a.isCorrect ===
+              ((a.responseKey ?? a.selected) === (a.answerKey ?? a.correct)),
+      )
+    );
+  }, "测验成绩必须与逐题作答一致");
 const reviewSchema = z.object({
   id,
   nodeId: id,
@@ -94,9 +213,63 @@ export const dataSchema = z
       if (new Set(items.map((x) => x.id)).size !== items.length)
         fail("数据中包含重复 ID");
     const trees = new Set(data.trees.map((t) => t.id));
+    const treeMap = new Map(data.trees.map((t) => [t.id, t]));
+    for (const tree of data.trees) {
+      if (tree.parentTreeId && !trees.has(tree.parentTreeId))
+        fail("上级学习树不存在");
+      if (
+        new Set(tree.prerequisiteTreeIds).size !==
+        tree.prerequisiteTreeIds.length
+      )
+        fail("前置学习树不能重复");
+      for (const prerequisite of tree.prerequisiteTreeIds)
+        if (!trees.has(prerequisite)) fail("前置学习树不存在");
+      const ancestors = new Set([tree.id]);
+      let parent = tree.parentTreeId;
+      while (parent) {
+        if (ancestors.has(parent)) {
+          fail("学习树的子级关系不能包含循环");
+          break;
+        }
+        ancestors.add(parent);
+        if (ancestors.size > 30) {
+          fail("学习树最多支持 30 层嵌套");
+          break;
+        }
+        parent = treeMap.get(parent)?.parentTreeId ?? null;
+      }
+    }
+    // Completing a tree requires its children and its explicit prerequisites.
+    // Check the combined graph so a child cannot depend on its own ancestor.
+    const visiting = new Set<string>();
+    const visited = new Set<string>();
+    const visitTree = (treeId: string): boolean => {
+      if (visiting.has(treeId)) return false;
+      if (visited.has(treeId)) return true;
+      visiting.add(treeId);
+      const dependencies = [
+        ...(treeMap.get(treeId)?.prerequisiteTreeIds ?? []),
+        ...data.trees.filter((t) => t.parentTreeId === treeId).map((t) => t.id),
+      ];
+      const ancestors = new Set<string>();
+      let parent = treeMap.get(treeId)?.parentTreeId;
+      while (parent && !ancestors.has(parent)) {
+        ancestors.add(parent);
+        dependencies.push(...(treeMap.get(parent)?.prerequisiteTreeIds ?? []));
+        parent = treeMap.get(parent)?.parentTreeId;
+      }
+      for (const dependency of dependencies)
+        if (!visitTree(dependency)) return false;
+      visiting.delete(treeId);
+      visited.add(treeId);
+      return true;
+    };
+    if (data.trees.some((tree) => !visitTree(tree.id)))
+      fail("学习树的依赖与子级关系不能形成循环");
     const nodes = new Map(data.nodes.map((n) => [n.id, n]));
     for (const node of data.nodes) {
-      if(new Set(node.quiz.map(q=>q.id)).size!==node.quiz.length) fail("测验题目 ID 不能重复");
+      if (new Set(node.quiz.map((q) => q.id)).size !== node.quiz.length)
+        fail("测验题目 ID 不能重复");
       if (!trees.has(node.treeId)) fail("知识点所属学习树不存在");
       const seen = new Set([node.id]);
       let parent = node.parentId;
@@ -127,6 +300,21 @@ export type Tree = Data["trees"][number];
 export type Topic = Data["nodes"][number];
 export type Session = Data["sessions"][number];
 export type Review = Data["reviews"][number];
+export function markTopicLearned(
+  data: Data,
+  nodeId: string,
+  now = new Date(),
+): Data {
+  const node = data.nodes.find((n) => n.id === nodeId);
+  if (!node) throw new Error("这个知识点已不存在");
+  if (node.learnedAt) return data;
+  return {
+    ...data,
+    nodes: data.nodes.map((n) =>
+      n.id === nodeId ? { ...n, learnedAt: now.toISOString() } : n,
+    ),
+  };
+}
 export const scheduler = fsrs({
   request_retention: 0.9,
   enable_fuzz: false,
@@ -255,6 +443,27 @@ export function removeTopics(data: Data, ids: Set<string>): Data {
     nodes: data.nodes.filter((n) => !ids.has(n.id)),
     sessions: data.sessions.filter((s) => !ids.has(s.nodeId)),
     reviews: data.reviews.filter((r) => !ids.has(r.nodeId)),
+  };
+}
+export function removeTree(data: Data, treeId: string): Data {
+  const tree = data.trees.find((t) => t.id === treeId);
+  const ids = new Set(
+    data.nodes.filter((n) => n.treeId === treeId).map((n) => n.id),
+  );
+  return {
+    ...removeTopics(data, ids),
+    trees: data.trees
+      .filter((t) => t.id !== treeId)
+      .map((t) => ({
+        ...t,
+        parentTreeId:
+          t.parentTreeId === treeId
+            ? (tree?.parentTreeId ?? null)
+            : t.parentTreeId,
+        prerequisiteTreeIds: t.prerequisiteTreeIds.filter(
+          (id) => id !== treeId,
+        ),
+      })),
   };
 }
 export function weeklyActivity(data: Data, now = new Date()) {

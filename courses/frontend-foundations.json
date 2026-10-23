@@ -1,0 +1,1250 @@
+{
+  "format": "learning-tree-course",
+  "version": 1,
+  "name": "LearningTree 入门课程包",
+  "trees": [
+    {
+      "id": "web",
+      "parentTreeId": null,
+      "prerequisiteTreeIds": [],
+      "title": "前端开发之路",
+      "description": "从页面到交互，独立做出一个好用的网页。",
+      "color": "green"
+    },
+    {
+      "id": "data",
+      "parentTreeId": null,
+      "prerequisiteTreeIds": [],
+      "title": "用 Python 理解数据",
+      "description": "让数据回答一个真实的问题。",
+      "color": "blue"
+    },
+    {
+      "id": "design",
+      "parentTreeId": null,
+      "prerequisiteTreeIds": [],
+      "title": "设计的日常练习",
+      "description": "观察、拆解，再亲手做一次。",
+      "color": "amber"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "html",
+      "treeId": "web",
+      "parentId": null,
+      "title": "HTML 与语义化",
+      "question": "为什么页面结构要使用语义化标签？",
+      "answer": "语义化标签表达内容的意义，有助于辅助技术理解结构、改善可访问性，也使代码更容易维护。",
+      "resource": "",
+      "content": "## 用标签表达内容的含义\n\nHTML 负责描述内容结构。标题、段落、导航和按钮应当使用能够表达这些含义的标签，让浏览器、读屏软件和维护代码的人理解页面。\n\n## 结构与层次\n\n`main` 表示页面主要内容，`nav` 表示导航区域，`article` 适合独立内容。标题层级要反映结构：先有主题，再有子主题，而不是为了字号大小随意选择 h1 或 h3。\n\n```html\n<main>\n  <h1>我的学习记录</h1>\n  <article>\n    <h2>本周的发现</h2>\n    <p>用自己的语言重新解释一个概念。</p>\n  </article>\n</main>\n```\n\n## 按钮和链接\n\n改变当前界面状态的操作通常使用 button；前往另一个地址通常使用 a。原生按钮支持键盘焦点和触发行为，不应为了外观把所有操作都写成 div。\n\n## 表单需要名称\n\n输入框需要关联 label。placeholder 只是提示，输入后会消失，不能替代标签。图标按钮没有可见文字时，需要提供可访问名称。\n\n## 图片的替代文本\n\n传递信息的图片需要描述其意义。纯装饰图片可以使用空的 alt，避免读屏软件重复朗读无关内容。\n\n试着用键盘 Tab 访问你写出的页面，确认每一个操作都能被找到并理解。",
+      "quiz": [
+        {
+          "id": "html-1",
+          "prompt": "哪一个元素最适合表示页面主要内容？",
+          "options": ["span", "main", "br", "small"],
+          "correctIndex": 1,
+          "explanation": "main 表示文档中主体内容。"
+        },
+        {
+          "id": "html-2",
+          "prompt": "点击后展开一个面板，优先用什么元素？",
+          "options": ["button", "div", "没有 href 的 a", "img"],
+          "correctIndex": 0,
+          "explanation": "这是一个界面操作，原生 button 提供可访问的操作语义。"
+        },
+        {
+          "id": "html-3",
+          "prompt": "输入框只有 placeholder，是否足以替代 label？",
+          "options": [
+            "足够",
+            "只要颜色足够深就可以",
+            "不够，应保留关联的标签",
+            "只有手机上足够"
+          ],
+          "correctIndex": 2,
+          "explanation": "placeholder 会消失，也不应替代持续可见且关联到控件的名称。"
+        },
+        {
+          "id": "html-4",
+          "prompt": "纯装饰图片的 alt 应当怎么设置？",
+          "options": [
+            "写入文件路径",
+            "复制相邻段落",
+            "删除 img 标签",
+            "使用空 alt"
+          ],
+          "correctIndex": 3,
+          "explanation": "空 alt 可让辅助技术忽略无意义的装饰图片。"
+        },
+        {
+          "id": "html-5",
+          "prompt": "选择 h1、h2 等标题标签的主要依据是什么？",
+          "options": [
+            "默认字体大小",
+            "内容结构和层级",
+            "当前背景色",
+            "标题有多少个字"
+          ],
+          "correctIndex": 1,
+          "explanation": "标题层级反映内容结构，外观应通过 CSS 调整。"
+        }
+      ]
+    },
+    {
+      "id": "css",
+      "treeId": "web",
+      "parentId": "html",
+      "title": "CSS 布局",
+      "question": "Flexbox 与 Grid 各适合解决什么问题？",
+      "answer": "Flexbox 主要沿一个轴进行一维布局；Grid 适合同时控制行和列的二维布局。二者可以组合使用。",
+      "resource": "",
+      "content": "## 这节课要解决什么问题\n\n同样是一组元素，导航栏要排成一行，作品集要排成网格，手机上还要自动换列。选对布局工具，比反复调整像素更重要。\n\n学完后，你应该能判断何时使用 Flexbox、何时使用 Grid，并解释它们与主轴、交叉轴的关系。\n\n## Flexbox：先考虑一条轴\n\nFlexbox 适合一维排列。默认的主轴是水平方向；设置 `flex-direction: column` 后，主轴变成竖直方向。\n\n- `justify-content` 沿主轴对齐。\n- `align-items` 沿交叉轴对齐。\n- `gap` 控制相邻项目的间距。\n- `flex-wrap: wrap` 允许空间不足时换行。\n\n```css\n.navigation {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  gap: 16px;\n}\n```\n\n上面的导航栏把第一个和最后一个项目推到两端，同时让不同高度的内容在交叉轴居中。注意：主轴改变后，两个对齐属性的视觉方向也会改变。\n\n## Grid：同时安排行和列\n\nGrid 适合二维排列。可以分别定义行和列，让卡片、图片和侧边栏按同一套网格对齐。\n\n```css\n.gallery {\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  gap: 20px;\n}\n```\n\n`1fr` 是一份可分配空间。三个 `1fr` 让三列平分剩余宽度；间隙会先从可用空间中扣除。\n\n## 让布局随空间变化\n\n固定三列不一定适合手机。下面的写法让浏览器根据容器宽度决定列数，同时维持每张卡片的最小宽度。\n\n```css\n.gallery {\n  display: grid;\n  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));\n  gap: 20px;\n}\n```\n\n如果屏幕窄于最小列宽，也需要调整最小值，或用媒体查询切换到单列。不要只验证一台设备。\n\n## 动手想一想\n\n做一个作品列表：整体区域包含一个侧边栏和一组卡片；每张卡片里又有图标、标题和操作按钮。\n\n1. 用 Grid 安排整体区域及卡片网格。\n2. 用 Flexbox 安排卡片内部的一行内容。\n3. 缩窄窗口，检查文本、按钮和卡片是否挤出容器。\n\n> Flexbox 和 Grid 可以一起使用。选择依据是要控制的维度，而不是哪个工具更“高级”。\n\n准备好后，用下方的测验检查你是否真的能做出这些判断。",
+      "quiz": [
+        {
+          "id": "css-1",
+          "prompt": "让导航栏中的项目沿一条轴排列，优先选择什么？",
+          "options": [
+            "CSS Grid 的固定二维模板",
+            "Flexbox",
+            "绝对定位每个项目",
+            "给每个项目加浮动"
+          ],
+          "correctIndex": 1,
+          "explanation": "Flexbox 适合一维排列，导航栏是一种典型场景。"
+        },
+        {
+          "id": "css-2",
+          "prompt": "flex-direction: column 时，justify-content 控制哪个方向？",
+          "options": ["水平方向", "元素的宽度", "竖直主轴方向", "文本书写方向"],
+          "correctIndex": 2,
+          "explanation": "justify-content 始终沿主轴；column 会将主轴变为竖直方向。"
+        },
+        {
+          "id": "css-3",
+          "prompt": "需要让多个卡片在行和列上同时对齐，哪种方式更合适？",
+          "options": [
+            "Grid",
+            "只用 margin-left",
+            "为每张卡片设置不同坐标",
+            "使用 br 换行"
+          ],
+          "correctIndex": 0,
+          "explanation": "Grid 可以显式定义行与列，更适合二维布局。"
+        },
+        {
+          "id": "css-4",
+          "prompt": "repeat(3, 1fr) 中的 1fr 表示什么？",
+          "options": [
+            "固定 1 像素",
+            "固定占容器的 1%",
+            "忽略间隙后占一整行",
+            "一份可分配的剩余空间"
+          ],
+          "correctIndex": 3,
+          "explanation": "fr 是可分配空间的份额；三个 1fr 使三列平分可用的剩余宽度。"
+        },
+        {
+          "id": "css-5",
+          "prompt": "同一个页面可以同时使用 Flexbox 和 Grid 吗？",
+          "options": [
+            "不可以，二者互斥",
+            "可以，按不同布局需要组合使用",
+            "只有在不同 HTML 文件中才可以",
+            "只有移动端可以"
+          ],
+          "correctIndex": 1,
+          "explanation": "例如整体结构使用 Grid，卡片内部使用 Flexbox。"
+        }
+      ]
+    },
+    {
+      "id": "js",
+      "treeId": "web",
+      "parentId": "html",
+      "title": "JavaScript 基础",
+      "question": "let 与 const 的区别是什么？",
+      "answer": "let 允许重新赋值，const 不允许重新绑定变量；const 声明的对象属性仍然可以修改。",
+      "resource": "",
+      "content": "## 变量是绑定，不是容器的全部行为\n\nJavaScript 的变量名可以绑定到一个值。let 允许重新赋值，const 不允许重新绑定，但这不代表 const 引用的对象被冻结了。\n\n```js\nconst learner = { name: \"Lin\", lessons: 0 };\nlearner.lessons += 1; // 合法：修改对象属性\n// learner = {};     // 不合法：重新绑定 const\n\nlet count = 0;\ncount += 1; // 合法\n```\n\n## 块级作用域\n\nlet 和 const 在块中定义的变量，不能随意从块外访问。函数内部的变量也有自己的作用域。阅读代码时，可以先确定每个变量在哪里声明，再追踪它被哪些函数访问。\n\n## 比较与类型\n\n`===` 不会为了比较而做隐式类型转换。`1 === '1'` 是 false。面对外部输入时，应当先转换并验证数据，再做逻辑判断。\n\n## 对象与数组\n\n对象通过引用传递。如果两个变量指向同一个对象，从其中一个入口修改属性，另一个入口也会观察到变化。浅拷贝只复制第一层；嵌套对象仍可能共享引用。\n\n## 把逻辑放进函数\n\n函数接收输入并返回结果。把重要计算写成明确的输入输出，通常比依赖很多外部可变变量更容易理解和验证。\n\n用自己的话解释：为什么 const 对象能修改属性，却不能重新赋值？",
+      "quiz": [
+        {
+          "id": "js-1",
+          "prompt": "const user = {name: 'A'} 后，哪种操作合法？",
+          "options": [
+            "user = {}",
+            "user = null",
+            "user.name = 'B'",
+            "重新声明同名 const"
+          ],
+          "correctIndex": 2,
+          "explanation": "const 限制重新绑定，并不自动冻结对象属性。"
+        },
+        {
+          "id": "js-2",
+          "prompt": "let 与 const 都具有什么作用域特征？",
+          "options": [
+            "块级作用域",
+            "永远全局可见",
+            "只在 HTML 中有效",
+            "没有作用域"
+          ],
+          "correctIndex": 0,
+          "explanation": "let 和 const 均遵循块级作用域。"
+        },
+        {
+          "id": "js-3",
+          "prompt": "1 === '1' 的结果是什么？",
+          "options": ["true", "false", "1", "抛出语法错误"],
+          "correctIndex": 1,
+          "explanation": "严格相等比较不会把字符串转换为数字。"
+        },
+        {
+          "id": "js-4",
+          "prompt": "两个变量指向同一个对象，修改其属性后会怎样？",
+          "options": [
+            "自动复制两份对象",
+            "只改变局部文字",
+            "不会产生任何变化",
+            "从另一个变量也能看到修改"
+          ],
+          "correctIndex": 3,
+          "explanation": "两个绑定共享同一个对象引用。"
+        },
+        {
+          "id": "js-5",
+          "prompt": "浅拷贝一个含有嵌套对象的对象，意味着什么？",
+          "options": [
+            "嵌套对象一定完全独立",
+            "第一层独立，嵌套对象可能仍共享引用",
+            "所有层都被冻结",
+            "不能读取嵌套属性"
+          ],
+          "correctIndex": 1,
+          "explanation": "展开运算符等常见浅拷贝不会递归复制所有嵌套对象。"
+        }
+      ]
+    },
+    {
+      "id": "responsive",
+      "treeId": "web",
+      "parentId": "css",
+      "title": "响应式设计",
+      "question": "如何让同一页面适配手机和桌面？",
+      "answer": "使用流式布局、弹性图片、合理断点与媒体查询；从内容需要出发调整布局，并验证触摸和键盘操作。",
+      "resource": "",
+      "content": "## 从内容出发选择断点\n响应式设计让相同内容适应不同可用空间。先使用流式宽度、Flexbox 或 Grid；当内容开始拥挤时再通过媒体查询改变布局，不必为每种设备单独写一个页面。\n## 视口与图片\n移动页面应包含 viewport 的 width=device-width。图片常用 max-width: 100% 和 height: auto，既限制溢出又保持比例。固定像素宽度的容器容易在窄屏溢出。\n## 练习与验证\n给卡片列表设置自适应列，在窄屏改为单列；检查长标题、键盘焦点和触摸按钮。断点应该修复内容拥挤，不能靠隐藏必要功能适配。",
+      "quiz": [
+        {
+          "id": "responsive-1",
+          "prompt": "选择响应式断点的主要依据是什么？",
+          "options": [
+            "内容开始拥挤的可用宽度",
+            "显示器品牌",
+            "必须每隔 100px 设置一次"
+          ],
+          "correctIndex": 0,
+          "explanation": "断点服务于内容与操作，而非设备名单。"
+        },
+        {
+          "id": "responsive-2",
+          "prompt": "图片保持比例并避免超出容器，可组合什么？",
+          "options": [
+            "固定 width 2000px",
+            "max-width: 100%; height: auto",
+            "height: 0"
+          ],
+          "correctIndex": 1,
+          "explanation": "最大宽度限制图片溢出，高度按比例计算。"
+        },
+        {
+          "id": "responsive-3",
+          "prompt": "移动端 viewport 常用哪个设置？",
+          "options": ["width=2000", "禁止用户缩放", "width=device-width"],
+          "correctIndex": 2,
+          "explanation": "让布局视口与设备宽度相适应。"
+        },
+        {
+          "id": "responsive-4",
+          "prompt": "窄屏出现横向溢出，优先检查什么？",
+          "options": [
+            "固定宽度、长内容和最小宽度约束",
+            "更换应用名称",
+            "把全部文字隐藏"
+          ],
+          "correctIndex": 0,
+          "explanation": "应找出造成溢出的真实约束。"
+        },
+        {
+          "id": "responsive-5",
+          "prompt": "响应式验证应包含什么？",
+          "options": ["只看最大屏幕", "不同宽度下的阅读和操作", "仅检查背景色"],
+          "correctIndex": 1,
+          "explanation": "布局可见不等于按钮、键盘与阅读都可用。"
+        }
+      ]
+    },
+    {
+      "id": "closure",
+      "treeId": "web",
+      "parentId": "js",
+      "title": "闭包与作用域",
+      "question": "什么是闭包？请举一个实际用途。",
+      "answer": "函数和其词法环境的组合使函数能访问定义时的外部变量，即使外部函数已返回。可用于封装私有状态，例如计数器工厂。",
+      "resource": "",
+      "content": "## 函数为什么能记住外部变量\n\n闭包是函数与它的词法环境的组合。函数可以访问定义时所在作用域里的变量，即使外部函数已经返回。\n\n```js\nfunction createCounter() {\n  let count = 0;\n  return function next() {\n    count += 1;\n    return count;\n  };\n}\nconst a = createCounter();\nconst b = createCounter();\na(); // 1\na(); // 2\nb(); // 1\n```\n\n## 每次调用，创建独立环境\n\na 和 b 来自两次 createCounter 调用，各自持有不同的 count。闭包捕获的是变量所在的环境，而不是把变量当前值复制成一张永远不变的照片。\n\n## 作用域看定义位置\n\n函数能访问哪些变量，由它定义的位置决定，不能因为换了调用位置就随意访问调用者的局部变量。\n\n## 实际用途与代价\n\n闭包可用于封装私有状态、回调和函数工厂。被仍然可达的闭包引用的数据可能继续留在内存中，因此不必要的大对象引用应及时释放。\n\n请手写一个计数器，再解释为什么两个实例不会互相影响。",
+      "quiz": [
+        {
+          "id": "closure-1",
+          "prompt": "闭包让函数能够访问什么？",
+          "options": [
+            "定义时词法环境中的变量",
+            "任意其他函数的变量",
+            "只允许全局变量",
+            "只有调用参数"
+          ],
+          "correctIndex": 0,
+          "explanation": "闭包保留对定义时词法环境的访问能力。"
+        },
+        {
+          "id": "closure-2",
+          "prompt": "外部函数返回后，被内部函数引用的变量一定立即消失吗？",
+          "options": [
+            "一定消失",
+            "取决于变量名字",
+            "不一定，仍可通过闭包访问",
+            "只有数字会消失"
+          ],
+          "correctIndex": 2,
+          "explanation": "仍可达的闭包可以继续引用外部环境。"
+        },
+        {
+          "id": "closure-3",
+          "prompt": "两次调用 createCounter 通常会得到什么？",
+          "options": [
+            "共享同一个 count",
+            "各自独立的 count 环境",
+            "两个无法调用的值",
+            "一个全局 count"
+          ],
+          "correctIndex": 1,
+          "explanation": "每次调用都会建立自己的函数执行环境。"
+        },
+        {
+          "id": "closure-4",
+          "prompt": "词法作用域主要由什么决定？",
+          "options": [
+            "调用者名字",
+            "函数运行时颜色",
+            "变量的数字大小",
+            "函数定义的位置"
+          ],
+          "correctIndex": 3,
+          "explanation": "词法作用域依据源代码中的定义结构确定。"
+        },
+        {
+          "id": "closure-5",
+          "prompt": "闭包引用一个不再需要的大对象时，应关注什么？",
+          "options": [
+            "可能延长对象的内存存活时间",
+            "对象会自动变成字符串",
+            "闭包禁止保存对象",
+            "对象一定立即被释放"
+          ],
+          "correctIndex": 0,
+          "explanation": "只要闭包仍可达且仍引用对象，该对象就可能无法被回收。"
+        }
+      ]
+    },
+    {
+      "id": "async",
+      "treeId": "web",
+      "parentId": "js",
+      "title": "异步与事件循环",
+      "question": "Promise 回调和 setTimeout 回调通常谁先执行？为什么？",
+      "answer": "当前同步任务完成后先清空微任务队列，因此已兑现 Promise 的 then 回调通常先于定时器任务执行。",
+      "resource": "",
+      "content": "## 先把同步代码执行完\n\nJavaScript 当前任务里的同步代码会先执行完，之后才会处理排队的回调。异步并不是把当前函数从中间打断。\n\n```js\nconsole.log(\"A\");\nsetTimeout(() => console.log(\"B\"), 0);\nPromise.resolve().then(() => console.log(\"C\"));\nconsole.log(\"D\");\n// 通常依次输出 A、D、C、B\n```\n\n## 微任务与任务\n\n已解决 Promise 的 then 回调进入微任务队列。当前任务结束后，浏览器会清空微任务队列，再处理下一项任务。因此上例的 Promise 回调先于定时器回调执行。\n\n## await 暂停的是当前 async 函数\n\nawait 让当前异步函数暂停，等待承诺的结果，不会阻塞整个页面主线程。后续代码依然需要处理失败情况。\n\n## 失败也是结果的一部分\n\n使用 try/catch 捕获 await 抛出的错误，或者给 Promise 链添加 catch。对于 fetch，HTTP 404 等响应通常仍会兑现 Promise，应用还需要检查 response.ok。\n\n## 避免长时间占用线程\n\n很长的同步循环会阻塞后续回调和界面更新。异步 API 并不能自动让所有耗时计算消失。\n\n先预测例子输出顺序，再运行验证，最后解释每一步进入了哪个队列。",
+      "quiz": [
+        {
+          "id": "async-1",
+          "prompt": "上面的 A、B、C、D 例子通常按什么顺序输出？",
+          "options": ["A B C D", "A D C B", "C A D B", "D C B A"],
+          "correctIndex": 1,
+          "explanation": "先同步 A、D，再微任务 C，最后定时器任务 B。"
+        },
+        {
+          "id": "async-2",
+          "prompt": "Promise.then 回调通常在哪个队列？",
+          "options": ["样式队列", "音频队列", "微任务队列", "只能同步执行"],
+          "correctIndex": 2,
+          "explanation": "已兑现 Promise 的反应回调通过微任务运行。"
+        },
+        {
+          "id": "async-3",
+          "prompt": "await 暂停的是什么？",
+          "options": [
+            "当前 async 函数的继续执行",
+            "整个操作系统",
+            "整个浏览器的所有任务",
+            "全部网络连接"
+          ],
+          "correctIndex": 0,
+          "explanation": "await 暂停当前异步函数，不阻塞整个主线程等待。"
+        },
+        {
+          "id": "async-4",
+          "prompt": "fetch 返回 HTTP 404 时，应该如何识别失败状态？",
+          "options": [
+            "它一定自动 reject",
+            "只看返回值是否为对象",
+            "忽略状态继续解析",
+            "检查 response.ok 或状态码"
+          ],
+          "correctIndex": 3,
+          "explanation": "fetch 的网络失败与 HTTP 错误响应不同，需要显式检查响应状态。"
+        },
+        {
+          "id": "async-5",
+          "prompt": "一个很长的同步循环对页面有什么影响？",
+          "options": [
+            "完全没有影响",
+            "可能阻塞界面更新和回调",
+            "自动变成微任务",
+            "一定在后台线程执行"
+          ],
+          "correctIndex": 1,
+          "explanation": "主线程上的长同步计算会阻塞渲染和后续任务。"
+        }
+      ]
+    },
+    {
+      "id": "react",
+      "treeId": "web",
+      "parentId": "async",
+      "title": "React 与状态",
+      "question": "为什么不应直接修改 React state 中的对象？",
+      "answer": "React 用引用变化识别更新。应创建新的对象或数组并调用状态设置函数，保持渲染快照的一致性。",
+      "resource": "",
+      "content": "## 组件与状态快照\nReact 组件根据 props 和 state 描述界面。state 是一次渲染的快照，直接修改对象不会正确通知 React；应创建新对象并调用 setter。props 则由父组件传入，不应在子组件中修改。\n## 基于旧值更新\n当下一状态取决于前一状态时，使用 setCount(c => c + 1)。同一事件内多次读取 count，读到的仍是该次渲染的快照，函数式更新可以依次处理排队的变化。\n## 列表与副作用\n列表 key 应稳定且与数据身份一致，不要在渲染时随机生成。Effect 用于与外部系统同步；监听器和定时器需要清理。派生值通常直接计算，不必再保存为一份状态。",
+      "quiz": [
+        {
+          "id": "react-1",
+          "prompt": "修改 state 中的对象属性时，推荐怎么做？",
+          "options": [
+            "直接修改并等待刷新",
+            "修改 props",
+            "创建新对象并调用 setter"
+          ],
+          "correctIndex": 2,
+          "explanation": "不可变更新让 React 能识别状态变化。"
+        },
+        {
+          "id": "react-2",
+          "prompt": "同一事件中要连续递增三次，适合哪种写法？",
+          "options": [
+            "连续使用 setCount(c => c + 1)",
+            "连续读旧 count 并赋同一值",
+            "直接 count++"
+          ],
+          "correctIndex": 0,
+          "explanation": "函数式更新依次接收前一个排队结果。"
+        },
+        {
+          "id": "react-3",
+          "prompt": "列表 key 应具备什么特征？",
+          "options": ["每次渲染都随机", "稳定且对应数据身份", "全部相同"],
+          "correctIndex": 1,
+          "explanation": "稳定 key 帮助 React 正确保持元素身份。"
+        },
+        {
+          "id": "react-4",
+          "prompt": "Effect 添加全局事件监听后应做什么？",
+          "options": ["永远不处理", "每秒重复添加", "在清理函数中移除监听"],
+          "correctIndex": 2,
+          "explanation": "清理避免重复订阅和资源泄漏。"
+        },
+        {
+          "id": "react-5",
+          "prompt": "子组件可以直接修改父组件传入的 props 吗？",
+          "options": ["不应这样做", "必须这样做", "只要改名就可以"],
+          "correctIndex": 0,
+          "explanation": "父组件拥有其状态，子组件通过回调请求更新。"
+        }
+      ]
+    },
+    {
+      "id": "project",
+      "treeId": "web",
+      "parentId": "react",
+      "title": "我的第一个作品",
+      "question": "",
+      "answer": "",
+      "resource": "",
+      "content": "## 先定义一个可以验收的作品\n选一个具体用户与问题，写出一条完整主路径。例如：添加学习目标，保存一条记录，刷新后仍能查看。把这个行为作为完成标准，再拆成小步骤。\n## 串起界面与数据\n明确每条数据的身份、持久化位置与错误处理。先形成可用闭环，再扩展次要功能。空状态要指出下一步；保存失败不能假装成功，也不应丢失用户尚未提交的输入。\n## 交付前检查\n运行类型检查、核心测试和生产构建，再实际走一次主路径。检查窄屏与键盘操作，写清运行方式和已知限制。作品完成依赖可重复验证的结果，不是功能按钮的数量。",
+      "quiz": [
+        {
+          "id": "project-1",
+          "prompt": "开始作品前应先明确什么？",
+          "options": ["所有动画", "具体用户、问题与主路径", "尽量多的按钮"],
+          "correctIndex": 1,
+          "explanation": "明确目标才能判断作品是否完成。"
+        },
+        {
+          "id": "project-2",
+          "prompt": "以下哪项是可验收标准？",
+          "options": ["保存记录后刷新仍能看到", "界面看起来很强大", "代码很多"],
+          "correctIndex": 0,
+          "explanation": "它有明确操作与可观察结果。"
+        },
+        {
+          "id": "project-3",
+          "prompt": "保存失败时应该怎么处理？",
+          "options": ["显示成功", "清空输入", "说明失败并保留待提交内容"],
+          "correctIndex": 2,
+          "explanation": "失败反馈应允许用户安全重试。"
+        },
+        {
+          "id": "project-4",
+          "prompt": "第一轮实现应优先什么？",
+          "options": ["堆叠次要设置", "完成一条可用闭环", "省略数据保存"],
+          "correctIndex": 1,
+          "explanation": "先实现从操作到结果的完整主路径。"
+        },
+        {
+          "id": "project-5",
+          "prompt": "交付说明应包含什么？",
+          "options": ["运行方式与已知限制", "只放一张封面", "只列使用的图标"],
+          "correctIndex": 0,
+          "explanation": "他人需要能够复现并理解交付边界。"
+        }
+      ]
+    },
+    {
+      "id": "box-model",
+      "treeId": "web",
+      "parentId": "css",
+      "title": "盒模型与定位",
+      "question": "标准盒模型与 border-box 有什么区别？",
+      "answer": "标准盒模型的 width 仅包含内容；border-box 的 width 包含内容、内边距和边框。",
+      "resource": "",
+      "content": "## 盒模型决定实际占用空间\n标准盒模型中，width 只表示内容宽度，实际占用宽度还包括左右 padding、border 和 margin。设置 box-sizing: border-box 后，width 包含内容、内边距和边框，margin 仍在外部。\n## 定位与包含块\nposition: relative 通常保留原来的布局位置。absolute 脱离普通文档流，定位依据通常是最近的非 static 定位祖先。fixed 通常相对视口定位，但带 transform 的祖先可能改变它的包含块。\n## 动手练习\n给卡片设置 width: 200px、padding: 20px、border: 2px solid，比较 content-box 的 244px 与 border-box 的 200px。再用相对定位的卡片承载绝对定位的角标。",
+      "quiz": [
+        {
+          "id": "box-model-1",
+          "prompt": "content-box 下 width 200px、左右 padding 各 20px、左右边框各 2px，边框盒宽多少？",
+          "options": ["200px", "240px", "244px"],
+          "correctIndex": 2,
+          "explanation": "内容、内边距和边框相加：200 + 40 + 4。"
+        },
+        {
+          "id": "box-model-2",
+          "prompt": "border-box 的 width 包含哪一部分？",
+          "options": ["内容、内边距和边框", "仅内容", "还包含外边距"],
+          "correctIndex": 0,
+          "explanation": "外边距始终位于边框盒外。"
+        },
+        {
+          "id": "box-model-3",
+          "prompt": "哪种定位通常保留原来的文档流位置？",
+          "options": ["absolute", "relative", "fixed"],
+          "correctIndex": 1,
+          "explanation": "相对定位的偏移不取消原有占位。"
+        },
+        {
+          "id": "box-model-4",
+          "prompt": "角标要相对卡片绝对定位，通常给卡片设置什么？",
+          "options": [
+            "position: static",
+            "display: none",
+            "position: relative"
+          ],
+          "correctIndex": 2,
+          "explanation": "最近的定位祖先可成为绝对定位的包含块。"
+        },
+        {
+          "id": "box-model-5",
+          "prompt": "margin 计入 border-box 的 width 吗？",
+          "options": ["不计入", "一定计入", "只计入左侧"],
+          "correctIndex": 0,
+          "explanation": "margin 是元素边框外的空间。"
+        }
+      ]
+    },
+    {
+      "id": "grid",
+      "treeId": "web",
+      "parentId": "css",
+      "title": "Grid 进阶布局",
+      "question": "如何用 Grid 实现自适应卡片列？",
+      "answer": "使用 repeat(auto-fit, minmax(最小宽度, 1fr)) 让列数按容器宽度变化。",
+      "resource": "",
+      "content": "## 显式定义行和列\nGrid 用于同时控制二维布局。grid-template-columns: repeat(3, 1fr) 建立三列，gap 指定轨道间隙。fr 分配可用剩余空间，并不是固定像素值。\n## 让列数随空间变化\nrepeat(auto-fit, minmax(180px, 1fr)) 可以建立自适应卡片列。auto-fit 会折叠空轨道，让已有内容占据空间；auto-fill 会保留空轨道。过大的最小宽度仍可能在极窄屏溢出。\n## 练习与可访问性\n缩放一组卡片，观察列数和空轨道。minmax(0, 1fr) 常用于允许轨道缩小，避免长内容撑开。视觉重排不能替代正确的 DOM 阅读顺序。",
+      "quiz": [
+        {
+          "id": "grid-1",
+          "prompt": "Grid 最适合控制什么？",
+          "options": ["只有文字颜色", "行与列的二维布局", "网络请求顺序"],
+          "correctIndex": 1,
+          "explanation": "Grid 可以同时定义行和列。"
+        },
+        {
+          "id": "grid-2",
+          "prompt": "哪种列定义可让卡片数随容器空间变化？",
+          "options": [
+            "repeat(auto-fit, minmax(180px, 1fr))",
+            "180px 180px 180px",
+            "display: none"
+          ],
+          "correctIndex": 0,
+          "explanation": "auto-fit 与 minmax 可组合成弹性列。"
+        },
+        {
+          "id": "grid-3",
+          "prompt": "auto-fit 与 auto-fill 的一个区别是什么？",
+          "options": [
+            "auto-fit 只用于图片",
+            "二者完全相同",
+            "auto-fit 折叠空轨道"
+          ],
+          "correctIndex": 2,
+          "explanation": "auto-fill 通常保留空轨道，auto-fit 可使已有内容扩展。"
+        },
+        {
+          "id": "grid-4",
+          "prompt": "1fr 表示什么？",
+          "options": ["固定 1 像素", "一份可分配的剩余空间", "整个页面宽度"],
+          "correctIndex": 1,
+          "explanation": "fr 是空间分配比例。"
+        },
+        {
+          "id": "grid-5",
+          "prompt": "用 Grid 改变视觉顺序后，还应检查什么？",
+          "options": ["DOM 阅读顺序与键盘焦点", "只检查配色", "不必检查"],
+          "correctIndex": 0,
+          "explanation": "辅助技术与键盘顺序通常仍由 DOM 决定。"
+        }
+      ]
+    },
+    {
+      "id": "accessibility",
+      "treeId": "web",
+      "parentId": "html",
+      "title": "可访问性",
+      "question": "为什么按钮需要可访问名称？",
+      "answer": "屏幕阅读器需要用名称描述按钮作用；图标按钮应有明确文本或 aria-label。",
+      "resource": "",
+      "content": "## 操作要能被识别\n界面操作使用 button，导航使用带 href 的链接。图标按钮也需要可访问名称，例如 aria-label。输入框应有关联的 label，不能只依赖会消失的 placeholder。\n## 键盘和视觉反馈\n用 Tab、Enter、空格完成主要任务，保留清晰焦点。不要只靠颜色表达错误，同时提供文字。WCAG AA 下普通正文常用的最低对比度要求是 4.5:1；大字号文字通常为 3:1。\n## 弹窗与练习\n弹窗应有名称，打开后将焦点移入并限制在弹窗内，关闭后返回触发按钮。给一个只含图标的按钮补充名称，再仅用键盘完成表单。",
+      "quiz": [
+        {
+          "id": "accessibility-1",
+          "prompt": "触发展开操作优先使用什么元素？",
+          "options": ["没有语义的 div", "button", "img"],
+          "correctIndex": 1,
+          "explanation": "原生按钮提供键盘行为与按钮语义。"
+        },
+        {
+          "id": "accessibility-2",
+          "prompt": "纯图标按钮需要什么？",
+          "options": ["明确的可访问名称", "更长的文件名", "只有颜色"],
+          "correctIndex": 0,
+          "explanation": "辅助技术需要能够读出按钮的用途。"
+        },
+        {
+          "id": "accessibility-3",
+          "prompt": "placeholder 能完全代替输入框的 label 吗？",
+          "options": ["可以", "只要字大就可以", "不能"],
+          "correctIndex": 2,
+          "explanation": "label 提供持续的、关联到控件的名称。"
+        },
+        {
+          "id": "accessibility-4",
+          "prompt": "常见 WCAG AA 普通正文对比度最低要求是多少？",
+          "options": ["1:1", "4.5:1", "2:1"],
+          "correctIndex": 1,
+          "explanation": "普通正文通常需要至少 4.5:1。"
+        },
+        {
+          "id": "accessibility-5",
+          "prompt": "弹窗关闭后，焦点通常应返回哪里？",
+          "options": ["触发弹窗的控件", "页面外", "随机标题"],
+          "correctIndex": 0,
+          "explanation": "恢复焦点可以延续用户的操作位置。"
+        }
+      ]
+    },
+    {
+      "id": "dom",
+      "treeId": "web",
+      "parentId": "js",
+      "title": "DOM 与交互",
+      "question": "事件委托适合什么场景？",
+      "answer": "将监听器放在公共祖先上，通过事件冒泡处理多个子元素；尤其适合动态列表。",
+      "resource": "",
+      "content": "## DOM 表示文档结构\nquerySelector 返回第一个匹配元素，找不到时为 null。读取用户输入需要通过 value 等属性；更新纯文字优先使用 textContent，避免把不可信字符串当成 HTML。\n## 事件传播与委托\n事件通常会经历捕获、目标和冒泡。把监听器放在共同祖先上，使用 event.target.closest 查找实际操作项，可处理后续动态添加的子元素；event.currentTarget 则是当前绑定监听器的元素。\n## 默认行为与练习\npreventDefault 阻止默认动作，stopPropagation 停止后续传播，二者不同。写一个可动态添加条目的列表，用祖先监听器处理每项删除按钮。",
+      "quiz": [
+        {
+          "id": "dom-1",
+          "prompt": "querySelector 没有找到元素时返回什么？",
+          "options": ["空数组", "undefined 字符串", "null"],
+          "correctIndex": 2,
+          "explanation": "访问属性前应考虑 null。"
+        },
+        {
+          "id": "dom-2",
+          "prompt": "显示不可信的纯文字，优先使用什么？",
+          "options": ["textContent", "innerHTML", "eval"],
+          "correctIndex": 0,
+          "explanation": "textContent 不把字符串解释为 HTML。"
+        },
+        {
+          "id": "dom-3",
+          "prompt": "事件委托适合哪种情况？",
+          "options": [
+            "必须给所有子项重复绑定",
+            "动态添加的列表操作",
+            "只能处理静态图片"
+          ],
+          "correctIndex": 1,
+          "explanation": "祖先监听器可接收冒泡上来的动态子项事件。"
+        },
+        {
+          "id": "dom-4",
+          "prompt": "event.currentTarget 指什么？",
+          "options": [
+            "最深层点击元素",
+            "任意祖先",
+            "当前执行监听器所绑定的元素"
+          ],
+          "correctIndex": 2,
+          "explanation": "target 和 currentTarget 可能不同。"
+        },
+        {
+          "id": "dom-5",
+          "prompt": "阻止表单默认提交但保留事件传播，应调用什么？",
+          "options": ["preventDefault", "stopPropagation", "removeChild"],
+          "correctIndex": 0,
+          "explanation": "默认行为与传播控制是两件不同的事。"
+        }
+      ]
+    },
+    {
+      "id": "typescript",
+      "treeId": "web",
+      "parentId": "js",
+      "title": "TypeScript 类型",
+      "question": "联合类型在使用前为何需要收窄？",
+      "answer": "只有确认当前具体类型后，才能安全访问某个分支独有的属性。",
+      "resource": "",
+      "content": "## 类型检查发生在开发阶段\nTypeScript 帮助在编译时发现不匹配；类型标注通常不会留在运行时，所以接口声明不能自动验证网络数据。外部输入应经过实际校验后再使用。\n## 联合类型与收窄\nstring | number 只保证两类共同支持的操作。通过 typeof、判别字段或其他类型守卫确认分支后，才能访问特有成员。unknown 要求先收窄，any 则会绕开很多检查。\n## 可选值与练习\n可选属性可能为 undefined，要先判断或使用可选链。类型断言只是告诉编译器相信你，不会转换或校验值。为一段 API 响应写校验，再用判别联合表示成功和失败。",
+      "quiz": [
+        {
+          "id": "typescript-1",
+          "prompt": "TypeScript 接口能自动验证服务器返回的 JSON 吗？",
+          "options": ["不能，需要运行时校验", "一定能", "只要使用 as 就能"],
+          "correctIndex": 0,
+          "explanation": "类型声明通常在运行时被擦除。"
+        },
+        {
+          "id": "typescript-2",
+          "prompt": "读取 string | number 的字符串专属方法前应做什么？",
+          "options": ["关闭类型检查", "通过 typeof 等方式收窄", "随意调用"],
+          "correctIndex": 1,
+          "explanation": "先确认当前值为 string 才能安全调用其方法。"
+        },
+        {
+          "id": "typescript-3",
+          "prompt": "unknown 与 any 的区别之一是什么？",
+          "options": [
+            "unknown 会自动转换",
+            "两者都禁止保存值",
+            "unknown 要求使用前收窄"
+          ],
+          "correctIndex": 2,
+          "explanation": "unknown 保留输入的不确定性。"
+        },
+        {
+          "id": "typescript-4",
+          "prompt": "value as User 会在运行时校验 value 吗？",
+          "options": ["不会", "会校验所有字段", "会下载用户数据"],
+          "correctIndex": 0,
+          "explanation": "断言不产生实际校验逻辑。"
+        },
+        {
+          "id": "typescript-5",
+          "prompt": "可选属性在读取时可能是什么？",
+          "options": ["一定是空字符串", "undefined", "一定是零"],
+          "correctIndex": 1,
+          "explanation": "需要处理属性缺失的情况。"
+        }
+      ]
+    },
+    {
+      "id": "network",
+      "treeId": "web",
+      "parentId": "async",
+      "title": "HTTP 与数据请求",
+      "question": "fetch 遇到 HTTP 404 会自动 reject 吗？",
+      "answer": "不会，fetch 通常只在网络失败时拒绝；必须检查 response.ok 或状态码。",
+      "resource": "",
+      "content": "## 请求、响应与状态\nHTTP 用方法、URL、请求头和请求体表达请求。GET 通常用于读取，POST 常用于提交。HTTPS 对传输进行加密，但不能证明业务数据一定可信。\n## 正确处理 fetch\nfetch 在网络错误时通常会 reject，HTTP 404、500 通常仍得到 Response。先检查 response.ok 或 status，再按内容类型解析；response.json() 本身也可能失败。\n## 跨域与取消\nCORS 是服务器声明的浏览器跨源访问策略，不是把前端 mode 改成 no-cors 就能读取任意响应。AbortController 可取消不再需要的请求。对失败显示重试入口，对不可信响应做数据校验。",
+      "quiz": [
+        {
+          "id": "network-1",
+          "prompt": "fetch 收到 HTTP 404 时通常会怎样？",
+          "options": [
+            "一定自动 reject",
+            "仍返回 Response，需要检查状态",
+            "自动重试十次"
+          ],
+          "correctIndex": 1,
+          "explanation": "HTTP 错误状态与网络连接失败不同。"
+        },
+        {
+          "id": "network-2",
+          "prompt": "通常用于读取资源的 HTTP 方法是什么？",
+          "options": ["GET", "DELETE", "PATCH"],
+          "correctIndex": 0,
+          "explanation": "GET 表达读取请求。"
+        },
+        {
+          "id": "network-3",
+          "prompt": "HTTPS 能保证什么？",
+          "options": [
+            "所有业务数据都正确",
+            "接口永远可用",
+            "传输加密与完整性保护"
+          ],
+          "correctIndex": 2,
+          "explanation": "仍需校验业务数据和权限。"
+        },
+        {
+          "id": "network-4",
+          "prompt": "设置 no-cors 就能读取任意跨域响应吗？",
+          "options": ["能", "不能，响应可能是不透明的", "只要刷新就能"],
+          "correctIndex": 1,
+          "explanation": "服务器必须正确配置 CORS 才能允许可读的跨源访问。"
+        },
+        {
+          "id": "network-5",
+          "prompt": "组件不再需要某个请求时，可用什么取消？",
+          "options": ["AbortController", "JSON.stringify", "setInterval"],
+          "correctIndex": 0,
+          "explanation": "通过 signal 与 abort 取消支持该机制的请求。"
+        }
+      ]
+    },
+    {
+      "id": "components",
+      "treeId": "web",
+      "parentId": "react",
+      "title": "组件设计",
+      "question": "什么情况下应该拆分组件？",
+      "answer": "当一段 UI 拥有清晰职责、独立状态或复用需求时拆分，避免只按代码行数拆分。",
+      "resource": "",
+      "content": "## 按职责划分组件\n组件适合承载有清晰职责、复用需求或独立交互的界面部分，而不是机械地按行数拆分。明确输入 props 与事件回调，可减少对全局状态的隐式依赖。\n## 状态归属\n只在单个组件使用的状态应尽量靠近使用位置。多个兄弟组件共享的状态，可以提升到最近的共同父组件；同一事实尽量保持一个来源，避免双份状态互相不同步。\n## 组合与验证\n通过 children 和小组件组合复杂界面。先约定空状态、加载、失败和成功行为，再实现正常路径。用可观察行为验证组件，而不是依赖内部实现细节。",
+      "quiz": [
+        {
+          "id": "components-1",
+          "prompt": "什么时候拆分组件更有价值？",
+          "options": ["每满十行", "职责清晰或需要复用时", "每个标签都拆分"],
+          "correctIndex": 1,
+          "explanation": "拆分依据应是职责与交互边界。"
+        },
+        {
+          "id": "components-2",
+          "prompt": "两个兄弟组件需要共享同一状态，通常把它放在哪里？",
+          "options": ["最近的共同父组件", "各复制一份", "DOM 属性中"],
+          "correctIndex": 0,
+          "explanation": "共同拥有者可以保持一致的数据来源。"
+        },
+        {
+          "id": "components-3",
+          "prompt": "同一事实保存多份状态的主要风险是什么？",
+          "options": ["字体变大", "自动获得缓存", "不同步"],
+          "correctIndex": 2,
+          "explanation": "派生数据应尽量由同一来源计算。"
+        },
+        {
+          "id": "components-4",
+          "prompt": "组件对外接口优先明确什么？",
+          "options": ["私有局部变量名", "输入 props 与事件回调", "编辑器主题"],
+          "correctIndex": 1,
+          "explanation": "明确输入输出有助于复用和独立验证。"
+        },
+        {
+          "id": "components-5",
+          "prompt": "设计交互组件时应覆盖哪些状态？",
+          "options": ["空、加载、失败与成功", "只覆盖成功", "只覆盖悬停"],
+          "correctIndex": 0,
+          "explanation": "用户需要在不同结果下知道如何继续。"
+        }
+      ]
+    },
+    {
+      "id": "testing",
+      "treeId": "web",
+      "parentId": "react",
+      "title": "测试与质量",
+      "question": "前端测试优先保护什么行为？",
+      "answer": "优先保护核心用户路径、数据一致性和反复出现的故障，验证用户可观察结果。",
+      "resource": "",
+      "content": "## 用风险决定验证范围\n优先保护核心用户路径、数据一致性、权限边界和已发生的回归。断言用户能够观察到的结果，避免仅复刻代码内部调用顺序；测试数量和覆盖率本身不能证明产品正确。\n## 分层验证\n领域逻辑适合快速单元测试，模块之间的真实契约适合集成测试，关键浏览器流程适合少量端到端检查。Mock 有助于隔离不稳定依赖，但全部模拟可能漏掉真实集成问题。\n## 可重复的测试\n使用隔离数据，控制时钟等外部条件，不依赖执行顺序和共享账户。修复缺陷时先能复现故障，再验证修复后的外部结果；测试不应通过吞掉错误来获得绿色。",
+      "quiz": [
+        {
+          "id": "testing-1",
+          "prompt": "测试应优先保护什么？",
+          "options": ["所有 CSS 类名", "代码行数", "核心路径与数据一致性"],
+          "correctIndex": 2,
+          "explanation": "验证资源应集中在失败代价高的行为。"
+        },
+        {
+          "id": "testing-2",
+          "prompt": "关键表单保存流程最有价值的断言是什么？",
+          "options": [
+            "保存后显示正确结果并确实持久化",
+            "私有函数名没有变化",
+            "日志字数相同"
+          ],
+          "correctIndex": 0,
+          "explanation": "应验证用户结果和真实数据。"
+        },
+        {
+          "id": "testing-3",
+          "prompt": "全部依赖都被 Mock 的风险是什么？",
+          "options": ["一定更接近生产", "可能漏掉真实集成问题", "不再需要断言"],
+          "correctIndex": 1,
+          "explanation": "模拟只证明模拟边界内的行为。"
+        },
+        {
+          "id": "testing-4",
+          "prompt": "测试依赖共享数据和执行顺序会怎样？",
+          "options": ["必然更快", "自动防止回归", "容易不稳定并互相影响"],
+          "correctIndex": 2,
+          "explanation": "隔离与可重复的数据能减少偶发失败。"
+        },
+        {
+          "id": "testing-5",
+          "prompt": "覆盖率高能直接证明产品正确吗？",
+          "options": ["不能，还要看断言和真实路径", "一定能", "达到 50% 就能"],
+          "correctIndex": 0,
+          "explanation": "执行过代码不代表验证了正确结果。"
+        }
+      ]
+    },
+    {
+      "id": "deploy",
+      "treeId": "web",
+      "parentId": "project",
+      "title": "部署与发布",
+      "question": "发布前需要确认哪些关键事项？",
+      "answer": "确认生产构建、真实路径、路由和资源地址、环境变量与回滚方式。",
+      "resource": "",
+      "content": "## 发布的是生产构建\n开发服务器为快速迭代设计；静态部署应使用生产构建输出。确认资源 base 路径与实际托管目录一致。使用客户端路由时，服务器还可能需要回退到入口文件。\n## 配置与隐私\n打包进前端的环境变量和密钥可以被浏览器用户读取，秘密必须保留在可信后台。固定资源文件名以外的版本指纹可用于缓存，入口文件应能及时获取新版本。\n## 验证与回滚\n部署后打开真实地址，验证资源加载、主路径和刷新行为。保留上一版本与回滚方法。浏览器 localStorage 按 origin 隔离，域名、协议或端口改变都可能导致读取另一份数据。",
+      "quiz": [
+        {
+          "id": "deploy-1",
+          "prompt": "静态发布通常应上传什么？",
+          "options": ["node_modules", "生产构建输出", "只有源代码注释"],
+          "correctIndex": 1,
+          "explanation": "构建输出包含浏览器实际加载的资源。"
+        },
+        {
+          "id": "deploy-2",
+          "prompt": "前端打包中的 API 密钥能保密吗？",
+          "options": [
+            "不能，秘密应放在可信后台",
+            "变量名隐藏后就能",
+            "压缩后就能"
+          ],
+          "correctIndex": 0,
+          "explanation": "浏览器接收到的资源可以被检查。"
+        },
+        {
+          "id": "deploy-3",
+          "prompt": "部署到子目录后资源 404，优先检查什么？",
+          "options": ["更换图标", "删除所有测试", "构建资源 base 路径"],
+          "correctIndex": 2,
+          "explanation": "资源路径需要匹配实际托管目录。"
+        },
+        {
+          "id": "deploy-4",
+          "prompt": "localStorage 的隔离依据是什么？",
+          "options": ["页面标题", "origin（协议、主机、端口）", "按钮颜色"],
+          "correctIndex": 1,
+          "explanation": "不同 origin 使用不同存储空间。"
+        },
+        {
+          "id": "deploy-5",
+          "prompt": "发布后仍需做什么？",
+          "options": [
+            "在真实地址验证主路径并准备回滚",
+            "只看构建日志",
+            "删除上一版本"
+          ],
+          "correctIndex": 0,
+          "explanation": "构建成功不代表托管配置和运行路径都正确。"
+        }
+      ]
+    },
+    {
+      "id": "python",
+      "treeId": "data",
+      "parentId": null,
+      "title": "Python 基础",
+      "question": "列表和元组的主要区别是什么？",
+      "answer": "列表可变，元组不可变。元组的元素本身仍可能是可变对象。",
+      "resource": "",
+      "content": "## 数据与容器\nPython 的列表 list 可变，元组 tuple 不可变，但元组引用的对象本身仍可能可变。字典 dict 按键访问值，set 表示去重的元素集合。\n## 引用与复制\nb = a 不会复制列表，而是使两个名称指向同一对象。list(a) 或 a.copy() 是浅拷贝，嵌套对象仍可能共享。可变默认参数会在函数定义时创建，通常用 None 再在函数内创建新列表。\n## 控制流与练习\n缩进属于语法；== 比较值，is 比较对象身份。读取一组消费记录，按类别累计金额，避免在遍历列表时随意修改同一个列表。",
+      "quiz": [
+        {
+          "id": "python-1",
+          "prompt": "列表与元组的主要区别是什么？",
+          "options": ["列表不可变", "二者都只能存数字", "列表可变，元组不可变"],
+          "correctIndex": 2,
+          "explanation": "元组结构不可变，但其元素引用的对象仍可能可变。"
+        },
+        {
+          "id": "python-2",
+          "prompt": "b = a 且 a 是列表，会发生什么？",
+          "options": ["两个名称指向同一列表", "自动深拷贝", "a 被清空"],
+          "correctIndex": 0,
+          "explanation": "赋值通常建立引用，不会复制列表。"
+        },
+        {
+          "id": "python-3",
+          "prompt": "去除一组可哈希元素的重复值，可使用什么？",
+          "options": ["tuple 必然去重", "set", "缩进"],
+          "correctIndex": 1,
+          "explanation": "集合保存不重复的元素。"
+        },
+        {
+          "id": "python-4",
+          "prompt": "避免可变默认参数共享状态的常用写法是什么？",
+          "options": [
+            "默认值一直用 []",
+            "使用全局列表",
+            "默认 None，在函数内新建"
+          ],
+          "correctIndex": 2,
+          "explanation": "每次调用可创建自己的列表。"
+        },
+        {
+          "id": "python-5",
+          "prompt": "== 与 is 分别主要比较什么？",
+          "options": ["值与对象身份", "都只比较变量名", "都比较内存大小"],
+          "correctIndex": 0,
+          "explanation": "内容相等不一定是同一个对象。"
+        }
+      ]
+    },
+    {
+      "id": "pandas",
+      "treeId": "data",
+      "parentId": "python",
+      "title": "Pandas 数据清理",
+      "question": "遇到缺失值时应该如何处理？",
+      "answer": "先理解缺失原因和比例，再决定保留、删除或合理填补，避免无依据地替换所有缺失值。",
+      "resource": "",
+      "content": "## 先检查，再清理\n读取数据后先看列类型、样本和缺失比例。缺失值可能表示未采集、未适用或异常；不能无依据地一律填零。删除缺失行可能引入偏差，填充规则应能解释。\n## 选择、转换与去重\nloc 用标签选择，iloc 用整数位置选择。日期与金额应转换为合适类型。drop_duplicates 需要明确哪些列共同决定一条记录的身份，不能仅因值相似就删除。\n## 汇总与验证\ngroupby 可按类别聚合；合并数据前检查连接键是否唯一，避免多对多连接意外放大行数。清理前后比较行数、总额与缺失分布，保留原始数据供追溯。",
+      "quiz": [
+        {
+          "id": "pandas-1",
+          "prompt": "发现缺失值后第一步应该做什么？",
+          "options": ["全部填零", "理解缺失原因与比例", "全部删表"],
+          "correctIndex": 1,
+          "explanation": "合理处理需要业务背景和分布信息。"
+        },
+        {
+          "id": "pandas-2",
+          "prompt": "loc 与 iloc 的主要区别是什么？",
+          "options": [
+            "标签选择与整数位置选择",
+            "一个仅能排序",
+            "二者都只读第一行"
+          ],
+          "correctIndex": 0,
+          "explanation": "loc 按标签，iloc 按位置。"
+        },
+        {
+          "id": "pandas-3",
+          "prompt": "按消费类别计算金额汇总适合用什么？",
+          "options": ["删除所有列", "随机抽样", "groupby 聚合"],
+          "correctIndex": 2,
+          "explanation": "分组聚合可计算每类的统计量。"
+        },
+        {
+          "id": "pandas-4",
+          "prompt": "合并数据前为什么检查连接键唯一性？",
+          "options": [
+            "为了改变字体",
+            "避免多对多连接意外放大行数",
+            "确保全部数据相同"
+          ],
+          "correctIndex": 1,
+          "explanation": "重复键可能产生组合行。"
+        },
+        {
+          "id": "pandas-5",
+          "prompt": "清理后应核对什么？",
+          "options": ["行数、总额与缺失分布", "只看最后一行", "只看文件名"],
+          "correctIndex": 0,
+          "explanation": "核对能暴露误删与不合理填充。"
+        }
+      ]
+    },
+    {
+      "id": "charts",
+      "treeId": "data",
+      "parentId": "pandas",
+      "title": "数据可视化",
+      "question": "",
+      "answer": "",
+      "resource": "",
+      "content": "## 用问题选择图表\n类别之间比较数值可用柱状图；随时间变化可用折线图；两个数值变量之间的关系可用散点图。先明确问题、单位、统计口径和数据来源，再设计外观。\n## 避免误导\n柱长编码数量时，数值轴通常应从零开始，否则会夸大差异。相关性不能证明因果。样本量、异常值和聚合方式都会影响结论，不应只展示有利的片段。\n## 可读与可验证\n标明标题、轴标签、单位和时间范围。使用文字或形状辅助颜色区分，必要时提供数据表。用同一份数据绘制两种图，解释哪个更能回答原始问题。",
+      "quiz": [
+        {
+          "id": "charts-1",
+          "prompt": "比较不同类别的金额，通常优先选什么？",
+          "options": ["柱状图", "仅背景图片", "随机折线"],
+          "correctIndex": 0,
+          "explanation": "柱长适合比较类别数值。"
+        },
+        {
+          "id": "charts-2",
+          "prompt": "查看两个数值变量的关系可用什么？",
+          "options": ["饼图必然最佳", "散点图", "无数据装饰图"],
+          "correctIndex": 1,
+          "explanation": "散点图可展示变量之间的分布关系。"
+        },
+        {
+          "id": "charts-3",
+          "prompt": "柱长表示数量时截断数值轴可能怎样？",
+          "options": ["自动减少误差", "保证因果关系", "夸大差异"],
+          "correctIndex": 2,
+          "explanation": "非零起点可能放大视觉比例。"
+        },
+        {
+          "id": "charts-4",
+          "prompt": "发现变量相关，能直接认定因果吗？",
+          "options": ["不能", "一定能", "只要颜色一样就能"],
+          "correctIndex": 0,
+          "explanation": "可能存在混杂因素或其他解释。"
+        },
+        {
+          "id": "charts-5",
+          "prompt": "图表应明确标注什么？",
+          "options": ["只有作者昵称", "单位、范围和统计口径", "只标最大数字"],
+          "correctIndex": 1,
+          "explanation": "读者需要知道数值的含义与边界。"
+        }
+      ]
+    },
+    {
+      "id": "type",
+      "treeId": "design",
+      "parentId": null,
+      "title": "字体与层次",
+      "question": "如何建立清晰的信息层次？",
+      "answer": "通过字号、字重、位置、间距和对比突出主要任务，减少同时竞争注意力的元素。",
+      "resource": "",
+      "content": "## 用层次表达内容关系\n字号、字重、位置、间距和对比共同建立层次。标题要帮助读者识别主题，正文要便于连续阅读，不必同时让所有文字争夺注意力。保持少量稳定的样式层级。\n## 阅读节奏\n行高与行长影响阅读。密集长段落、过小字体和过低对比会增加负担。与其凭一个固定数字决定所有场景，不如在真实内容、窄屏与浏览器缩放下检验可读性。\n## 语义与练习\n标题标签根据内容结构选择，外观通过样式控制；不能为了某个默认字号跳过合理层级。排一张课程卡片，用两个文字层级突出学习目标与辅助信息，再检查长中文标题。",
+      "quiz": [
+        {
+          "id": "type-1",
+          "prompt": "文字层次的目的是什么？",
+          "options": [
+            "让全部文字同样突出",
+            "帮助识别主题和内容关系",
+            "只增加装饰"
+          ],
+          "correctIndex": 1,
+          "explanation": "层次应服务于阅读顺序与内容理解。"
+        },
+        {
+          "id": "type-2",
+          "prompt": "选择 h1、h2 等标签主要依据什么？",
+          "options": ["内容结构", "默认字号", "颜色偏好"],
+          "correctIndex": 0,
+          "explanation": "语义结构与视觉样式应分别处理。"
+        },
+        {
+          "id": "type-3",
+          "prompt": "哪种做法会增加连续阅读负担？",
+          "options": ["适当行高", "清晰分段", "过小字体与拥挤长行"],
+          "correctIndex": 2,
+          "explanation": "字体与行距应在真实内容中检验。"
+        },
+        {
+          "id": "type-4",
+          "prompt": "样式层级如何更容易保持一致？",
+          "options": [
+            "每段随机字号",
+            "使用少量稳定的层级",
+            "所有段落都做主标题"
+          ],
+          "correctIndex": 1,
+          "explanation": "稳定层级有助于用户形成阅读预期。"
+        },
+        {
+          "id": "type-5",
+          "prompt": "排版完成后应该检查什么？",
+          "options": [
+            "长标题、窄屏与缩放后的阅读",
+            "只有空白模板",
+            "只看最大字号"
+          ],
+          "correctIndex": 0,
+          "explanation": "真实内容与不同阅读条件才能暴露问题。"
+        }
+      ]
+    },
+    {
+      "id": "color",
+      "treeId": "design",
+      "parentId": "type",
+      "title": "色彩与对比",
+      "question": "",
+      "answer": "",
+      "resource": "",
+      "content": "## 颜色要传递稳定含义\n把主要操作、正文、边界和状态分别赋予一致的颜色角色。品牌色不必覆盖所有内容，过多强调色会使重点不清晰。状态色不能只靠用户辨认红绿来传递信息。\n## 对比与可访问性\n文字需要与背景保持足够对比，普通正文在常见 WCAG AA 标准下至少为 4.5:1。错误同时提供文字和必要图标；链接与焦点应能被辨认，不只用极轻的颜色变化。\n## 练习与检查\n为同一张卡片定义默认、悬停、焦点和禁用状态。检查不同屏幕与灰度显示，在状态说明中加入文字。柔和的视觉风格不能以牺牲正文对比为代价。",
+      "quiz": [
+        {
+          "id": "color-1",
+          "prompt": "界面颜色角色应如何使用？",
+          "options": ["每个按钮随机", "所有内容都高亮", "保持一致的语义"],
+          "correctIndex": 2,
+          "explanation": "稳定角色有助于用户识别操作和状态。"
+        },
+        {
+          "id": "color-2",
+          "prompt": "错误反馈只用红色是否足够？",
+          "options": ["不够，应有文字等补充", "足够", "颜色越浅越够"],
+          "correctIndex": 0,
+          "explanation": "色觉差异和辅助技术都需要其他线索。"
+        },
+        {
+          "id": "color-3",
+          "prompt": "普通正文常见的 AA 最低对比度要求是什么？",
+          "options": ["1:1", "4.5:1", "2:1"],
+          "correctIndex": 1,
+          "explanation": "应检查文字与实际背景的对比度。"
+        },
+        {
+          "id": "color-4",
+          "prompt": "过多强调色容易导致什么？",
+          "options": ["自动提高层次", "自动提升对比", "重点不清晰"],
+          "correctIndex": 2,
+          "explanation": "强调需要适度才能保持意义。"
+        },
+        {
+          "id": "color-5",
+          "prompt": "设计按钮颜色还应覆盖什么？",
+          "options": ["悬停、键盘焦点与禁用状态", "只有默认状态", "只看图标"],
+          "correctIndex": 0,
+          "explanation": "交互状态需要清晰且可辨别。"
+        }
+      ]
+    }
+  ]
+}

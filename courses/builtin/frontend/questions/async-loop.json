@@ -1,0 +1,131 @@
+[
+  {
+    "id": "fe-async-loop-single",
+    "type": "single",
+    "difficulty": "basic",
+    "prompt": "async 函数返回一个数字时，调用方立即拿到的是什么？",
+    "explanation": "async 的返回值会被包装为 Promise。",
+    "options": [
+      "浏览器定时器 ID",
+      "一个 DOM 节点",
+      "一定是数字本身",
+      "兑现为该数字的 Promise"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "fe-async-loop-multiple",
+    "type": "multiple",
+    "difficulty": "applied",
+    "prompt": "哪些说法正确？",
+    "explanation": "计时器仍受事件循环和其他工作影响。",
+    "options": [
+      "Promise.all 可以等待独立任务",
+      "零延时定时器保证立刻执行",
+      "被 await 的拒绝可以被 try/catch 捕获",
+      "await 只暂停当前异步函数后续逻辑"
+    ],
+    "correctIndices": [
+      3,
+      0,
+      2
+    ]
+  },
+  {
+    "id": "fe-async-loop-boolean",
+    "type": "boolean",
+    "difficulty": "basic",
+    "prompt": "给 setTimeout 设置 0 毫秒，会让回调先于当前同步代码执行。",
+    "explanation": "当前同步栈会先完成；0 不是立即打断当前代码。",
+    "options": [
+      "正确",
+      "错误"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "fe-async-loop-fill",
+    "type": "fill",
+    "difficulty": "basic",
+    "prompt": "等待一组 Promise，且任意失败就让整体失败的静态方法是 ____。",
+    "explanation": "Promise.all 保留输入顺序返回结果，但不代表逐个串行启动。",
+    "acceptedAnswers": [
+      "Promise.all",
+      "Promise.all()"
+    ],
+    "caseSensitive": false
+  },
+  {
+    "id": "fe-async-loop-order",
+    "type": "order",
+    "difficulty": "applied",
+    "prompt": "针对示例脚本排列输出：同步 A；注册 Promise 输出 C；同步 B；定时器输出 D。",
+    "explanation": "同步先完成，再处理已排队微任务，最后才有此定时器任务。",
+    "options": [
+      "A",
+      "B",
+      "D",
+      "C"
+    ],
+    "correctOrder": [
+      0,
+      1,
+      3,
+      2
+    ]
+  },
+  {
+    "id": "fe-async-loop-code_reading",
+    "type": "code_reading",
+    "difficulty": "applied",
+    "prompt": "输出什么？按空格分隔。",
+    "explanation": "await 之前的部分同步执行，后续恢复排在当前同步代码之后。",
+    "code": "async function run() {\n  console.log(1);\n  await Promise.resolve();\n  console.log(3);\n}\nrun();\nconsole.log(2);",
+    "language": "javascript",
+    "acceptedAnswers": [
+      "1 2 3"
+    ],
+    "caseSensitive": true
+  },
+  {
+    "id": "fe-async-loop-short_answer",
+    "type": "short_answer",
+    "difficulty": "advanced",
+    "prompt": "两个独立请求何时适合 Promise.all，何时更适合 allSettled？",
+    "explanation": "都成功才有意义时使用 all；任一失败会使组合拒绝。需要保留每项成功或失败结果并显示部分成果时使用 allSettled，还需分别处理拒绝原因。",
+    "referenceAnswer": "都成功才有意义时使用 all；任一失败会使组合拒绝。需要保留每项成功或失败结果并显示部分成果时使用 allSettled，还需分别处理拒绝原因。",
+    "rubric": [
+      "说明 all 的失败行为",
+      "说明部分成功的场景",
+      "不把组合等待误当自动取消其他请求"
+    ]
+  },
+  {
+    "id": "fe-async-loop-code_fix",
+    "type": "code_fix",
+    "difficulty": "applied",
+    "prompt": "让调用者能等待 JSON 结果，并让请求或解析失败进入 catch。",
+    "explanation": "未 await 的异步拒绝不会被周围同步 try/catch 自动捕获；fetch 还需检查 HTTP 状态。",
+    "code": "async function load() {\n  try { fetch(\"/api/items\").then(r => r.json()); }\n  catch (error) { throw new Error(\"加载失败\"); }\n}",
+    "language": "javascript",
+    "referenceAnswer": "async function load() {\n  try {\n    const response = await fetch(\"/api/items\");\n    if (!response.ok) throw new Error(\"HTTP \" + response.status);\n    return await response.json();\n  } catch (error) {\n    throw new Error(\"加载失败\", { cause: error });\n  }\n}",
+    "rubric": [
+      "等待请求并返回结果",
+      "检查 HTTP 状态",
+      "JSON 解析拒绝也进入错误路径"
+    ]
+  },
+  {
+    "id": "fe-async-loop-project",
+    "type": "project",
+    "difficulty": "advanced",
+    "prompt": "实现一个同时加载用户资料和课程列表的函数，并定义其中一项失败时的界面策略。",
+    "explanation": "并行启动独立请求，根据页面需要选择整体失败或部分成功。提供加载、成功、失败状态和重试入口，解释为什么没有无意义的串行等待。",
+    "referenceAnswer": "并行启动独立请求，根据页面需要选择整体失败或部分成功。提供加载、成功、失败状态和重试入口，解释为什么没有无意义的串行等待。",
+    "rubric": [
+      "独立请求并发启动",
+      "失败策略与组合方法匹配",
+      "调用方可以等待结果且不会遗失拒绝"
+    ]
+  }
+]

@@ -1,0 +1,360 @@
+{
+  "name": "内置 · 前端学习科技树",
+  "release": "1.0.0",
+  "trees": [
+    {
+      "id": "fe-root",
+      "title": "前端学习科技树",
+      "description": "从 Web 原理到可交付作品，按阶段学习、测验与复盘。",
+      "color": "blue",
+      "parentTreeId": null,
+      "prerequisiteTreeIds": []
+    },
+    {
+      "id": "fe-stage-web",
+      "title": "01 · Web 与 HTML",
+      "description": "理解浏览器如何呈现页面，建立语义与表单基础。",
+      "color": "blue",
+      "parentTreeId": "fe-root",
+      "prerequisiteTreeIds": []
+    },
+    {
+      "id": "fe-stage-css",
+      "title": "02 · CSS 与布局",
+      "description": "从盒模型到组件视觉，做出适配不同空间的页面。",
+      "color": "blue",
+      "parentTreeId": "fe-root",
+      "prerequisiteTreeIds": [
+        "fe-stage-web"
+      ]
+    },
+    {
+      "id": "fe-stage-javascript",
+      "title": "03 · JavaScript",
+      "description": "用明确的数据流、作用域和异步模型实现逻辑。",
+      "color": "blue",
+      "parentTreeId": "fe-root",
+      "prerequisiteTreeIds": [
+        "fe-stage-web"
+      ]
+    },
+    {
+      "id": "fe-stage-browser",
+      "title": "04 · 浏览器与网络",
+      "description": "连接 DOM、请求、存储与安全边界。",
+      "color": "blue",
+      "parentTreeId": "fe-root",
+      "prerequisiteTreeIds": [
+        "fe-stage-javascript"
+      ]
+    },
+    {
+      "id": "fe-stage-typescript",
+      "title": "05 · TypeScript",
+      "description": "让类型表达真实约束，明确编译期与运行时的边界。",
+      "color": "blue",
+      "parentTreeId": "fe-root",
+      "prerequisiteTreeIds": [
+        "fe-stage-javascript"
+      ]
+    },
+    {
+      "id": "fe-stage-react",
+      "title": "06 · React 应用",
+      "description": "组织组件、状态、副作用与路由数据流。",
+      "color": "blue",
+      "parentTreeId": "fe-root",
+      "prerequisiteTreeIds": [
+        "fe-stage-css",
+        "fe-stage-browser",
+        "fe-stage-typescript"
+      ]
+    },
+    {
+      "id": "fe-stage-engineering",
+      "title": "07 · 工程与质量",
+      "description": "建立可复现构建、可维护测试和性能诊断流程。",
+      "color": "blue",
+      "parentTreeId": "fe-root",
+      "prerequisiteTreeIds": [
+        "fe-stage-react"
+      ]
+    },
+    {
+      "id": "fe-stage-delivery",
+      "title": "08 · 交付实战",
+      "description": "完成可访问性检查、发布和可回滚的真实作品。",
+      "color": "blue",
+      "parentTreeId": "fe-root",
+      "prerequisiteTreeIds": [
+        "fe-stage-engineering"
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "id": "fe-web-platform",
+      "treeId": "fe-stage-web",
+      "parentId": null,
+      "title": "Web 页面如何运行",
+      "lesson": "lessons/web-platform.md",
+      "questions": "questions/web-platform.json",
+      "resource": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_the_web_works",
+      "question": "为什么“页面白屏”不能只根据一个 200 状态码判断原因？",
+      "answer": "200 只说明某次请求成功。页面还可能有其他资源失败、脚本异常、错误数据结构或样式隐藏等问题，应结合 Network、Console 和当前 DOM 定位。"
+    },
+    {
+      "id": "fe-semantic-html",
+      "treeId": "fe-stage-web",
+      "parentId": "fe-web-platform",
+      "title": "语义化 HTML 与文档结构",
+      "lesson": "lessons/semantic-html.md",
+      "questions": "questions/semantic-html.json",
+      "resource": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Structuring_content",
+      "question": "如何判断一个界面动作应该用 a 还是 button？",
+      "answer": "根据行为判断：导航到一个地址使用有 href 的链接；提交、展开、切换状态等操作使用按钮。再确认名称、键盘和表单上下文是否正确。"
+    },
+    {
+      "id": "fe-forms-a11y",
+      "treeId": "fe-stage-web",
+      "parentId": "fe-semantic-html",
+      "title": "表单、约束与可访问名称",
+      "lesson": "lessons/forms-a11y.md",
+      "questions": "questions/forms-a11y.json",
+      "resource": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms",
+      "question": "为什么 placeholder 不能替代 label？",
+      "answer": "placeholder 在输入后消失，提示与名称职责不同；清晰且正确关联的 label 有利于持续识别字段、扩大点击区域和辅助技术访问。"
+    },
+    {
+      "id": "fe-box-model",
+      "treeId": "fe-stage-css",
+      "parentId": null,
+      "title": "盒模型与定位",
+      "lesson": "lessons/box-model.md",
+      "questions": "questions/box-model.json",
+      "resource": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Styling_basics/Box_model",
+      "question": "为什么绝对定位的角标常需要父卡片设置 position: relative？",
+      "answer": "它让卡片成为定位祖先，角标的偏移通常相对卡片计算；卡片本身仍保留普通布局占位。还应确认中间祖先或变换属性没有改变包含块。"
+    },
+    {
+      "id": "fe-flex-grid",
+      "treeId": "fe-stage-css",
+      "parentId": "fe-box-model",
+      "title": "Flexbox 与 Grid 布局",
+      "lesson": "lessons/flex-grid.md",
+      "questions": "questions/flex-grid.json",
+      "resource": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/CSS_layout",
+      "question": "如何为外层卡片列表和卡片内部操作栏分别选择布局？",
+      "answer": "外层多行多列可用 Grid；内部图标、标题、按钮的一行关系可用 Flex。根据内容维度和对齐目标选择，并保留合理 DOM 顺序。"
+    },
+    {
+      "id": "fe-responsive",
+      "treeId": "fe-stage-css",
+      "parentId": "fe-flex-grid",
+      "title": "响应式与媒体适配",
+      "lesson": "lessons/responsive.md",
+      "questions": "questions/responsive.json",
+      "resource": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/CSS_layout/Responsive_Design",
+      "question": "为什么 overflow-x:hidden 不能作为所有横向溢出的修复方案？",
+      "answer": "它可能只隐藏错误并裁掉必要内容。应找出固定宽度、长内容、轨道或最小宽度问题，让内容在容器内可访问地布局。"
+    },
+    {
+      "id": "fe-design-system",
+      "treeId": "fe-stage-css",
+      "parentId": "fe-flex-grid",
+      "title": "设计变量、状态与视觉层次",
+      "lesson": "lessons/design-system.md",
+      "questions": "questions/design-system.json",
+      "resource": "https://www.radix-ui.com/colors/docs/palette-composition/understanding-the-scale",
+      "question": "为什么统一变量后仍然需要分别考虑正文、按钮和禁用态？",
+      "answer": "变量统一的是用途与来源，不是把所有元素变成同一种视觉权重。不同状态需要不同的对比、背景和行为，禁用与可操作也应明确区分。"
+    },
+    {
+      "id": "fe-js-values",
+      "treeId": "fe-stage-javascript",
+      "parentId": null,
+      "title": "值、引用与类型转换",
+      "lesson": "lessons/js-values.md",
+      "questions": "questions/js-values.json",
+      "resource": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Data_structures",
+      "question": "为什么 {...state} 之后修改 next.user.name 仍可能影响 state？",
+      "answer": "展开只复制外层。next.user 与 state.user 可能仍引用同一对象；应在更新 name 时也复制 user，或者针对合适的数据使用深复制方案。"
+    },
+    {
+      "id": "fe-scope-closures",
+      "treeId": "fe-stage-javascript",
+      "parentId": "fe-js-values",
+      "title": "作用域、函数与闭包",
+      "lesson": "lessons/scope-closures.md",
+      "questions": "questions/scope-closures.json",
+      "resource": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Closures",
+      "question": "多个定时回调捕获 var 循环索引时为什么容易得到相同值？",
+      "answer": "var 为循环共享同一个函数作用域绑定。回调延迟执行时读取的是循环结束后的值。使用 let 为各次迭代建立绑定，或通过函数参数显式捕获值。"
+    },
+    {
+      "id": "fe-collections",
+      "treeId": "fe-stage-javascript",
+      "parentId": "fe-js-values",
+      "title": "集合、数据变换与不可变更新",
+      "lesson": "lessons/collections.md",
+      "questions": "questions/collections.json",
+      "resource": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array",
+      "question": "为什么数组 map 后仍可能意外修改旧状态？",
+      "answer": "map 只保证返回一个新数组。若回调修改 item 属性或原样返回对象，新旧数组仍可能共享对象。更新条目时要复制该对象以及实际变化的嵌套层。"
+    },
+    {
+      "id": "fe-async-loop",
+      "treeId": "fe-stage-javascript",
+      "parentId": "fe-scope-closures",
+      "title": "Promise、异步与事件循环",
+      "lesson": "lessons/async-loop.md",
+      "questions": "questions/async-loop.json",
+      "resource": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises",
+      "question": "两个独立请求何时适合 Promise.all，何时更适合 allSettled？",
+      "answer": "都成功才有意义时使用 all；任一失败会使组合拒绝。需要保留每项成功或失败结果并显示部分成果时使用 allSettled，还需分别处理拒绝原因。"
+    },
+    {
+      "id": "fe-dom-events",
+      "treeId": "fe-stage-browser",
+      "parentId": null,
+      "title": "DOM、事件传播与交互",
+      "lesson": "lessons/dom-events.md",
+      "questions": "questions/dom-events.json",
+      "resource": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/Event_bubbling",
+      "question": "动态列表为什么适合事件委托，处理图标点击时应注意什么？",
+      "answer": "祖先监听器可以处理后续新增子项，不必逐个重新绑定。点击图标时 target 可能是内部元素，应使用 closest 找到按钮并限制在容器内，按需清理监听器。"
+    },
+    {
+      "id": "fe-http-fetch",
+      "treeId": "fe-stage-browser",
+      "parentId": "fe-dom-events",
+      "title": "HTTP、Fetch 与请求状态",
+      "lesson": "lessons/http-fetch.md",
+      "questions": "questions/http-fetch.json",
+      "resource": "https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch",
+      "question": "搜索框输入从 a 变成 ab，怎样避免 a 的慢响应覆盖 ab？",
+      "answer": "为每轮请求建立取消控制器或递增编号；新请求开始时取消旧请求，更新状态前确认响应属于当前请求。取消不作为普通错误，并处理加载状态的归属。"
+    },
+    {
+      "id": "fe-storage-security",
+      "treeId": "fe-stage-browser",
+      "parentId": "fe-http-fetch",
+      "title": "浏览器存储与安全边界",
+      "lesson": "lessons/storage-security.md",
+      "questions": "questions/storage-security.json",
+      "resource": "https://developer.mozilla.org/en-US/docs/Web/Security",
+      "question": "为什么不应把 localStorage 当作敏感信息保险箱或唯一备份？",
+      "answer": "同源脚本可以读取，XSS 可能窃取数据；它也可能因用户清理、配额或浏览器策略而不可用。应减少敏感持久化，使用合适会话机制并提供导出或服务端持久化策略。"
+    },
+    {
+      "id": "fe-ts-narrowing",
+      "treeId": "fe-stage-typescript",
+      "parentId": null,
+      "title": "TypeScript 类型与收窄",
+      "lesson": "lessons/ts-narrowing.md",
+      "questions": "questions/ts-narrowing.json",
+      "resource": "https://www.typescriptlang.org/docs/handbook/2/narrowing.html",
+      "question": "怎样避免 loading、error、data 三个独立字段出现互相矛盾的状态？",
+      "answer": "用 status 字面量构成可辨识联合，每个分支只带需要的字段。读取时先按 status 收窄；来自外部的数据要经过运行时校验，不能仅靠断言。"
+    },
+    {
+      "id": "fe-ts-generics",
+      "treeId": "fe-stage-typescript",
+      "parentId": "fe-ts-narrowing",
+      "title": "泛型、约束与可复用接口",
+      "lesson": "lessons/ts-generics.md",
+      "questions": "questions/ts-generics.json",
+      "resource": "https://www.typescriptlang.org/docs/handbook/2/generics.html",
+      "question": "什么时候一个函数值得使用泛型，而不是直接接受固定类型？",
+      "answer": "当函数对多种类型执行同样操作，同时需要保留输入、键或返回值之间的关系时。仅返回 boolean 且只需固定字段时，普通接口可能更简单；不要用泛型替代运行时校验。"
+    },
+    {
+      "id": "fe-react-components",
+      "treeId": "fe-stage-react",
+      "parentId": null,
+      "title": "React 组件、Props 与列表",
+      "lesson": "lessons/react-components.md",
+      "questions": "questions/react-components.json",
+      "resource": "https://react.dev/learn/passing-props-to-a-component",
+      "question": "为什么可重排输入列表使用数组索引 key 容易出问题？",
+      "answer": "React 会按 key 复用组件。索引跟随位置而非业务条目，重排后局部状态或输入可能被复用给另一个条目；稳定 ID 能让身份跟随数据。"
+    },
+    {
+      "id": "fe-react-state",
+      "treeId": "fe-stage-react",
+      "parentId": "fe-react-components",
+      "title": "状态、派生数据与副作用",
+      "lesson": "lessons/react-state.md",
+      "questions": "questions/react-state.json",
+      "resource": "https://react.dev/learn/synchronizing-with-effects",
+      "question": "为什么不应把 filteredItems 同时保存在 state，再用 effect 跟随 items 和 query？",
+      "answer": "它可以直接从已有数据计算。额外状态引入同步负担和一次额外更新，容易短暂过期；直接派生更清楚，昂贵计算在有证据时再考虑缓存。"
+    },
+    {
+      "id": "fe-routing-data",
+      "treeId": "fe-stage-react",
+      "parentId": "fe-react-state",
+      "title": "路由、表单与数据流",
+      "lesson": "lessons/routing-data.md",
+      "questions": "questions/routing-data.json",
+      "resource": "https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams",
+      "question": "怎样决定筛选词、弹窗展开和课程详情分别放在哪里？",
+      "answer": "需要分享和历史恢复的筛选词放 URL；纯临时弹窗状态放界面状态；课程内容作为服务端数据，通过路由 ID 读取并管理加载和失败。避免在多个位置维护互相冲突的副本。"
+    },
+    {
+      "id": "fe-git-tooling",
+      "treeId": "fe-stage-engineering",
+      "parentId": null,
+      "title": "Git、依赖与可复现构建",
+      "lesson": "lessons/git-tooling.md",
+      "questions": "questions/git-tooling.json",
+      "resource": "https://docs.npmjs.com/cli/v11/commands/npm-ci",
+      "question": "为什么只写“npm install 后能跑”不足以描述可复现交付？",
+      "answer": "还需要一致的锁文件、兼容的运行时版本、必要配置及构建/启动命令。install 可能受依赖解析与本地环境影响，交付应说明如何从干净环境恢复相同输入。"
+    },
+    {
+      "id": "fe-testing-debugging",
+      "treeId": "fe-stage-engineering",
+      "parentId": "fe-git-tooling",
+      "title": "测试设计与调试定位",
+      "lesson": "lessons/testing-debugging.md",
+      "questions": "questions/testing-debugging.json",
+      "resource": "https://testing-library.com/docs/guiding-principles/",
+      "question": "为什么按钮保存成功的组件测试仍不能单独证明 SQLite 持久化正确？",
+      "answer": "组件测试可能替换了 API 或只检查提示。真实持久化还涉及请求、服务端事务、数据库写入和重新读取，需要针对该契约的集成路径证据。"
+    },
+    {
+      "id": "fe-web-performance",
+      "treeId": "fe-stage-engineering",
+      "parentId": "fe-testing-debugging",
+      "title": "性能、加载与测量",
+      "lesson": "lessons/web-performance.md",
+      "questions": "questions/web-performance.json",
+      "resource": "https://web.dev/articles/vitals",
+      "question": "为什么不能把所有图片都设 loading=\"lazy\" 当成通用性能方案？",
+      "answer": "屏外图片延迟加载可节省带宽，但首屏关键图片可能因延后发现或加载而恶化 LCP。应区分关键与非关键资源，并测量实际加载路径。"
+    },
+    {
+      "id": "fe-quality-a11y",
+      "treeId": "fe-stage-delivery",
+      "parentId": null,
+      "title": "可访问性与交付质量",
+      "lesson": "lessons/quality-a11y.md",
+      "questions": "questions/quality-a11y.json",
+      "resource": "https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/",
+      "question": "为什么给 div 加 role=\"button\" 仍不足以获得完整按钮体验？",
+      "answer": "角色只提供语义，不自动添加可聚焦性、Enter/Space 激活、禁用和表单行为。优先使用原生 button，减少遗漏并保持标准交互。"
+    },
+    {
+      "id": "fe-deployment-project",
+      "treeId": "fe-stage-delivery",
+      "parentId": "fe-quality-a11y",
+      "title": "部署、恢复与毕业实战",
+      "lesson": "lessons/deployment-project.md",
+      "questions": "questions/deployment-project.json",
+      "resource": "https://www.sqlite.org/backup.html",
+      "question": "为什么“回滚前端文件”不一定能恢复一次有数据库变更的发布？",
+      "answer": "旧代码可能不兼容新 schema 或新数据语义；还需考虑服务端版本、配置和备份恢复。发布前应明确兼容迁移、可回退范围与一致性备份。"
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+[
+  {
+    "id": "fe-deployment-project-single",
+    "type": "single",
+    "difficulty": "basic",
+    "prompt": "数据库文件应优先放在哪里？",
+    "explanation": "学习历史需要跨进程和发布周期保留。",
+    "options": [
+      "浏览器 CSS 文件里",
+      "独立持久化目录，发布时保留",
+      "任意临时目录且不记录路径",
+      "每次构建都会清空的 dist 内"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "fe-deployment-project-multiple",
+    "type": "multiple",
+    "difficulty": "applied",
+    "prompt": "哪些属于完整交付要考虑的内容？",
+    "explanation": "交付需要覆盖关键状态与数据边界。",
+    "options": [
+      "数据备份及恢复策略",
+      "深链接与 API 路由行为",
+      "只要首页打开就说明所有持久化正确",
+      "启动和配置说明"
+    ],
+    "correctIndices": [
+      3,
+      1,
+      0
+    ]
+  },
+  {
+    "id": "fe-deployment-project-boolean",
+    "type": "boolean",
+    "difficulty": "basic",
+    "prompt": "SQLite 使用 WAL 时，运行中只复制主数据库文件永远足以得到完整一致的最新备份。",
+    "explanation": "最新提交可能仍在 WAL；应使用支持一致性的备份方案或受控停机与检查点流程。",
+    "options": [
+      "正确",
+      "错误"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "fe-deployment-project-fill",
+    "type": "fill",
+    "difficulty": "basic",
+    "prompt": "提供传输加密的 Web 协议通常写作 ____。",
+    "explanation": "HTTPS 保护传输通道，但不替代应用权限与数据校验。",
+    "acceptedAnswers": [
+      "HTTPS"
+    ],
+    "caseSensitive": false
+  },
+  {
+    "id": "fe-deployment-project-order",
+    "type": "order",
+    "difficulty": "applied",
+    "prompt": "按一次保守发布与回退准备流程排序。",
+    "explanation": "如果涉及不可逆数据迁移，应在执行前明确恢复边界。",
+    "options": [
+      "异常时按兼容性方案回退和恢复",
+      "记录版本并准备一致性数据备份",
+      "启动服务并确认关键路径",
+      "部署兼容代码和配置"
+    ],
+    "correctOrder": [
+      1,
+      3,
+      2,
+      0
+    ]
+  },
+  {
+    "id": "fe-deployment-project-code_reading",
+    "type": "code_reading",
+    "difficulty": "applied",
+    "prompt": "响应首字符是 <，而客户端调用 json()。最可能遇到的是哪类问题？填“解析失败”。",
+    "explanation": "错误地把 API 路径回退到 HTML 入口，会在 JSON 解析阶段失败，即使 HTTP 状态为 200。",
+    "code": "HTTP/1.1 200 OK\nContent-Type: text/html\n\n<!doctype html><html><body>App</body></html>",
+    "language": "text",
+    "acceptedAnswers": [
+      "解析失败"
+    ],
+    "caseSensitive": true
+  },
+  {
+    "id": "fe-deployment-project-short_answer",
+    "type": "short_answer",
+    "difficulty": "advanced",
+    "prompt": "为什么“回滚前端文件”不一定能恢复一次有数据库变更的发布？",
+    "explanation": "旧代码可能不兼容新 schema 或新数据语义；还需考虑服务端版本、配置和备份恢复。发布前应明确兼容迁移、可回退范围与一致性备份。",
+    "referenceAnswer": "旧代码可能不兼容新 schema 或新数据语义；还需考虑服务端版本、配置和备份恢复。发布前应明确兼容迁移、可回退范围与一致性备份。",
+    "rubric": [
+      "指出代码与 schema 耦合",
+      "包含服务端和配置",
+      "提出备份及兼容性策略"
+    ]
+  },
+  {
+    "id": "fe-deployment-project-code_fix",
+    "type": "code_fix",
+    "difficulty": "applied",
+    "prompt": "服务端把不存在的 API 也回退成 HTML。修复路由优先级，API 不存在时返回 JSON 404。",
+    "explanation": "示例是路由伪代码；实际还要按框架处理路径安全与静态资源缺失。",
+    "code": "if (fileExists(pathname)) serveFile(pathname);\nelse serveFile(\"index.html\");",
+    "language": "text",
+    "referenceAnswer": "if (pathname.startsWith(\"/api/\")) {\n  if (apiRouteExists(pathname)) handleApi(pathname);\n  else sendJson(404, { error: \"API 不存在\" });\n} else if (fileExists(pathname)) {\n  serveFile(pathname);\n} else {\n  serveFile(\"index.html\");\n}",
+    "rubric": [
+      "API 分支优先于 SPA 回退",
+      "不存在 API 返回正确状态和 JSON",
+      "页面深链接仍能回退入口"
+    ]
+  },
+  {
+    "id": "fe-deployment-project-project",
+    "type": "project",
+    "difficulty": "advanced",
+    "prompt": "毕业实战：完成一个可导入课程、浏览科技树、阅读课程、测验并保存历史的个人学习网页应用。",
+    "explanation": "交付前后端与数据库，课程内容采用独立包。自动题按明确规则判分，主观题提供参考与自评；学习历史跨刷新与重启保留。提供 README、示例课程、运行配置、数据位置与恢复说明，并列出公开部署前仍需补齐的边界。",
+    "referenceAnswer": "交付前后端与数据库，课程内容采用独立包。自动题按明确规则判分，主观题提供参考与自评；学习历史跨刷新与重启保留。提供 README、示例课程、运行配置、数据位置与恢复说明，并列出公开部署前仍需补齐的边界。",
+    "rubric": [
+      "从课程导入到学习测验形成完整路径",
+      "客观判分与主观自评明确区分",
+      "学习历史存入数据库且内容与进度分离",
+      "启动、配置、数据备份和恢复说明齐全",
+      "真实限制被说明且无硬编码秘密"
+    ]
+  }
+]

@@ -1,0 +1,128 @@
+[
+  {
+    "id": "fe-dom-events-single",
+    "type": "single",
+    "difficulty": "basic",
+    "prompt": "监听器绑定在 ul，点击里面的 button，该监听器中的 currentTarget 是谁？",
+    "explanation": "currentTarget 对应正在执行的监听器所绑定的元素。",
+    "options": [
+      "鼠标图标",
+      "永远是 document",
+      "button",
+      "ul"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "fe-dom-events-multiple",
+    "type": "multiple",
+    "difficulty": "applied",
+    "prompt": "哪些说法正确？",
+    "explanation": "应处理查询为空和监听器生命周期。",
+    "options": [
+      "target 与 currentTarget 可能不同",
+      "重复添加不同函数对象可能导致重复处理",
+      "preventDefault 不等于停止传播",
+      "querySelector 保证总能找到元素"
+    ],
+    "correctIndices": [
+      0,
+      2,
+      1
+    ]
+  },
+  {
+    "id": "fe-dom-events-boolean",
+    "type": "boolean",
+    "difficulty": "basic",
+    "prompt": "调用 preventDefault() 一定会阻止事件继续冒泡。",
+    "explanation": "阻止默认动作与阻止传播是不同操作。",
+    "options": [
+      "正确",
+      "错误"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "fe-dom-events-fill",
+    "type": "fill",
+    "difficulty": "basic",
+    "prompt": "安全显示用户提供的普通文字，可优先设置元素的 ____ 属性。",
+    "explanation": "textContent 把输入作为文字，不会当作 HTML 解析。",
+    "acceptedAnswers": [
+      "textContent"
+    ],
+    "caseSensitive": false
+  },
+  {
+    "id": "fe-dom-events-order",
+    "type": "order",
+    "difficulty": "applied",
+    "prompt": "按常规事件路径从外层到目标再返回排列。",
+    "explanation": "不是所有事件都冒泡，应依据具体事件类型判断。",
+    "options": [
+      "祖先捕获阶段",
+      "祖先冒泡阶段",
+      "目标阶段"
+    ],
+    "correctOrder": [
+      0,
+      2,
+      1
+    ]
+  },
+  {
+    "id": "fe-dom-events-code_reading",
+    "type": "code_reading",
+    "difficulty": "applied",
+    "prompt": "忽略空白文本节点。列表有几个 li 元素？只填数字。",
+    "explanation": "先有两项，再追加一项。此处 innerHTML 是固定可信示例，用户输入不应直接拼入。",
+    "code": "const ul = document.createElement(\"ul\");\nul.innerHTML = \"<li>A</li><li>B</li>\";\nul.append(document.createElement(\"li\"));\nconsole.log(ul.querySelectorAll(\"li\").length);",
+    "language": "javascript",
+    "acceptedAnswers": [
+      "3"
+    ],
+    "caseSensitive": true
+  },
+  {
+    "id": "fe-dom-events-short_answer",
+    "type": "short_answer",
+    "difficulty": "advanced",
+    "prompt": "动态列表为什么适合事件委托，处理图标点击时应注意什么？",
+    "explanation": "祖先监听器可以处理后续新增子项，不必逐个重新绑定。点击图标时 target 可能是内部元素，应使用 closest 找到按钮并限制在容器内，按需清理监听器。",
+    "referenceAnswer": "祖先监听器可以处理后续新增子项，不必逐个重新绑定。点击图标时 target 可能是内部元素，应使用 closest 找到按钮并限制在容器内，按需清理监听器。",
+    "rubric": [
+      "解释动态子项的好处",
+      "处理嵌套图标目标",
+      "确认容器范围或清理策略"
+    ]
+  },
+  {
+    "id": "fe-dom-events-code_fix",
+    "type": "code_fix",
+    "difficulty": "applied",
+    "prompt": "评论只需要普通文字。修复把外部文本插入 HTML 的风险。",
+    "explanation": "字符串替换几个危险词无法可靠净化 HTML；纯文本需求直接使用文本 API。",
+    "code": "function showComment(element, userText) {\n  element.innerHTML = userText;\n}",
+    "language": "javascript",
+    "referenceAnswer": "function showComment(element, userText) {\n  element.textContent = userText;\n}",
+    "rubric": [
+      "将输入当作纯文本",
+      "不靠删除某个单一标签充当通用清洗",
+      "保留文本显示功能"
+    ]
+  },
+  {
+    "id": "fe-dom-events-project",
+    "type": "project",
+    "difficulty": "advanced",
+    "prompt": "制作可动态新增和删除的任务列表，用一个列表监听器处理删除按钮。",
+    "explanation": "使用真实 button 与 data-id，委托处理删除，插入任务名时使用 textContent；支持按钮内部图标点击并保留键盘操作。",
+    "referenceAnswer": "使用真实 button 与 data-id，委托处理删除，插入任务名时使用 textContent；支持按钮内部图标点击并保留键盘操作。",
+    "rubric": [
+      "新增项无需逐个重新绑定",
+      "点击文字与图标均正确定位条目",
+      "用户输入不被当作 HTML 且按钮可键盘操作"
+    ]
+  }
+]

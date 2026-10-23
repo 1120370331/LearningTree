@@ -1,0 +1,130 @@
+[
+  {
+    "id": "fe-web-platform-single",
+    "type": "single",
+    "difficulty": "basic",
+    "prompt": "想确认图片请求是否失败，应首先查看哪个面板？",
+    "explanation": "Network 记录资源请求及其状态。",
+    "options": [
+      "Network",
+      "只看本地文件名",
+      "只看页面背景色",
+      "修改浏览器缩放"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "fe-web-platform-multiple",
+    "type": "multiple",
+    "difficulty": "applied",
+    "prompt": "选择所有正确说法。",
+    "explanation": "HTTP 成功与业务正确性是不同层次。",
+    "options": [
+      "Content-Type 描述响应正文类型",
+      "200 保证应用没有任何业务错误",
+      "一个页面可发出多个资源请求",
+      "JavaScript 能改变当前 DOM"
+    ],
+    "correctIndices": [
+      2,
+      3,
+      0
+    ]
+  },
+  {
+    "id": "fe-web-platform-boolean",
+    "type": "boolean",
+    "difficulty": "basic",
+    "prompt": "Elements 面板中的 DOM 必然与下载的 HTML 源码完全一致。",
+    "explanation": "脚本可以修改 DOM，因此当前 DOM 与初始 HTML 不一定相同。",
+    "options": [
+      "正确",
+      "错误"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "fe-web-platform-fill",
+    "type": "fill",
+    "difficulty": "basic",
+    "prompt": "HTTP 状态码中通常表示“未找到资源”的数字是 ____。",
+    "explanation": "404 表示目标资源未找到，不代表网络连接本身一定失败。",
+    "acceptedAnswers": [
+      "404"
+    ],
+    "caseSensitive": false
+  },
+  {
+    "id": "fe-web-platform-order",
+    "type": "order",
+    "difficulty": "applied",
+    "prompt": "按无缓存、无连接复用的简化教学流程排列。",
+    "explanation": "真实页面可能存在并行请求，此题只描述一次主文档请求的简化流程。",
+    "options": [
+      "解析域名",
+      "解析资源并渲染页面",
+      "接收 HTTP 响应",
+      "建立连接并发送请求"
+    ],
+    "correctOrder": [
+      0,
+      3,
+      2,
+      1
+    ]
+  },
+  {
+    "id": "fe-web-platform-code_reading",
+    "type": "code_reading",
+    "difficulty": "applied",
+    "prompt": "下面响应的 HTTP 状态码是多少？只填数字。",
+    "explanation": "304 用于条件请求，说明可以复用已有表示。",
+    "code": "HTTP/1.1 304 Not Modified\nETag: \"guide-v2\"",
+    "language": "http",
+    "acceptedAnswers": [
+      "304"
+    ],
+    "caseSensitive": true
+  },
+  {
+    "id": "fe-web-platform-short_answer",
+    "type": "short_answer",
+    "difficulty": "advanced",
+    "prompt": "为什么“页面白屏”不能只根据一个 200 状态码判断原因？",
+    "explanation": "200 只说明某次请求成功。页面还可能有其他资源失败、脚本异常、错误数据结构或样式隐藏等问题，应结合 Network、Console 和当前 DOM 定位。",
+    "referenceAnswer": "200 只说明某次请求成功。页面还可能有其他资源失败、脚本异常、错误数据结构或样式隐藏等问题，应结合 Network、Console 和当前 DOM 定位。",
+    "rubric": [
+      "区分请求成功与页面可用",
+      "列出至少两类其他原因",
+      "说明将查看哪些证据"
+    ]
+  },
+  {
+    "id": "fe-web-platform-code_fix",
+    "type": "code_fix",
+    "difficulty": "applied",
+    "prompt": "下面 HTML 把样式表当成脚本加载，请改成正确的样式引用。",
+    "explanation": "资源类型和加载方式要匹配，不能只靠文件后缀期待浏览器自动纠正标签。",
+    "code": "<script src=\"style.css\"></script>",
+    "language": "http",
+    "referenceAnswer": "<link rel=\"stylesheet\" href=\"style.css\">",
+    "rubric": [
+      "使用 link 元素",
+      "rel 为 stylesheet",
+      "保留正确资源路径"
+    ]
+  },
+  {
+    "id": "fe-web-platform-project",
+    "type": "project",
+    "difficulty": "advanced",
+    "prompt": "制作一个含标题、外部 CSS 和一张图片的小页面，记录三类资源在 Network 中的状态。",
+    "explanation": "提供 HTML、CSS 和资源路径；刷新页面后记录主文档、样式、图片请求。故意写错图片路径，观察状态与页面变化，再修复。",
+    "referenceAnswer": "提供 HTML、CSS 和资源路径；刷新页面后记录主文档、样式、图片请求。故意写错图片路径，观察状态与页面变化，再修复。",
+    "rubric": [
+      "三类资源路径可对应到页面内容",
+      "记录至少一个成功与一个失败请求的现象",
+      "解释失败请求对页面造成的具体影响"
+    ]
+  }
+]

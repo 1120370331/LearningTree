@@ -1,0 +1,130 @@
+[
+  {
+    "id": "fe-web-performance-single",
+    "type": "single",
+    "difficulty": "basic",
+    "prompt": "衡量意外布局偏移的 Core Web Vital 是哪个？",
+    "explanation": "CLS 关注布局稳定性。",
+    "options": [
+      "CLS",
+      "Git SHA",
+      "CSS specificity",
+      "HTTP 404"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "fe-web-performance-multiple",
+    "type": "multiple",
+    "difficulty": "applied",
+    "prompt": "哪些优化与对应问题匹配？",
+    "explanation": "关键图片懒加载可能延后主要内容出现。",
+    "options": [
+      "减少长任务改善交互响应",
+      "为图片保留尺寸减少布局跳动",
+      "按需拆分非关键代码减少初始下载",
+      "给首屏主图统一懒加载保证 LCP 更好"
+    ],
+    "correctIndices": [
+      1,
+      0,
+      2
+    ]
+  },
+  {
+    "id": "fe-web-performance-boolean",
+    "type": "boolean",
+    "difficulty": "basic",
+    "prompt": "一次高性能电脑上的实验室分数，能完全代表全部真实用户体验。",
+    "explanation": "真实设备、网络和使用路径不同，应结合真实用户数据与可复现测量。",
+    "options": [
+      "正确",
+      "错误"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "fe-web-performance-fill",
+    "type": "fill",
+    "difficulty": "basic",
+    "prompt": "描述与下一次绘制有关的交互响应体验的指标缩写是 ____。",
+    "explanation": "INP 关注用户交互到下一次绘制的响应延迟。",
+    "acceptedAnswers": [
+      "INP"
+    ],
+    "caseSensitive": false
+  },
+  {
+    "id": "fe-web-performance-order",
+    "type": "order",
+    "difficulty": "applied",
+    "prompt": "按性能优化的证据流程排序。",
+    "explanation": "没有一致基线容易把网络或设备差异误当优化收益。",
+    "options": [
+      "在相同条件下比较结果",
+      "定义目标场景并记录基线",
+      "定位主要瓶颈",
+      "实施针对性改动"
+    ],
+    "correctOrder": [
+      1,
+      2,
+      3,
+      0
+    ]
+  },
+  {
+    "id": "fe-web-performance-code_reading",
+    "type": "code_reading",
+    "difficulty": "applied",
+    "prompt": "四个项目中只渲染 visible 为 true 的项，渲染几项？只填数字。",
+    "explanation": "减少实际渲染的工作量可能有帮助，但是否值得优化仍需结合场景测量。",
+    "code": "const rows = [true, false, true, false];\nconst rendered = rows.filter(Boolean);\nconsole.log(rendered.length);",
+    "language": "html",
+    "acceptedAnswers": [
+      "2"
+    ],
+    "caseSensitive": true
+  },
+  {
+    "id": "fe-web-performance-short_answer",
+    "type": "short_answer",
+    "difficulty": "advanced",
+    "prompt": "为什么不能把所有图片都设 loading=\"lazy\" 当成通用性能方案？",
+    "explanation": "屏外图片延迟加载可节省带宽，但首屏关键图片可能因延后发现或加载而恶化 LCP。应区分关键与非关键资源，并测量实际加载路径。",
+    "referenceAnswer": "屏外图片延迟加载可节省带宽，但首屏关键图片可能因延后发现或加载而恶化 LCP。应区分关键与非关键资源，并测量实际加载路径。",
+    "rubric": [
+      "区分首屏关键与屏外资源",
+      "说明对 LCP 的潜在影响",
+      "提出测量而非统一开关"
+    ]
+  },
+  {
+    "id": "fe-web-performance-code_fix",
+    "type": "code_fix",
+    "difficulty": "applied",
+    "prompt": "这张后加载的卡片封面让下方内容跳动。补充已知 800×450 比例并保持响应式。",
+    "explanation": "预留几何空间解决布局跳动；压缩字节解决的是另一类加载问题。",
+    "code": "<img src=\"cover.webp\" alt=\"课程封面\">",
+    "language": "html",
+    "referenceAnswer": "<img src=\"cover.webp\" alt=\"课程封面\" width=\"800\" height=\"450\" style=\"max-width:100%;height:auto\">",
+    "rubric": [
+      "提前提供正确比例或等效 aspect-ratio",
+      "维持响应式且不拉伸",
+      "不通过隐藏后续内容掩盖跳动"
+    ]
+  },
+  {
+    "id": "fe-web-performance-project",
+    "type": "project",
+    "difficulty": "advanced",
+    "prompt": "为一个含封面和长列表的页面写性能改进记录，只选择一个已定位瓶颈实施改动。",
+    "explanation": "记录场景、设备与网络条件、基线指标、瓶颈证据和改动。可处理布局跳动、初始资源或长任务，最后比较同条件结果并记录副作用。",
+    "referenceAnswer": "记录场景、设备与网络条件、基线指标、瓶颈证据和改动。可处理布局跳动、初始资源或长任务，最后比较同条件结果并记录副作用。",
+    "rubric": [
+      "场景和基线可复现",
+      "改动直接对应已定位瓶颈",
+      "结果比较包含限制与副作用而非只报一个分数"
+    ]
+  }
+]

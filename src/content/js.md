@@ -3,12 +3,12 @@
 JavaScript 的变量名可以绑定到一个值。let 允许重新赋值，const 不允许重新绑定，但这不代表 const 引用的对象被冻结了。
 
 ```js
-const learner = { name: 'Lin', lessons: 0 };
+const learner = { name: "Lin", lessons: 0 };
 learner.lessons += 1; // 合法：修改对象属性
 // learner = {};     // 不合法：重新绑定 const
 
 let count = 0;
-count += 1;          // 合法
+count += 1; // 合法
 ```
 
 ## 块级作用域

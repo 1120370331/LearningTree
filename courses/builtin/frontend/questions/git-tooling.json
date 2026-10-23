@@ -1,0 +1,130 @@
+[
+  {
+    "id": "fe-git-tooling-single",
+    "type": "single",
+    "difficulty": "basic",
+    "prompt": "决定下一次 git commit 包含哪些普通文件改动的是哪个区域？",
+    "explanation": "git add 把选定内容加入暂存区，commit 记录该快照。",
+    "options": [
+      "暂存区",
+      "浏览器缓存",
+      "npm 下载缓存",
+      "远程分支名称"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "fe-git-tooling-multiple",
+    "type": "multiple",
+    "difficulty": "applied",
+    "prompt": "哪些做法有助于可复现构建？",
+    "explanation": "自动升级会改变输入，降低结果的可复现性。",
+    "options": [
+      "声明和使用兼容的 Node 版本",
+      "提交匹配的锁文件",
+      "每次构建自动升级到最新依赖",
+      "记录必要的构建命令"
+    ],
+    "correctIndices": [
+      1,
+      0,
+      3
+    ]
+  },
+  {
+    "id": "fe-git-tooling-boolean",
+    "type": "boolean",
+    "difficulty": "basic",
+    "prompt": "把 API 私钥放进会被前端打包器公开的环境变量，就能避免浏览器用户读取。",
+    "explanation": "客户端产物和请求可被查看，秘密应保留在服务端。",
+    "options": [
+      "正确",
+      "错误"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "fe-git-tooling-fill",
+    "type": "fill",
+    "difficulty": "basic",
+    "prompt": "在锁文件已存在且与 package.json 一致时，执行干净依赖安装的 npm 命令是 ____。",
+    "explanation": "npm ci 不用于随意更新依赖，会按锁文件安装并重建依赖目录。",
+    "acceptedAnswers": [
+      "npm ci"
+    ],
+    "caseSensitive": false
+  },
+  {
+    "id": "fe-git-tooling-order",
+    "type": "order",
+    "difficulty": "applied",
+    "prompt": "按一个小改动的 Git 提交流程排序。",
+    "explanation": "明确提交边界比一次性暂存所有文件更利于审查。",
+    "options": [
+      "创建提交",
+      "查看差异并暂存目标改动",
+      "查看暂存区差异",
+      "编辑工作区文件"
+    ],
+    "correctOrder": [
+      3,
+      1,
+      2,
+      0
+    ]
+  },
+  {
+    "id": "fe-git-tooling-code_reading",
+    "type": "code_reading",
+    "difficulty": "applied",
+    "prompt": "这些操作完成后，紧接着执行 git commit 会保存哪版文本？填 A 或 B。",
+    "explanation": "暂存区记录 A，继续编辑工作区不会自动更新暂存内容。",
+    "code": "# 文件最初已提交\n# 把文件编辑成 A\ngit add note.txt\n# 继续把工作区文件编辑成 B\n# 尚未再次 git add",
+    "language": "text",
+    "acceptedAnswers": [
+      "A"
+    ],
+    "caseSensitive": true
+  },
+  {
+    "id": "fe-git-tooling-short_answer",
+    "type": "short_answer",
+    "difficulty": "advanced",
+    "prompt": "为什么只写“npm install 后能跑”不足以描述可复现交付？",
+    "explanation": "还需要一致的锁文件、兼容的运行时版本、必要配置及构建/启动命令。install 可能受依赖解析与本地环境影响，交付应说明如何从干净环境恢复相同输入。",
+    "referenceAnswer": "还需要一致的锁文件、兼容的运行时版本、必要配置及构建/启动命令。install 可能受依赖解析与本地环境影响，交付应说明如何从干净环境恢复相同输入。",
+    "rubric": [
+      "指出锁文件与运行时",
+      "指出配置和命令",
+      "区分本机可运行与可复现"
+    ]
+  },
+  {
+    "id": "fe-git-tooling-code_fix",
+    "type": "code_fix",
+    "difficulty": "applied",
+    "prompt": "客户端代码暴露私钥。改写为调用本项目服务端代理，私钥由服务端保管。",
+    "explanation": "只改环境变量名称不能保护会被打包进浏览器的秘密。",
+    "code": "fetch(\"https://vendor.example/data\", {\n  headers: { Authorization: \"Bearer PRIVATE_KEY\" }\n});",
+    "language": "text",
+    "referenceAnswer": "fetch(\"/api/vendor-data\");\n// 服务端 /api/vendor-data 读取服务端环境变量，\n// 校验请求权限并调用供应商接口；私钥不进入客户端产物。",
+    "rubric": [
+      "客户端不再包含或接收私钥",
+      "请求通过明确的服务端边界",
+      "服务端仍校验权限并限制代理用途"
+    ]
+  },
+  {
+    "id": "fe-git-tooling-project",
+    "type": "project",
+    "difficulty": "advanced",
+    "prompt": "为一个前端项目写可复现交付说明，并整理一次只含目标改动的提交。",
+    "explanation": "说明 Node 版本、锁文件、安装、构建、启动和配置；提供无秘密示例配置，并记录暂存差异。不要提交 node_modules、本地数据库或真实凭证。",
+    "referenceAnswer": "说明 Node 版本、锁文件、安装、构建、启动和配置；提供无秘密示例配置，并记录暂存差异。不要提交 node_modules、本地数据库或真实凭证。",
+    "rubric": [
+      "其他人可按说明恢复环境",
+      "锁文件与依赖定义一起维护",
+      "提交范围明确且不含秘密或本地数据"
+    ]
+  }
+]

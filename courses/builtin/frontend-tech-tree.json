@@ -1,0 +1,3453 @@
+{
+  "format": "learning-tree-course",
+  "version": 1,
+  "name": "内置 · 前端学习科技树",
+  "release": "1.0.0",
+  "trees": [
+    {
+      "id": "fe-root",
+      "title": "前端学习科技树",
+      "description": "从 Web 原理到可交付作品，按阶段学习、测验与复盘。",
+      "color": "blue",
+      "parentTreeId": null,
+      "prerequisiteTreeIds": []
+    },
+    {
+      "id": "fe-stage-web",
+      "title": "01 · Web 与 HTML",
+      "description": "理解浏览器如何呈现页面，建立语义与表单基础。",
+      "color": "blue",
+      "parentTreeId": "fe-root",
+      "prerequisiteTreeIds": []
+    },
+    {
+      "id": "fe-stage-css",
+      "title": "02 · CSS 与布局",
+      "description": "从盒模型到组件视觉，做出适配不同空间的页面。",
+      "color": "blue",
+      "parentTreeId": "fe-root",
+      "prerequisiteTreeIds": [
+        "fe-stage-web"
+      ]
+    },
+    {
+      "id": "fe-stage-javascript",
+      "title": "03 · JavaScript",
+      "description": "用明确的数据流、作用域和异步模型实现逻辑。",
+      "color": "blue",
+      "parentTreeId": "fe-root",
+      "prerequisiteTreeIds": [
+        "fe-stage-web"
+      ]
+    },
+    {
+      "id": "fe-stage-browser",
+      "title": "04 · 浏览器与网络",
+      "description": "连接 DOM、请求、存储与安全边界。",
+      "color": "blue",
+      "parentTreeId": "fe-root",
+      "prerequisiteTreeIds": [
+        "fe-stage-javascript"
+      ]
+    },
+    {
+      "id": "fe-stage-typescript",
+      "title": "05 · TypeScript",
+      "description": "让类型表达真实约束，明确编译期与运行时的边界。",
+      "color": "blue",
+      "parentTreeId": "fe-root",
+      "prerequisiteTreeIds": [
+        "fe-stage-javascript"
+      ]
+    },
+    {
+      "id": "fe-stage-react",
+      "title": "06 · React 应用",
+      "description": "组织组件、状态、副作用与路由数据流。",
+      "color": "blue",
+      "parentTreeId": "fe-root",
+      "prerequisiteTreeIds": [
+        "fe-stage-css",
+        "fe-stage-browser",
+        "fe-stage-typescript"
+      ]
+    },
+    {
+      "id": "fe-stage-engineering",
+      "title": "07 · 工程与质量",
+      "description": "建立可复现构建、可维护测试和性能诊断流程。",
+      "color": "blue",
+      "parentTreeId": "fe-root",
+      "prerequisiteTreeIds": [
+        "fe-stage-react"
+      ]
+    },
+    {
+      "id": "fe-stage-delivery",
+      "title": "08 · 交付实战",
+      "description": "完成可访问性检查、发布和可回滚的真实作品。",
+      "color": "blue",
+      "parentTreeId": "fe-root",
+      "prerequisiteTreeIds": [
+        "fe-stage-engineering"
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "id": "fe-web-platform",
+      "treeId": "fe-stage-web",
+      "parentId": null,
+      "title": "Web 页面如何运行",
+      "resource": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_the_web_works",
+      "question": "为什么“页面白屏”不能只根据一个 200 状态码判断原因？",
+      "answer": "200 只说明某次请求成功。页面还可能有其他资源失败、脚本异常、错误数据结构或样式隐藏等问题，应结合 Network、Console 和当前 DOM 定位。",
+      "content": "# Web 页面如何运行\r\n\r\n## 学完要能做到什么\r\n\r\n能说明 URL、请求、响应与浏览器渲染的关系，并在开发者工具中找到一次请求的状态和资源类型。\r\n\r\n## 核心概念\r\n\r\n浏览器不是把 HTML 当成图片下载。它通过 URL 定位资源，取得响应字节，再解析结构和样式。HTML 描述结构，CSS 参与布局与绘制，JavaScript 可以读取和改变页面状态。一个页面通常需要多个资源请求。\r\n\r\n在一个没有缓存、没有已建立连接的简化流程里，浏览器先解析域名，再建立连接并发送 HTTP 请求；服务器返回状态、响应头和正文。实际浏览器会复用连接并并行加载资源，因此不要把教学顺序当成所有网络活动的唯一时间线。\r\n\r\n状态码说明一次 HTTP 响应的结果，不等于整个产品业务一定成功。开发者工具的 Network 面板可以看 URL、状态、类型、耗时与响应正文；Elements 展示的是当前 DOM，可能已经被脚本修改。\r\n\r\n## 读懂一个最小例子\r\n\r\n```http\r\nGET /guide.html HTTP/1.1\r\nHost: learn.example\r\n\r\nHTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n<h1>学习路线</h1>\r\n```\r\n\r\n请求行说明要取哪个资源，响应状态 200 表示这次请求成功。Content-Type 告诉浏览器正文的媒体类型；HTML 的标题随后才进入解析和渲染流程。\r\n\r\n## 两个容易混淆的地方\r\n\r\n- 脚本可以修改 DOM，因此当前 DOM 与初始 HTML 不一定相同。\r\n- 资源类型和加载方式要匹配，不能只靠文件后缀期待浏览器自动纠正标签。\r\n\r\n## 动手完成一个小作品\r\n\r\n制作一个含标题、外部 CSS 和一张图片的小页面，记录三类资源在 Network 中的状态。\r\n\r\n完成后，用下面的标准观察实际产出，而不是只看代码是否写完：\r\n\r\n- 三类资源路径可对应到页面内容\r\n- 记录至少一个成功与一个失败请求的现象\r\n- 解释失败请求对页面造成的具体影响\r\n\r\n## 如何留下学习证据\r\n\r\n先完成本节练习，再在底部开始测验。选择、填空、排序与代码阅读自动判分；简答、改错和实战需要你对照参考答案逐项自评。自评不会计入自动正确率，也不代表系统已经执行或审查你的代码。\r\n\r\n把仍说不清的概念写进个人笔记。复习时先尝试回答“为什么“页面白屏”不能只根据一个 200 状态码判断原因？”，再核对参考解释。\r\n\r\n## 继续阅读\r\n\r\n[官方资料](https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_the_web_works)。资料用于补充概念和边界，本节内容本身可以独立阅读。",
+      "quiz": [
+        {
+          "id": "fe-web-platform-single",
+          "type": "single",
+          "difficulty": "basic",
+          "prompt": "想确认图片请求是否失败，应首先查看哪个面板？",
+          "explanation": "Network 记录资源请求及其状态。",
+          "options": [
+            "Network",
+            "只看本地文件名",
+            "只看页面背景色",
+            "修改浏览器缩放"
+          ],
+          "correctIndex": 0
+        },
+        {
+          "id": "fe-web-platform-multiple",
+          "type": "multiple",
+          "difficulty": "applied",
+          "prompt": "选择所有正确说法。",
+          "explanation": "HTTP 成功与业务正确性是不同层次。",
+          "options": [
+            "Content-Type 描述响应正文类型",
+            "200 保证应用没有任何业务错误",
+            "一个页面可发出多个资源请求",
+            "JavaScript 能改变当前 DOM"
+          ],
+          "correctIndices": [
+            2,
+            3,
+            0
+          ]
+        },
+        {
+          "id": "fe-web-platform-boolean",
+          "type": "boolean",
+          "difficulty": "basic",
+          "prompt": "Elements 面板中的 DOM 必然与下载的 HTML 源码完全一致。",
+          "explanation": "脚本可以修改 DOM，因此当前 DOM 与初始 HTML 不一定相同。",
+          "options": [
+            "正确",
+            "错误"
+          ],
+          "correctIndex": 1
+        },
+        {
+          "id": "fe-web-platform-fill",
+          "type": "fill",
+          "difficulty": "basic",
+          "prompt": "HTTP 状态码中通常表示“未找到资源”的数字是 ____。",
+          "explanation": "404 表示目标资源未找到，不代表网络连接本身一定失败。",
+          "acceptedAnswers": [
+            "404"
+          ],
+          "caseSensitive": false
+        },
+        {
+          "id": "fe-web-platform-order",
+          "type": "order",
+          "difficulty": "applied",
+          "prompt": "按无缓存、无连接复用的简化教学流程排列。",
+          "explanation": "真实页面可能存在并行请求，此题只描述一次主文档请求的简化流程。",
+          "options": [
+            "解析域名",
+            "解析资源并渲染页面",
+            "接收 HTTP 响应",
+            "建立连接并发送请求"
+          ],
+          "correctOrder": [
+            0,
+            3,
+            2,
+            1
+          ]
+        },
+        {
+          "id": "fe-web-platform-code_reading",
+          "type": "code_reading",
+          "difficulty": "applied",
+          "prompt": "下面响应的 HTTP 状态码是多少？只填数字。",
+          "explanation": "304 用于条件请求，说明可以复用已有表示。",
+          "code": "HTTP/1.1 304 Not Modified\nETag: \"guide-v2\"",
+          "language": "http",
+          "acceptedAnswers": [
+            "304"
+          ],
+          "caseSensitive": true
+        },
+        {
+          "id": "fe-web-platform-short_answer",
+          "type": "short_answer",
+          "difficulty": "advanced",
+          "prompt": "为什么“页面白屏”不能只根据一个 200 状态码判断原因？",
+          "explanation": "200 只说明某次请求成功。页面还可能有其他资源失败、脚本异常、错误数据结构或样式隐藏等问题，应结合 Network、Console 和当前 DOM 定位。",
+          "referenceAnswer": "200 只说明某次请求成功。页面还可能有其他资源失败、脚本异常、错误数据结构或样式隐藏等问题，应结合 Network、Console 和当前 DOM 定位。",
+          "rubric": [
+            "区分请求成功与页面可用",
+            "列出至少两类其他原因",
+            "说明将查看哪些证据"
+          ]
+        },
+        {
+          "id": "fe-web-platform-code_fix",
+          "type": "code_fix",
+          "difficulty": "applied",
+          "prompt": "下面 HTML 把样式表当成脚本加载，请改成正确的样式引用。",
+          "explanation": "资源类型和加载方式要匹配，不能只靠文件后缀期待浏览器自动纠正标签。",
+          "code": "<script src=\"style.css\"></script>",
+          "language": "http",
+          "referenceAnswer": "<link rel=\"stylesheet\" href=\"style.css\">",
+          "rubric": [
+            "使用 link 元素",
+            "rel 为 stylesheet",
+            "保留正确资源路径"
+          ]
+        },
+        {
+          "id": "fe-web-platform-project",
+          "type": "project",
+          "difficulty": "advanced",
+          "prompt": "制作一个含标题、外部 CSS 和一张图片的小页面，记录三类资源在 Network 中的状态。",
+          "explanation": "提供 HTML、CSS 和资源路径；刷新页面后记录主文档、样式、图片请求。故意写错图片路径，观察状态与页面变化，再修复。",
+          "referenceAnswer": "提供 HTML、CSS 和资源路径；刷新页面后记录主文档、样式、图片请求。故意写错图片路径，观察状态与页面变化，再修复。",
+          "rubric": [
+            "三类资源路径可对应到页面内容",
+            "记录至少一个成功与一个失败请求的现象",
+            "解释失败请求对页面造成的具体影响"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fe-semantic-html",
+      "treeId": "fe-stage-web",
+      "parentId": "fe-web-platform",
+      "title": "语义化 HTML 与文档结构",
+      "resource": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Structuring_content",
+      "question": "如何判断一个界面动作应该用 a 还是 button？",
+      "answer": "根据行为判断：导航到一个地址使用有 href 的链接；提交、展开、切换状态等操作使用按钮。再确认名称、键盘和表单上下文是否正确。",
+      "content": "# 语义化 HTML 与文档结构\r\n\r\n## 学完要能做到什么\r\n\r\n能用合适的标题、导航、主体和操作元素组织一张页面，并解释为什么语义不应由视觉样式替代。\r\n\r\n## 核心概念\r\n\r\n语义化是让标签表达内容角色。main 表示主要内容，nav 表示导航，article 适合可独立理解的内容。标签并不会自动保证内容质量，但能为浏览器、辅助技术和维护者提供稳定结构。\r\n\r\n标题层级应反映内容关系，字号由 CSS 调整。为图标加上按钮语义，也必须提供可访问名称。跳转到地址通常使用链接，触发当前页面操作通常使用按钮。\r\n\r\n原生控件带有键盘和交互语义。把 div 画得像按钮，并不会自动得到焦点、键盘激活或名称。优先选择原生元素，再按实际需要补充 ARIA，而不是覆盖原有语义。\r\n\r\n## 读懂一个最小例子\r\n\r\n```html\r\n<main>\r\n  <h1>学习计划</h1>\r\n  <nav aria-label=\"章节\"><a href=\"#html\">HTML</a></nav>\r\n  <section id=\"html\"><h2>结构与语义</h2><p>先表达内容角色。</p></section>\r\n  <button type=\"button\">保存计划</button>\r\n</main>\r\n```\r\n\r\nh1 描述页面主题，h2 是其子章节。链接跳转到章节，按钮执行保存操作。aria-label 为这组导航提供名称，没有改变它的导航角色。\r\n\r\n## 两个容易混淆的地方\r\n\r\n- 样式不能自动赋予按钮的焦点、键盘激活和语义。\r\n- 修复应采用原生语义，而不是仅加 tabindex 后忽略其他行为。\r\n\r\n## 动手完成一个小作品\r\n\r\n把一篇文章改造成含导航、主体、章节标题和收藏操作的语义化页面。\r\n\r\n完成后，用下面的标准观察实际产出，而不是只看代码是否写完：\r\n\r\n- 标题层级与内容关系一致\r\n- 链接和按钮按真实行为区分\r\n- 操作可通过键盘访问且名称明确\r\n\r\n## 如何留下学习证据\r\n\r\n先完成本节练习，再在底部开始测验。选择、填空、排序与代码阅读自动判分；简答、改错和实战需要你对照参考答案逐项自评。自评不会计入自动正确率，也不代表系统已经执行或审查你的代码。\r\n\r\n把仍说不清的概念写进个人笔记。复习时先尝试回答“如何判断一个界面动作应该用 a 还是 button？”，再核对参考解释。\r\n\r\n## 继续阅读\r\n\r\n[官方资料](https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Structuring_content)。资料用于补充概念和边界，本节内容本身可以独立阅读。",
+      "quiz": [
+        {
+          "id": "fe-semantic-html-single",
+          "type": "single",
+          "difficulty": "basic",
+          "prompt": "点击后打开当前页面中的设置面板，优先选择哪种元素？",
+          "explanation": "这是界面操作，原生 button 提供合适的语义与键盘行为。",
+          "options": [
+            "button",
+            "br",
+            "没有 href 的 a",
+            "div 加蓝色背景"
+          ],
+          "correctIndex": 0
+        },
+        {
+          "id": "fe-semantic-html-multiple",
+          "type": "multiple",
+          "difficulty": "applied",
+          "prompt": "哪些做法有助于清晰的文档结构？",
+          "explanation": "结构表达内容关系，视觉尺寸交给样式。",
+          "options": [
+            "为不同导航区域提供名称",
+            "仅为字号大而使用 h1",
+            "用标题层级表达章节关系",
+            "用 main 包裹主要内容"
+          ],
+          "correctIndices": [
+            2,
+            3,
+            0
+          ]
+        },
+        {
+          "id": "fe-semantic-html-boolean",
+          "type": "boolean",
+          "difficulty": "basic",
+          "prompt": "只要把 div 设置为蓝色并加上 cursor:pointer，它就具有完整的原生按钮行为。",
+          "explanation": "样式不能自动赋予按钮的焦点、键盘激活和语义。",
+          "options": [
+            "正确",
+            "错误"
+          ],
+          "correctIndex": 1
+        },
+        {
+          "id": "fe-semantic-html-fill",
+          "type": "fill",
+          "difficulty": "basic",
+          "prompt": "表示页面主要内容的原生元素是 ____。",
+          "explanation": "main 描述页面的主体内容。",
+          "acceptedAnswers": [
+            "main",
+            "<main>"
+          ],
+          "caseSensitive": false
+        },
+        {
+          "id": "fe-semantic-html-order",
+          "type": "order",
+          "difficulty": "applied",
+          "prompt": "按此文档的标题层级从外到内排列。",
+          "explanation": "层级取决于结构，不是默认字体大小。",
+          "options": [
+            "章节内小节标题 h3",
+            "页面主标题 h1",
+            "章节标题 h2"
+          ],
+          "correctOrder": [
+            1,
+            2,
+            0
+          ]
+        },
+        {
+          "id": "fe-semantic-html-code_reading",
+          "type": "code_reading",
+          "difficulty": "applied",
+          "prompt": "以下片段有几个原生按钮？只填数字。",
+          "explanation": "只有 button 是原生按钮；class 名不会改变 div 的语义。",
+          "code": "<button>保存</button>\n<a href=\"/help\">帮助</a>\n<div class=\"button\">取消</div>",
+          "language": "html",
+          "acceptedAnswers": [
+            "1"
+          ],
+          "caseSensitive": true
+        },
+        {
+          "id": "fe-semantic-html-short_answer",
+          "type": "short_answer",
+          "difficulty": "advanced",
+          "prompt": "如何判断一个界面动作应该用 a 还是 button？",
+          "explanation": "根据行为判断：导航到一个地址使用有 href 的链接；提交、展开、切换状态等操作使用按钮。再确认名称、键盘和表单上下文是否正确。",
+          "referenceAnswer": "根据行为判断：导航到一个地址使用有 href 的链接；提交、展开、切换状态等操作使用按钮。再确认名称、键盘和表单上下文是否正确。",
+          "rubric": [
+            "按行为而非外观区分",
+            "分别给出链接与按钮的例子",
+            "考虑键盘或表单语境"
+          ]
+        },
+        {
+          "id": "fe-semantic-html-code_fix",
+          "type": "code_fix",
+          "difficulty": "applied",
+          "prompt": "将这个伪按钮改为具备原生操作语义的元素，保留文字。",
+          "explanation": "修复应采用原生语义，而不是仅加 tabindex 后忽略其他行为。",
+          "code": "<div onclick=\"save()\">保存</div>",
+          "language": "html",
+          "referenceAnswer": "<button type=\"button\" onclick=\"save()\">保存</button>",
+          "rubric": [
+            "使用 button",
+            "在非提交操作中明确 type=\"button\"",
+            "保留清晰的操作名称"
+          ]
+        },
+        {
+          "id": "fe-semantic-html-project",
+          "type": "project",
+          "difficulty": "advanced",
+          "prompt": "把一篇文章改造成含导航、主体、章节标题和收藏操作的语义化页面。",
+          "explanation": "根据内容关系选择 main、article、nav 和标题层级；收藏用按钮，目录用链接。用键盘遍历所有可操作元素，并说明结构选择。",
+          "referenceAnswer": "根据内容关系选择 main、article、nav 和标题层级；收藏用按钮，目录用链接。用键盘遍历所有可操作元素，并说明结构选择。",
+          "rubric": [
+            "标题层级与内容关系一致",
+            "链接和按钮按真实行为区分",
+            "操作可通过键盘访问且名称明确"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fe-forms-a11y",
+      "treeId": "fe-stage-web",
+      "parentId": "fe-semantic-html",
+      "title": "表单、约束与可访问名称",
+      "resource": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms",
+      "question": "为什么 placeholder 不能替代 label？",
+      "answer": "placeholder 在输入后消失，提示与名称职责不同；清晰且正确关联的 label 有利于持续识别字段、扩大点击区域和辅助技术访问。",
+      "content": "# 表单、约束与可访问名称\r\n\r\n## 学完要能做到什么\r\n\r\n能建立有标签、有正确提交数据、有可理解错误提示的表单，并区分客户端提示与服务端校验。\r\n\r\n## 核心概念\r\n\r\nlabel 为控件提供持续可见的名称。for 必须对应 input 的 id；name 决定普通表单提交时字段的键。placeholder 是提示，不应替代标签。\r\n\r\nrequired、type=email、min 等原生约束可以帮助用户在提交前发现问题，但不能替代服务端校验。disabled 控件通常不会随普通表单提交，readonly 文本控件仍可提交。\r\n\r\n错误需要说明哪个字段出了什么问题，以及如何修改。可将错误文本通过 aria-describedby 关联到控件，并用 aria-invalid 表明错误状态。不要只靠红色表达错误。\r\n\r\n## 读懂一个最小例子\r\n\r\n```html\r\n<form>\r\n  <label for=\"email\">邮箱</label>\r\n  <input id=\"email\" name=\"email\" type=\"email\" required>\r\n  <button type=\"submit\">订阅</button>\r\n</form>\r\n```\r\n\r\nid 用于标签关联，name 用于提交键名，两者职责不同。type=email 和 required 提供浏览器约束；后端仍需处理无效或恶意请求。\r\n\r\n## 两个容易混淆的地方\r\n\r\n- 请求可以绕过前端页面，后端必须校验自己的输入。\r\n- 名称关联和提交键是两件不同的事，需要分别处理。\r\n\r\n## 动手完成一个小作品\r\n\r\n制作报名表，包含姓名、邮箱、可选备注和一个取消按钮；给无效邮箱提供文字反馈。\r\n\r\n完成后，用下面的标准观察实际产出，而不是只看代码是否写完：\r\n\r\n- 字段可见标签且提交键完整\r\n- 错误提示可理解并关联到字段\r\n- 取消不会误提交且错误后保留输入\r\n\r\n## 如何留下学习证据\r\n\r\n先完成本节练习，再在底部开始测验。选择、填空、排序与代码阅读自动判分；简答、改错和实战需要你对照参考答案逐项自评。自评不会计入自动正确率，也不代表系统已经执行或审查你的代码。\r\n\r\n把仍说不清的概念写进个人笔记。复习时先尝试回答“为什么 placeholder 不能替代 label？”，再核对参考解释。\r\n\r\n## 继续阅读\r\n\r\n[官方资料](https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms)。资料用于补充概念和边界，本节内容本身可以独立阅读。",
+      "quiz": [
+        {
+          "id": "fe-forms-a11y-single",
+          "type": "single",
+          "difficulty": "basic",
+          "prompt": "普通表单提交时，字段键名主要由哪个属性决定？",
+          "explanation": "name 对应提交数据中的字段名。",
+          "options": [
+            "placeholder",
+            "name",
+            "class",
+            "aria-label"
+          ],
+          "correctIndex": 1
+        },
+        {
+          "id": "fe-forms-a11y-multiple",
+          "type": "multiple",
+          "difficulty": "applied",
+          "prompt": "选择正确的表单做法。",
+          "explanation": "客户端校验和可见说明不能替代服务端校验或持续标签。",
+          "options": [
+            "为输入框关联 label",
+            "用文字说明错误原因",
+            "后端再次校验输入",
+            "只用 placeholder 作为字段说明"
+          ],
+          "correctIndices": [
+            0,
+            2,
+            1
+          ]
+        },
+        {
+          "id": "fe-forms-a11y-boolean",
+          "type": "boolean",
+          "difficulty": "basic",
+          "prompt": "只要前端设置 required，后端就可以完全不校验该字段。",
+          "explanation": "请求可以绕过前端页面，后端必须校验自己的输入。",
+          "options": [
+            "正确",
+            "错误"
+          ],
+          "correctIndex": 1
+        },
+        {
+          "id": "fe-forms-a11y-fill",
+          "type": "fill",
+          "difficulty": "basic",
+          "prompt": "label 的 for 属性应对应输入框的 ____ 属性。",
+          "explanation": "for 与 id 建立标签和控件的关联。",
+          "acceptedAnswers": [
+            "id"
+          ],
+          "caseSensitive": false
+        },
+        {
+          "id": "fe-forms-a11y-order",
+          "type": "order",
+          "difficulty": "applied",
+          "prompt": "在原生交互式表单且约束有效时，按简化提交流程排序。",
+          "explanation": "这里描述的是常规交互式提交；直接调用 form.submit() 等行为有不同细节。",
+          "options": [
+            "未被阻止时提交表单数据",
+            "用户触发提交",
+            "浏览器执行约束校验",
+            "触发 submit 事件"
+          ],
+          "correctOrder": [
+            1,
+            2,
+            3,
+            0
+          ]
+        },
+        {
+          "id": "fe-forms-a11y-code_reading",
+          "type": "code_reading",
+          "difficulty": "applied",
+          "prompt": "普通提交中下列两个字段会提交几个？只填数字。",
+          "explanation": "disabled 字段通常不参与提交；readonly 文本字段仍可提交。",
+          "code": "<input name=\"a\" value=\"1\" disabled>\n<input name=\"b\" value=\"2\" readonly>",
+          "language": "html",
+          "acceptedAnswers": [
+            "1"
+          ],
+          "caseSensitive": true
+        },
+        {
+          "id": "fe-forms-a11y-short_answer",
+          "type": "short_answer",
+          "difficulty": "advanced",
+          "prompt": "为什么 placeholder 不能替代 label？",
+          "explanation": "placeholder 在输入后消失，提示与名称职责不同；清晰且正确关联的 label 有利于持续识别字段、扩大点击区域和辅助技术访问。",
+          "referenceAnswer": "placeholder 在输入后消失，提示与名称职责不同；清晰且正确关联的 label 有利于持续识别字段、扩大点击区域和辅助技术访问。",
+          "rubric": [
+            "指出输入后消失的问题",
+            "区分名称与提示",
+            "说明关联标签对操作或辅助技术的帮助"
+          ]
+        },
+        {
+          "id": "fe-forms-a11y-code_fix",
+          "type": "code_fix",
+          "difficulty": "applied",
+          "prompt": "修复标签关联和提交字段缺失问题。",
+          "explanation": "名称关联和提交键是两件不同的事，需要分别处理。",
+          "code": "<label for=\"mail\">邮箱</label>\n<input id=\"email\" type=\"email\">",
+          "language": "html",
+          "referenceAnswer": "<label for=\"email\">邮箱</label>\n<input id=\"email\" name=\"email\" type=\"email\">",
+          "rubric": [
+            "for 与 id 一致",
+            "添加 name",
+            "保留 email 输入类型"
+          ]
+        },
+        {
+          "id": "fe-forms-a11y-project",
+          "type": "project",
+          "difficulty": "advanced",
+          "prompt": "制作报名表，包含姓名、邮箱、可选备注和一个取消按钮；给无效邮箱提供文字反馈。",
+          "explanation": "使用关联 label 与合适输入类型；提交按钮与普通取消按钮区分 type；错误关联到对应字段，并保留已输入内容。",
+          "referenceAnswer": "使用关联 label 与合适输入类型；提交按钮与普通取消按钮区分 type；错误关联到对应字段，并保留已输入内容。",
+          "rubric": [
+            "字段可见标签且提交键完整",
+            "错误提示可理解并关联到字段",
+            "取消不会误提交且错误后保留输入"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fe-box-model",
+      "treeId": "fe-stage-css",
+      "parentId": null,
+      "title": "盒模型与定位",
+      "resource": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Styling_basics/Box_model",
+      "question": "为什么绝对定位的角标常需要父卡片设置 position: relative？",
+      "answer": "它让卡片成为定位祖先，角标的偏移通常相对卡片计算；卡片本身仍保留普通布局占位。还应确认中间祖先或变换属性没有改变包含块。",
+      "content": "# 盒模型与定位\r\n\r\n## 学完要能做到什么\r\n\r\n能计算元素实际占用空间，选择合适的 box-sizing，并为浮层或角标建立正确的定位上下文。\r\n\r\n## 核心概念\r\n\r\n标准盒模型下 width 表示内容区；内边距和边框增加边框盒的宽度。border-box 把内容、padding 和 border 一起计入指定宽度，margin 始终在边框外。\r\n\r\nnormal flow 决定普通内容如何排列。relative 通常保留原占位，偏移只改变视觉位置；absolute 脱离普通流，通常以最近的非 static 定位祖先为包含块。\r\n\r\nfixed 常见情况下相对视口，但某些属性如 transform 会建立新的包含块。不要把定位当成常规布局的首选；先用流式、Flex 或 Grid，再为局部覆盖选择定位。\r\n\r\n## 读懂一个最小例子\r\n\r\n```css\r\n.card { width: 240px; padding: 16px; border: 2px solid; box-sizing: border-box; position: relative; }\r\n.badge { position: absolute; top: 8px; right: 8px; }\r\n```\r\n\r\n卡片的边框盒保持 240px，内容区宽度是 204px。卡片提供定位上下文，角标的 top/right 以该上下文计算。\r\n\r\n## 两个容易混淆的地方\r\n\r\n- relative 偏移视觉位置，不像 absolute 那样直接脱离普通流。\r\n- 定位问题优先查包含块，不要不断试偏移量。\r\n\r\n## 动手完成一个小作品\r\n\r\n制作带角标的商品卡片，外宽固定 280px，包含内边距和边框；写出内容区宽度计算。\r\n\r\n完成后，用下面的标准观察实际产出，而不是只看代码是否写完：\r\n\r\n- 边框盒外宽确为 280px\r\n- 角标位置依赖卡片而非页面\r\n- 提供可复算的内容宽度计算\r\n\r\n## 如何留下学习证据\r\n\r\n先完成本节练习，再在底部开始测验。选择、填空、排序与代码阅读自动判分；简答、改错和实战需要你对照参考答案逐项自评。自评不会计入自动正确率，也不代表系统已经执行或审查你的代码。\r\n\r\n把仍说不清的概念写进个人笔记。复习时先尝试回答“为什么绝对定位的角标常需要父卡片设置 position: relative？”，再核对参考解释。\r\n\r\n## 继续阅读\r\n\r\n[官方资料](https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Styling_basics/Box_model)。资料用于补充概念和边界，本节内容本身可以独立阅读。",
+      "quiz": [
+        {
+          "id": "fe-box-model-single",
+          "type": "single",
+          "difficulty": "basic",
+          "prompt": "content-box 下，width=200、左右 padding 各 10、边框各 2，边框盒宽多少？",
+          "explanation": "边框盒宽度为 200 + 20 + 4。",
+          "options": [
+            "200px",
+            "224px",
+            "220px",
+            "204px"
+          ],
+          "correctIndex": 1
+        },
+        {
+          "id": "fe-box-model-multiple",
+          "type": "multiple",
+          "difficulty": "applied",
+          "prompt": "哪些内容计入 border-box 的 width？",
+          "explanation": "margin 位于边框盒之外。",
+          "options": [
+            "内容区",
+            "margin",
+            "padding",
+            "border"
+          ],
+          "correctIndices": [
+            0,
+            2,
+            3
+          ]
+        },
+        {
+          "id": "fe-box-model-boolean",
+          "type": "boolean",
+          "difficulty": "basic",
+          "prompt": "position: relative 的元素发生偏移后，通常仍保留原本的布局占位。",
+          "explanation": "relative 偏移视觉位置，不像 absolute 那样直接脱离普通流。",
+          "options": [
+            "正确",
+            "错误"
+          ],
+          "correctIndex": 0
+        },
+        {
+          "id": "fe-box-model-fill",
+          "type": "fill",
+          "difficulty": "basic",
+          "prompt": "让 width 包含内容、padding 和 border，box-sizing 应设为 ____。",
+          "explanation": "border-box 简化组件宽度的整体控制。",
+          "acceptedAnswers": [
+            "border-box"
+          ],
+          "caseSensitive": false
+        },
+        {
+          "id": "fe-box-model-order",
+          "type": "order",
+          "difficulty": "applied",
+          "prompt": "将盒子的组成按从内到外排序。",
+          "explanation": "内边距在内容外，边框在内边距外，外边距位于边框外。",
+          "options": [
+            "padding",
+            "border",
+            "margin",
+            "content"
+          ],
+          "correctOrder": [
+            3,
+            0,
+            1,
+            2
+          ]
+        },
+        {
+          "id": "fe-box-model-code_reading",
+          "type": "code_reading",
+          "difficulty": "applied",
+          "prompt": "该元素的边框盒宽度是多少像素？只填数字。",
+          "explanation": "180 + 12×2 + 3×2 = 210。",
+          "code": ".box { width: 180px; padding: 12px; border: 3px solid; box-sizing: content-box; }",
+          "language": "css",
+          "acceptedAnswers": [
+            "210"
+          ],
+          "caseSensitive": true
+        },
+        {
+          "id": "fe-box-model-short_answer",
+          "type": "short_answer",
+          "difficulty": "advanced",
+          "prompt": "为什么绝对定位的角标常需要父卡片设置 position: relative？",
+          "explanation": "它让卡片成为定位祖先，角标的偏移通常相对卡片计算；卡片本身仍保留普通布局占位。还应确认中间祖先或变换属性没有改变包含块。",
+          "referenceAnswer": "它让卡片成为定位祖先，角标的偏移通常相对卡片计算；卡片本身仍保留普通布局占位。还应确认中间祖先或变换属性没有改变包含块。",
+          "rubric": [
+            "说明定位参照的作用",
+            "说明父卡片仍保留占位",
+            "区分绝对定位与普通布局"
+          ]
+        },
+        {
+          "id": "fe-box-model-code_fix",
+          "type": "code_fix",
+          "difficulty": "applied",
+          "prompt": "让角标相对卡片右上角定位，而非意外相对外层。",
+          "explanation": "定位问题优先查包含块，不要不断试偏移量。",
+          "code": ".card { padding: 20px; }\n.badge { position: absolute; top: 0; right: 0; }",
+          "language": "css",
+          "referenceAnswer": ".card { padding: 20px; position: relative; }\n.badge { position: absolute; top: 0; right: 0; }",
+          "rubric": [
+            "卡片建立定位上下文",
+            "角标保留右上角偏移",
+            "未把所有元素都改成绝对定位"
+          ]
+        },
+        {
+          "id": "fe-box-model-project",
+          "type": "project",
+          "difficulty": "advanced",
+          "prompt": "制作带角标的商品卡片，外宽固定 280px，包含内边距和边框；写出内容区宽度计算。",
+          "explanation": "使用 border-box 管理外宽，relative 卡片承载 absolute 角标；记录各尺寸并解释 margin 不计入 width。",
+          "referenceAnswer": "使用 border-box 管理外宽，relative 卡片承载 absolute 角标；记录各尺寸并解释 margin 不计入 width。",
+          "rubric": [
+            "边框盒外宽确为 280px",
+            "角标位置依赖卡片而非页面",
+            "提供可复算的内容宽度计算"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fe-flex-grid",
+      "treeId": "fe-stage-css",
+      "parentId": "fe-box-model",
+      "title": "Flexbox 与 Grid 布局",
+      "resource": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/CSS_layout",
+      "question": "如何为外层卡片列表和卡片内部操作栏分别选择布局？",
+      "answer": "外层多行多列可用 Grid；内部图标、标题、按钮的一行关系可用 Flex。根据内容维度和对齐目标选择，并保留合理 DOM 顺序。",
+      "content": "# Flexbox 与 Grid 布局\r\n\r\n## 学完要能做到什么\r\n\r\n能依据一维或二维需求选择布局方式，并用轴、轨道和间隙解释布局结果。\r\n\r\n## 核心概念\r\n\r\nFlexbox 围绕主轴组织项目，justify-content 控制主轴，align-items 控制交叉轴。主轴由 flex-direction 决定，因此 column 下不能把 justify-content 简单记为水平对齐。\r\n\r\nGrid 显式控制行列轨道，适合二维对齐。fr 分配扣除固定轨道和间隙后的剩余空间；minmax 可以限制轨道范围。Flex 与 Grid 可在不同层级组合。\r\n\r\norder 和视觉网格位置可能改变外观顺序，但不会自动改变 DOM 阅读顺序。布局要同时考虑键盘、读屏和窄屏内容，而不是只把截图摆齐。\r\n\r\n## 读懂一个最小例子\r\n\r\n```css\r\n.toolbar { display: flex; align-items: center; gap: 12px; }\r\n.cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }\r\n```\r\n\r\n工具栏是一维排列，卡片区需要行列对齐。若卡片容器宽 620px，扣除一条 20px 间隙后，每列是 300px。\r\n\r\n## 两个容易混淆的地方\r\n\r\n- justify-content 始终沿主轴，不固定代表水平方向。\r\n- 记住轴而非固定的水平/竖直口诀。\r\n\r\n## 动手完成一个小作品\r\n\r\n制作一个三列卡片列表，每张卡片的图标与按钮使用一维排列，窄屏变为单列。\r\n\r\n完成后，用下面的标准观察实际产出，而不是只看代码是否写完：\r\n\r\n- 外层与内层布局职责清楚\r\n- 窄屏不出现必要内容被挤出\r\n- 按钮顺序与键盘阅读一致\r\n\r\n## 如何留下学习证据\r\n\r\n先完成本节练习，再在底部开始测验。选择、填空、排序与代码阅读自动判分；简答、改错和实战需要你对照参考答案逐项自评。自评不会计入自动正确率，也不代表系统已经执行或审查你的代码。\r\n\r\n把仍说不清的概念写进个人笔记。复习时先尝试回答“如何为外层卡片列表和卡片内部操作栏分别选择布局？”，再核对参考解释。\r\n\r\n## 继续阅读\r\n\r\n[官方资料](https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/CSS_layout)。资料用于补充概念和边界，本节内容本身可以独立阅读。",
+      "quiz": [
+        {
+          "id": "fe-flex-grid-single",
+          "type": "single",
+          "difficulty": "basic",
+          "prompt": "想同时对齐多行多列卡片，优先考虑什么？",
+          "explanation": "Grid 直接描述二维轨道。",
+          "options": [
+            "每个元素固定坐标",
+            "连续插入 br",
+            "Grid",
+            "只设置 text-align"
+          ],
+          "correctIndex": 2
+        },
+        {
+          "id": "fe-flex-grid-multiple",
+          "type": "multiple",
+          "difficulty": "applied",
+          "prompt": "选择正确说法。",
+          "explanation": "视觉顺序与 DOM 顺序需要分别考虑。",
+          "options": [
+            "order 必然改变 DOM 顺序",
+            "Flex 的主轴由 flex-direction 决定",
+            "Grid 与 Flex 可以组合",
+            "gap 可以表达项目间距"
+          ],
+          "correctIndices": [
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "id": "fe-flex-grid-boolean",
+          "type": "boolean",
+          "difficulty": "basic",
+          "prompt": "flex-direction: column 时，justify-content 沿竖直主轴对齐。",
+          "explanation": "justify-content 始终沿主轴，不固定代表水平方向。",
+          "options": [
+            "正确",
+            "错误"
+          ],
+          "correctIndex": 0
+        },
+        {
+          "id": "fe-flex-grid-fill",
+          "type": "fill",
+          "difficulty": "basic",
+          "prompt": "Flex 中沿交叉轴对齐项目的常用属性是 ____。",
+          "explanation": "align-items 与 justify-content 对应不同的轴。",
+          "acceptedAnswers": [
+            "align-items"
+          ],
+          "caseSensitive": false
+        },
+        {
+          "id": "fe-flex-grid-order",
+          "type": "order",
+          "difficulty": "applied",
+          "prompt": "三项 DOM 顺序为 A、B、C，order 分别为 0、2、-1。按视觉先后排序。",
+          "explanation": "较小 order 先出现，相同 order 再看原始顺序。",
+          "options": [
+            "B",
+            "A",
+            "C"
+          ],
+          "correctOrder": [
+            2,
+            1,
+            0
+          ]
+        },
+        {
+          "id": "fe-flex-grid-code_reading",
+          "type": "code_reading",
+          "difficulty": "applied",
+          "prompt": "600px 容器内 repeat(3, 1fr)，gap=15px；每列宽多少？只填数字。",
+          "explanation": "三列有两个间隙：(600-30)/3=190。",
+          "code": ".grid { width: 600px; display:grid; grid-template-columns:repeat(3,1fr); gap:15px; }",
+          "language": "css",
+          "acceptedAnswers": [
+            "190"
+          ],
+          "caseSensitive": true
+        },
+        {
+          "id": "fe-flex-grid-short_answer",
+          "type": "short_answer",
+          "difficulty": "advanced",
+          "prompt": "如何为外层卡片列表和卡片内部操作栏分别选择布局？",
+          "explanation": "外层多行多列可用 Grid；内部图标、标题、按钮的一行关系可用 Flex。根据内容维度和对齐目标选择，并保留合理 DOM 顺序。",
+          "referenceAnswer": "外层多行多列可用 Grid；内部图标、标题、按钮的一行关系可用 Flex。根据内容维度和对齐目标选择，并保留合理 DOM 顺序。",
+          "rubric": [
+            "分别说明两层需求",
+            "合理使用 Grid 与 Flex",
+            "考虑内容或阅读顺序而非只谈外观"
+          ]
+        },
+        {
+          "id": "fe-flex-grid-code_fix",
+          "type": "code_fix",
+          "difficulty": "applied",
+          "prompt": "让竖直主轴上的项目整体居中。",
+          "explanation": "记住轴而非固定的水平/竖直口诀。",
+          "code": ".panel { display:flex; flex-direction:column; height:300px; align-items:center; }",
+          "language": "css",
+          "referenceAnswer": ".panel { display:flex; flex-direction:column; height:300px; justify-content:center; align-items:center; }",
+          "rubric": [
+            "识别 column 的主轴方向",
+            "用 justify-content 控制竖直主轴",
+            "说明 align-items 的职责不同"
+          ]
+        },
+        {
+          "id": "fe-flex-grid-project",
+          "type": "project",
+          "difficulty": "advanced",
+          "prompt": "制作一个三列卡片列表，每张卡片的图标与按钮使用一维排列，窄屏变为单列。",
+          "explanation": "外层 Grid 定义轨道，内层 Flex 排列控件；用内容驱动的断点或自适应轨道处理窄屏，保留自然阅读顺序。",
+          "referenceAnswer": "外层 Grid 定义轨道，内层 Flex 排列控件；用内容驱动的断点或自适应轨道处理窄屏，保留自然阅读顺序。",
+          "rubric": [
+            "外层与内层布局职责清楚",
+            "窄屏不出现必要内容被挤出",
+            "按钮顺序与键盘阅读一致"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fe-responsive",
+      "treeId": "fe-stage-css",
+      "parentId": "fe-flex-grid",
+      "title": "响应式与媒体适配",
+      "resource": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/CSS_layout/Responsive_Design",
+      "question": "为什么 overflow-x:hidden 不能作为所有横向溢出的修复方案？",
+      "answer": "它可能只隐藏错误并裁掉必要内容。应找出固定宽度、长内容、轨道或最小宽度问题，让内容在容器内可访问地布局。",
+      "content": "# 响应式与媒体适配\r\n\r\n## 学完要能做到什么\r\n\r\n能从内容拥挤的位置选择断点，处理图片和长文本，并保留缩放与触控操作能力。\r\n\r\n## 核心概念\r\n\r\n响应式让相同内容适应可用空间。先建立流式宽度、弹性轨道和合理的最小宽度，再在内容开始拥挤时使用媒体查询。设备品牌不是断点的依据。\r\n\r\nviewport 的 width=device-width 帮助移动浏览器使用合适的布局视口。图片常用 max-width:100% 和 height:auto；长链接、不可换行文字及 flex 子项的最小尺寸也可能制造横向溢出。\r\n\r\n适配不应依赖隐藏必要功能，也不应禁止用户缩放。除了宽度，还要考虑输入方式、焦点、文字放大和 reduced-motion 等用户偏好。\r\n\r\n## 读懂一个最小例子\r\n\r\n```css\r\n.cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr)); gap:16px; }\r\nimg { max-width:100%; height:auto; }\r\n```\r\n\r\nmin(100%,240px) 避免容器比 240px 更窄时仍被最小列宽撑开；图片保持比例。仍需观察长内容和组件内部约束。\r\n\r\n## 两个容易混淆的地方\r\n\r\n- 应修复布局并允许用户按需要放大文字。\r\n- 固定宽高可能同时导致溢出和变形。\r\n\r\n## 动手完成一个小作品\r\n\r\n为一个内容卡片页制作窄、中、宽三种空间下的布局说明，并处理一条很长的 URL。\r\n\r\n完成后，用下面的标准观察实际产出，而不是只看代码是否写完：\r\n\r\n- 不同空间均可阅读和操作\r\n- 长内容不迫使页面横向溢出\r\n- 没有通过隐藏关键操作或禁止缩放应付适配\r\n\r\n## 如何留下学习证据\r\n\r\n先完成本节练习，再在底部开始测验。选择、填空、排序与代码阅读自动判分；简答、改错和实战需要你对照参考答案逐项自评。自评不会计入自动正确率，也不代表系统已经执行或审查你的代码。\r\n\r\n把仍说不清的概念写进个人笔记。复习时先尝试回答“为什么 overflow-x:hidden 不能作为所有横向溢出的修复方案？”，再核对参考解释。\r\n\r\n## 继续阅读\r\n\r\n[官方资料](https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/CSS_layout/Responsive_Design)。资料用于补充概念和边界，本节内容本身可以独立阅读。",
+      "quiz": [
+        {
+          "id": "fe-responsive-single",
+          "type": "single",
+          "difficulty": "basic",
+          "prompt": "选择断点最合理的依据是什么？",
+          "explanation": "断点服务于内容与操作。",
+          "options": [
+            "内容开始拥挤的宽度",
+            "页面标题长度",
+            "显示器品牌",
+            "固定每隔100px一个断点"
+          ],
+          "correctIndex": 0
+        },
+        {
+          "id": "fe-responsive-multiple",
+          "type": "multiple",
+          "difficulty": "applied",
+          "prompt": "哪些可能造成窄屏横向溢出？",
+          "explanation": "应查找实际约束，而不是统一隐藏溢出。",
+          "options": [
+            "子项最小宽度约束",
+            "合理的流式宽度本身",
+            "过大的固定宽度",
+            "不能换行的长内容"
+          ],
+          "correctIndices": [
+            2,
+            3,
+            0
+          ]
+        },
+        {
+          "id": "fe-responsive-boolean",
+          "type": "boolean",
+          "difficulty": "basic",
+          "prompt": "禁止用户缩放是解决移动端布局问题的推荐方法。",
+          "explanation": "应修复布局并允许用户按需要放大文字。",
+          "options": [
+            "正确",
+            "错误"
+          ],
+          "correctIndex": 1
+        },
+        {
+          "id": "fe-responsive-fill",
+          "type": "fill",
+          "difficulty": "basic",
+          "prompt": "移动页面 viewport 常见的宽度设置为 ____。",
+          "explanation": "让布局视口对应设备宽度。",
+          "acceptedAnswers": [
+            "width=device-width"
+          ],
+          "caseSensitive": false
+        },
+        {
+          "id": "fe-responsive-order",
+          "type": "order",
+          "difficulty": "applied",
+          "prompt": "按给定 max-width 断点从最窄到最宽排列。",
+          "explanation": "本题只比较断点数值，不要求采用这些固定断点。",
+          "options": [
+            "max-width: 1024px",
+            "max-width: 480px",
+            "max-width: 768px"
+          ],
+          "correctOrder": [
+            1,
+            2,
+            0
+          ]
+        },
+        {
+          "id": "fe-responsive-code_reading",
+          "type": "code_reading",
+          "difficulty": "applied",
+          "prompt": "视口宽 600px 时，最终列数是多少？只填数字。",
+          "explanation": "600 满足 max-width:700px，后声明的规则使其单列。",
+          "code": ".grid { grid-template-columns:repeat(3,1fr); }\n@media (max-width:700px) { .grid { grid-template-columns:1fr; } }",
+          "language": "css",
+          "acceptedAnswers": [
+            "1"
+          ],
+          "caseSensitive": true
+        },
+        {
+          "id": "fe-responsive-short_answer",
+          "type": "short_answer",
+          "difficulty": "advanced",
+          "prompt": "为什么 overflow-x:hidden 不能作为所有横向溢出的修复方案？",
+          "explanation": "它可能只隐藏错误并裁掉必要内容。应找出固定宽度、长内容、轨道或最小宽度问题，让内容在容器内可访问地布局。",
+          "referenceAnswer": "它可能只隐藏错误并裁掉必要内容。应找出固定宽度、长内容、轨道或最小宽度问题，让内容在容器内可访问地布局。",
+          "rubric": [
+            "区分隐藏现象与修复原因",
+            "给出至少两类溢出来源",
+            "考虑内容可访问性"
+          ]
+        },
+        {
+          "id": "fe-responsive-code_fix",
+          "type": "code_fix",
+          "difficulty": "applied",
+          "prompt": "让图片在窄容器内不溢出并保持比例。",
+          "explanation": "固定宽高可能同时导致溢出和变形。",
+          "code": "img { width:1200px; height:500px; }",
+          "language": "css",
+          "referenceAnswer": "img { max-width:100%; height:auto; }",
+          "rubric": [
+            "限制相对容器的最大宽度",
+            "高度随比例变化",
+            "不靠隐藏图片解决问题"
+          ]
+        },
+        {
+          "id": "fe-responsive-project",
+          "type": "project",
+          "difficulty": "advanced",
+          "prompt": "为一个内容卡片页制作窄、中、宽三种空间下的布局说明，并处理一条很长的 URL。",
+          "explanation": "使用流式布局和必要断点，允许长内容换行；记录每种空间下列数、操作位置、文字放大后的表现。",
+          "referenceAnswer": "使用流式布局和必要断点，允许长内容换行；记录每种空间下列数、操作位置、文字放大后的表现。",
+          "rubric": [
+            "不同空间均可阅读和操作",
+            "长内容不迫使页面横向溢出",
+            "没有通过隐藏关键操作或禁止缩放应付适配"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fe-design-system",
+      "treeId": "fe-stage-css",
+      "parentId": "fe-flex-grid",
+      "title": "设计变量、状态与视觉层次",
+      "resource": "https://www.radix-ui.com/colors/docs/palette-composition/understanding-the-scale",
+      "question": "为什么统一变量后仍然需要分别考虑正文、按钮和禁用态？",
+      "answer": "变量统一的是用途与来源，不是把所有元素变成同一种视觉权重。不同状态需要不同的对比、背景和行为，禁用与可操作也应明确区分。",
+      "content": "# 设计变量、状态与视觉层次\r\n\r\n## 学完要能做到什么\r\n\r\n能把颜色、间距和状态收敛为语义变量，建立清晰的正文、面板、选中与错误层次。\r\n\r\n## 核心概念\r\n\r\n设计变量应描述用途，例如 text-primary、surface、border、action，而不是把几十个相近的颜色散落在组件里。变量能集中调整，但仍要根据实际使用的前景和背景判断对比。\r\n\r\n柔和不等于把所有文字变淡。大面积背景可用中性色，正文保持清晰，强调色集中用于操作和选中状态；错误、成功还应配合文字、图标或形状，避免只凭颜色判断。\r\n\r\n组件应定义默认、悬停、焦点、禁用和错误状态。键盘焦点与鼠标悬停不是同一件事，不能为了截图干净而移除全部 outline。\r\n\r\n## 读懂一个最小例子\r\n\r\n```css\r\n:root { --surface:#f9f9fb; --text:#1c2024; --action:#0d74ce; }\r\n.card { background:var(--surface); color:var(--text); }\r\nbutton:focus-visible { outline:2px solid var(--action); outline-offset:3px; }\r\n```\r\n\r\n语义变量表达用途，焦点态明确标示当前键盘位置。强调色只占少量面积，正文不因背景柔和而失去对比。\r\n\r\n## 两个容易混淆的地方\r\n\r\n- 低对比会增加辨认负担，柔和背景仍需要清晰文字。\r\n- 焦点提示帮助用户知道下一次键盘操作会作用在哪个控件。\r\n\r\n## 动手完成一个小作品\r\n\r\n为学习卡片、按钮、输入框制作一组语义变量，并列出默认、选中、错误、禁用状态。\r\n\r\n完成后，用下面的标准观察实际产出，而不是只看代码是否写完：\r\n\r\n- 变量按用途命名且能复用\r\n- 状态之间有清楚区别\r\n- 正文与交互文字保持清晰且错误不只靠颜色\r\n\r\n## 如何留下学习证据\r\n\r\n先完成本节练习，再在底部开始测验。选择、填空、排序与代码阅读自动判分；简答、改错和实战需要你对照参考答案逐项自评。自评不会计入自动正确率，也不代表系统已经执行或审查你的代码。\r\n\r\n把仍说不清的概念写进个人笔记。复习时先尝试回答“为什么统一变量后仍然需要分别考虑正文、按钮和禁用态？”，再核对参考解释。\r\n\r\n## 继续阅读\r\n\r\n[官方资料](https://www.radix-ui.com/colors/docs/palette-composition/understanding-the-scale)。资料用于补充概念和边界，本节内容本身可以独立阅读。",
+      "quiz": [
+        {
+          "id": "fe-design-system-single",
+          "type": "single",
+          "difficulty": "basic",
+          "prompt": "哪个变量名更能表达颜色用途？",
+          "explanation": "用途语义比偶然的色名更便于维护。",
+          "options": [
+            "--light-blue-37",
+            "--pretty-color",
+            "--random-gray",
+            "--text-primary"
+          ],
+          "correctIndex": 3
+        },
+        {
+          "id": "fe-design-system-multiple",
+          "type": "multiple",
+          "difficulty": "applied",
+          "prompt": "哪些做法能帮助区分交互状态？",
+          "explanation": "状态需要可辨识且不只依赖颜色。",
+          "options": [
+            "清晰的焦点轮廓",
+            "所有状态只换成几乎相同的浅蓝",
+            "成功图标配合文字",
+            "错误文字说明"
+          ],
+          "correctIndices": [
+            0,
+            3,
+            2
+          ]
+        },
+        {
+          "id": "fe-design-system-boolean",
+          "type": "boolean",
+          "difficulty": "basic",
+          "prompt": "为了减少视觉疲劳，应把正文颜色一直调浅直到几乎接近背景。",
+          "explanation": "低对比会增加辨认负担，柔和背景仍需要清晰文字。",
+          "options": [
+            "正确",
+            "错误"
+          ],
+          "correctIndex": 1
+        },
+        {
+          "id": "fe-design-system-fill",
+          "type": "fill",
+          "difficulty": "basic",
+          "prompt": "用 CSS 变量取值的函数是 ____。",
+          "explanation": "例如 color:var(--text-primary)。",
+          "acceptedAnswers": [
+            "var",
+            "var()"
+          ],
+          "caseSensitive": false
+        },
+        {
+          "id": "fe-design-system-order",
+          "type": "order",
+          "difficulty": "applied",
+          "prompt": "按给定层级从最低到最高排列：页面底层、内容表面、浮层。",
+          "explanation": "层级应服务信息结构，配合边界、位置和必要阴影。",
+          "options": [
+            "弹出层",
+            "内容面板",
+            "页面背景"
+          ],
+          "correctOrder": [
+            2,
+            1,
+            0
+          ]
+        },
+        {
+          "id": "fe-design-system-code_reading",
+          "type": "code_reading",
+          "difficulty": "applied",
+          "prompt": "下面 title 的 color 最终是什么？填写颜色关键字。",
+          "explanation": "var 读取当前作用域中的自定义属性。",
+          "code": ":root { --text: navy; }\n.title { color:var(--text); }",
+          "language": "css",
+          "acceptedAnswers": [
+            "navy"
+          ],
+          "caseSensitive": true
+        },
+        {
+          "id": "fe-design-system-short_answer",
+          "type": "short_answer",
+          "difficulty": "advanced",
+          "prompt": "为什么统一变量后仍然需要分别考虑正文、按钮和禁用态？",
+          "explanation": "变量统一的是用途与来源，不是把所有元素变成同一种视觉权重。不同状态需要不同的对比、背景和行为，禁用与可操作也应明确区分。",
+          "referenceAnswer": "变量统一的是用途与来源，不是把所有元素变成同一种视觉权重。不同状态需要不同的对比、背景和行为，禁用与可操作也应明确区分。",
+          "rubric": [
+            "区分统一与单调",
+            "说明至少两种状态的不同职责",
+            "保留可读性和可辨识操作"
+          ]
+        },
+        {
+          "id": "fe-design-system-code_fix",
+          "type": "code_fix",
+          "difficulty": "applied",
+          "prompt": "修复删除全部键盘焦点提示的样式。",
+          "explanation": "焦点提示帮助用户知道下一次键盘操作会作用在哪个控件。",
+          "code": "button:focus { outline:none; }",
+          "language": "css",
+          "referenceAnswer": "button:focus-visible { outline:2px solid var(--action); outline-offset:3px; }",
+          "rubric": [
+            "恢复可见键盘焦点",
+            "使用明确的边界而非只变字色",
+            "不误把 hover 当作唯一焦点态"
+          ]
+        },
+        {
+          "id": "fe-design-system-project",
+          "type": "project",
+          "difficulty": "advanced",
+          "prompt": "为学习卡片、按钮、输入框制作一组语义变量，并列出默认、选中、错误、禁用状态。",
+          "explanation": "把背景、正文、边框和操作色集中定义；每种状态配合文字或图标，让组件在浅背景上可辨识，并保留键盘焦点。",
+          "referenceAnswer": "把背景、正文、边框和操作色集中定义；每种状态配合文字或图标，让组件在浅背景上可辨识，并保留键盘焦点。",
+          "rubric": [
+            "变量按用途命名且能复用",
+            "状态之间有清楚区别",
+            "正文与交互文字保持清晰且错误不只靠颜色"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fe-js-values",
+      "treeId": "fe-stage-javascript",
+      "parentId": null,
+      "title": "值、引用与类型转换",
+      "resource": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Data_structures",
+      "question": "为什么 {...state} 之后修改 next.user.name 仍可能影响 state？",
+      "answer": "展开只复制外层。next.user 与 state.user 可能仍引用同一对象；应在更新 name 时也复制 user，或者针对合适的数据使用深复制方案。",
+      "content": "# 值、引用与类型转换\r\n\r\n## 学完要能做到什么\r\n\r\n能预测基础表达式的结果，区分值复制与共享对象，并用明确转换处理表单输入。\r\n\r\n## 核心概念\r\n\r\nJavaScript 的原始值包括字符串、数字、布尔、undefined、null、bigint 和 symbol。对象、数组和函数属于对象类型。变量保存的是值；复制对象值会让两个变量引用同一对象，并不会自动深复制其中内容。\r\n\r\nconst 限制重新赋值，不限制对象内部属性被修改。展开对象和数组只复制一层；嵌套对象仍然共享。更新复杂数据时，必须复制到真正发生变化的那一层。\r\n\r\n表单输入的 value 通常是字符串。加号可能做字符串拼接，而严格相等不做跨类型转换。用 Number 等显式转换后还要处理空字符串、NaN 和业务范围；“转成数字”并不等于“通过业务校验”。\r\n\r\n## 读懂一个最小例子\r\n\r\n```javascript\r\nconst original = { score: 1 };\r\nconst alias = original;\r\nalias.score = 2;\r\nconst copy = { ...original };\r\ncopy.score = 3;\r\nconsole.log(original.score, copy.score);\r\n```\r\n\r\n输出 2 3。alias 与 original 指向同一对象；copy 是新的外层对象，这里的 score 是数字，因此之后互不影响。\r\n\r\n## 两个容易混淆的地方\r\n\r\n- const 禁止给变量重新赋值，数组内容仍可修改。\r\n- 仅用 Number 不足以表达所有输入规则；空字符串会转成 0。\r\n\r\n## 动手完成一个小作品\r\n\r\n做一个分数调整器：输入当前分数和增量，显示结果，保留原始分数对象。\r\n\r\n完成后，用下面的标准观察实际产出，而不是只看代码是否写完：\r\n\r\n- 合法输入得到数值加法结果\r\n- 空文本与非法数字有明确反馈\r\n- 更新后原对象的值保持可解释且未被意外修改\r\n\r\n## 如何留下学习证据\r\n\r\n先完成本节练习，再在底部开始测验。选择、填空、排序与代码阅读自动判分；简答、改错和实战需要你对照参考答案逐项自评。自评不会计入自动正确率，也不代表系统已经执行或审查你的代码。\r\n\r\n把仍说不清的概念写进个人笔记。复习时先尝试回答“为什么 {...state} 之后修改 next.user.name 仍可能影响 state？”，再核对参考解释。\r\n\r\n## 继续阅读\r\n\r\n[官方资料](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Data_structures)。资料用于补充概念和边界，本节内容本身可以独立阅读。",
+      "quiz": [
+        {
+          "id": "fe-js-values-single",
+          "type": "single",
+          "difficulty": "basic",
+          "prompt": "const a = {n:1}; const b = a; b.n = 2; 此时 a.n 是多少？",
+          "explanation": "const 不会冻结属性；两个变量引用同一对象。",
+          "options": [
+            "1",
+            "代码必然因为 const 报错",
+            "2",
+            "undefined"
+          ],
+          "correctIndex": 2
+        },
+        {
+          "id": "fe-js-values-multiple",
+          "type": "multiple",
+          "difficulty": "applied",
+          "prompt": "关于值和转换，哪些说法正确？",
+          "explanation": "声明绑定、复制深度和转换规则是不同概念。",
+          "options": [
+            "const 自动深冻结所有属性",
+            "严格相等不进行跨类型转换",
+            "Number(\"not-a-number\") 得到 NaN",
+            "对象展开是浅复制"
+          ],
+          "correctIndices": [
+            1,
+            3,
+            2
+          ]
+        },
+        {
+          "id": "fe-js-values-boolean",
+          "type": "boolean",
+          "difficulty": "basic",
+          "prompt": "const 声明的数组可以调用 push 添加元素。",
+          "explanation": "const 禁止给变量重新赋值，数组内容仍可修改。",
+          "options": [
+            "正确",
+            "错误"
+          ],
+          "correctIndex": 0
+        },
+        {
+          "id": "fe-js-values-fill",
+          "type": "fill",
+          "difficulty": "basic",
+          "prompt": "检查一个值是否为 NaN，推荐使用 Number 的哪个方法？填完整调用名，不带参数。",
+          "explanation": "Number.isNaN 不会先把任意输入强制转成数字。",
+          "acceptedAnswers": [
+            "Number.isNaN",
+            "Number.isNaN()"
+          ],
+          "caseSensitive": false
+        },
+        {
+          "id": "fe-js-values-order",
+          "type": "order",
+          "difficulty": "applied",
+          "prompt": "按明确的数据处理管线排序：输入来自文本框，结果必须为 1 到 10 的有限数。",
+          "explanation": "先保留并检查原始输入，避免空字符串被转成 0 后误判。",
+          "options": [
+            "使用已校验的数字更新结果",
+            "读取原始文本",
+            "排除空文本并显式转成数字",
+            "校验有限数和 1 到 10 的范围"
+          ],
+          "correctOrder": [
+            1,
+            2,
+            3,
+            0
+          ]
+        },
+        {
+          "id": "fe-js-values-code_reading",
+          "type": "code_reading",
+          "difficulty": "applied",
+          "prompt": "下面 console.log 输出什么？按空格分隔两项。",
+          "explanation": "第一项发生字符串拼接，第二项显式转换后相加。",
+          "code": "console.log(\"5\" + 1, Number(\"5\") + 1);",
+          "language": "javascript",
+          "acceptedAnswers": [
+            "51 6"
+          ],
+          "caseSensitive": true
+        },
+        {
+          "id": "fe-js-values-short_answer",
+          "type": "short_answer",
+          "difficulty": "advanced",
+          "prompt": "为什么 {...state} 之后修改 next.user.name 仍可能影响 state？",
+          "explanation": "展开只复制外层。next.user 与 state.user 可能仍引用同一对象；应在更新 name 时也复制 user，或者针对合适的数据使用深复制方案。",
+          "referenceAnswer": "展开只复制外层。next.user 与 state.user 可能仍引用同一对象；应在更新 name 时也复制 user，或者针对合适的数据使用深复制方案。",
+          "rubric": [
+            "指出共享的嵌套引用",
+            "给出复制到修改层的方案",
+            "不把 const 或展开误当深冻结"
+          ]
+        },
+        {
+          "id": "fe-js-values-code_fix",
+          "type": "code_fix",
+          "difficulty": "applied",
+          "prompt": "表单提供的是字符串。修复错误的加法，并拒绝空文本或非有限数。",
+          "explanation": "仅用 Number 不足以表达所有输入规则；空字符串会转成 0。",
+          "code": "function addOne(raw) { return raw + 1; }",
+          "language": "javascript",
+          "referenceAnswer": "function addOne(raw) {\n  if (raw.trim() === \"\") throw new Error(\"请输入数字\");\n  const n = Number(raw);\n  if (!Number.isFinite(n)) throw new Error(\"请输入有限数字\");\n  return n + 1;\n}",
+          "rubric": [
+            "显式转换字符串",
+            "空文本单独处理",
+            "用有限数检查拒绝无效输入"
+          ]
+        },
+        {
+          "id": "fe-js-values-project",
+          "type": "project",
+          "difficulty": "advanced",
+          "prompt": "做一个分数调整器：输入当前分数和增量，显示结果，保留原始分数对象。",
+          "explanation": "先将输入转换并校验，再通过创建新对象计算结果。演示空输入、普通数字和非法输入，说明为什么原对象不应被意外改变。",
+          "referenceAnswer": "先将输入转换并校验，再通过创建新对象计算结果。演示空输入、普通数字和非法输入，说明为什么原对象不应被意外改变。",
+          "rubric": [
+            "合法输入得到数值加法结果",
+            "空文本与非法数字有明确反馈",
+            "更新后原对象的值保持可解释且未被意外修改"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fe-scope-closures",
+      "treeId": "fe-stage-javascript",
+      "parentId": "fe-js-values",
+      "title": "作用域、函数与闭包",
+      "resource": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Closures",
+      "question": "多个定时回调捕获 var 循环索引时为什么容易得到相同值？",
+      "answer": "var 为循环共享同一个函数作用域绑定。回调延迟执行时读取的是循环结束后的值。使用 let 为各次迭代建立绑定，或通过函数参数显式捕获值。",
+      "content": "# 作用域、函数与闭包\r\n\r\n## 学完要能做到什么\r\n\r\n能追踪函数访问的词法环境，解释闭包保存状态的原因，并识别循环回调共享绑定的问题。\r\n\r\n## 核心概念\r\n\r\n词法作用域由代码定义位置决定。函数查找变量时从当前作用域逐层向外，而不是到调用它的函数里寻找同名变量。参数也是函数的局部绑定。\r\n\r\nlet 和 const 具有块作用域。进入作用域到声明完成前处于暂时性死区，不能把它们简单理解成“提前变为 undefined”。var 是函数作用域，循环中的同一个绑定容易被多个回调共享。\r\n\r\n闭包是函数与其引用的词法环境的组合。外层函数返回后，内部函数仍可能访问那个环境；多次调用工厂函数可以形成不同状态。闭包引用的是绑定，而不是自动拍摄所有变量的永久快照。\r\n\r\n## 读懂一个最小例子\r\n\r\n```javascript\r\nfunction counter() {\r\n  let value = 0;\r\n  return () => ++value;\r\n}\r\nconst a = counter();\r\nconst b = counter();\r\nconsole.log(a(), a(), b());\r\n```\r\n\r\n输出 1 2 1。a 的两次调用共享一个 value；b 来自另一次工厂调用，拥有自己的环境。\r\n\r\n## 两个容易混淆的地方\r\n\r\n- 只要闭包仍可达，它所需的词法环境就可能继续存在。\r\n- 修复变量捕获，而不是把延时改大或改小。\r\n\r\n## 动手完成一个小作品\r\n\r\n实现两个互不影响的计数器，每个提供 increment 和 getValue 方法。\r\n\r\n完成后，用下面的标准观察实际产出，而不是只看代码是否写完：\r\n\r\n- 同一实例的方法共享状态\r\n- 两个实例互不影响\r\n- 说明状态的词法位置和存活原因\r\n\r\n## 如何留下学习证据\r\n\r\n先完成本节练习，再在底部开始测验。选择、填空、排序与代码阅读自动判分；简答、改错和实战需要你对照参考答案逐项自评。自评不会计入自动正确率，也不代表系统已经执行或审查你的代码。\r\n\r\n把仍说不清的概念写进个人笔记。复习时先尝试回答“多个定时回调捕获 var 循环索引时为什么容易得到相同值？”，再核对参考解释。\r\n\r\n## 继续阅读\r\n\r\n[官方资料](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Closures)。资料用于补充概念和边界，本节内容本身可以独立阅读。",
+      "quiz": [
+        {
+          "id": "fe-scope-closures-single",
+          "type": "single",
+          "difficulty": "basic",
+          "prompt": "函数读取外层变量时，主要依据什么寻找作用域？",
+          "explanation": "词法作用域由定义结构决定。",
+          "options": [
+            "函数定义时的词法位置",
+            "浏览器窗口大小",
+            "调用者同名变量的最新值",
+            "文件名的字母顺序"
+          ],
+          "correctIndex": 0
+        },
+        {
+          "id": "fe-scope-closures-multiple",
+          "type": "multiple",
+          "difficulty": "applied",
+          "prompt": "哪些说法正确？",
+          "explanation": "闭包保留可访问的词法环境，不等于固定值快照。",
+          "options": [
+            "两次工厂调用可以产生独立状态",
+            "闭包总会复制外层变量的初始值",
+            "闭包可以延续对外层绑定的访问",
+            "let 具有块作用域"
+          ],
+          "correctIndices": [
+            3,
+            2,
+            0
+          ]
+        },
+        {
+          "id": "fe-scope-closures-boolean",
+          "type": "boolean",
+          "difficulty": "basic",
+          "prompt": "函数返回后，它创建的闭包就绝不可能再读取外层局部变量。",
+          "explanation": "只要闭包仍可达，它所需的词法环境就可能继续存在。",
+          "options": [
+            "正确",
+            "错误"
+          ],
+          "correctIndex": 1
+        },
+        {
+          "id": "fe-scope-closures-fill",
+          "type": "fill",
+          "difficulty": "basic",
+          "prompt": "给循环每次迭代创建独立索引绑定，通常应把 for 中的 var 改成 ____。",
+          "explanation": "for 的 let 绑定可为各次迭代创建不同环境。",
+          "acceptedAnswers": [
+            "let"
+          ],
+          "caseSensitive": false
+        },
+        {
+          "id": "fe-scope-closures-order",
+          "type": "order",
+          "difficulty": "applied",
+          "prompt": "按计数器工厂的一次使用过程排序。",
+          "explanation": "这是一段有明确先后依赖的闭包使用过程。",
+          "options": [
+            "调用 counter 创建局部绑定",
+            "调用返回的函数读取并更新绑定",
+            "返回引用该绑定的函数",
+            "下一次调用观察更新后的绑定"
+          ],
+          "correctOrder": [
+            0,
+            2,
+            1,
+            3
+          ]
+        },
+        {
+          "id": "fe-scope-closures-code_reading",
+          "type": "code_reading",
+          "difficulty": "applied",
+          "prompt": "输出什么？按空格分隔。",
+          "explanation": "两次调用更新的是同一个闭包中的 n。",
+          "code": "function make() { let n = 10; return () => ++n; }\nconst next = make();\nconsole.log(next(), next());",
+          "language": "javascript",
+          "acceptedAnswers": [
+            "11 12"
+          ],
+          "caseSensitive": true
+        },
+        {
+          "id": "fe-scope-closures-short_answer",
+          "type": "short_answer",
+          "difficulty": "advanced",
+          "prompt": "多个定时回调捕获 var 循环索引时为什么容易得到相同值？",
+          "explanation": "var 为循环共享同一个函数作用域绑定。回调延迟执行时读取的是循环结束后的值。使用 let 为各次迭代建立绑定，或通过函数参数显式捕获值。",
+          "referenceAnswer": "var 为循环共享同一个函数作用域绑定。回调延迟执行时读取的是循环结束后的值。使用 let 为各次迭代建立绑定，或通过函数参数显式捕获值。",
+          "rubric": [
+            "指出共享同一个绑定",
+            "解释读取发生的时机",
+            "给出 let 或参数捕获的修复"
+          ]
+        },
+        {
+          "id": "fe-scope-closures-code_fix",
+          "type": "code_fix",
+          "difficulty": "applied",
+          "prompt": "希望回调依次记录 0、1、2。修复共享循环变量问题。",
+          "explanation": "修复变量捕获，而不是把延时改大或改小。",
+          "code": "for (var i = 0; i < 3; i++) {\n  setTimeout(() => console.log(i), 0);\n}",
+          "language": "javascript",
+          "referenceAnswer": "for (let i = 0; i < 3; i++) {\n  setTimeout(() => console.log(i), 0);\n}",
+          "rubric": [
+            "使用每次迭代独立的绑定或等效捕获",
+            "保留异步回调",
+            "能解释原代码为什么打印三个 3"
+          ]
+        },
+        {
+          "id": "fe-scope-closures-project",
+          "type": "project",
+          "difficulty": "advanced",
+          "prompt": "实现两个互不影响的计数器，每个提供 increment 和 getValue 方法。",
+          "explanation": "工厂内部保存 let count，并返回访问它的两个函数。创建两个实例，交替操作并记录结果；不把状态放在全局。",
+          "referenceAnswer": "工厂内部保存 let count，并返回访问它的两个函数。创建两个实例，交替操作并记录结果；不把状态放在全局。",
+          "rubric": [
+            "同一实例的方法共享状态",
+            "两个实例互不影响",
+            "说明状态的词法位置和存活原因"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fe-collections",
+      "treeId": "fe-stage-javascript",
+      "parentId": "fe-js-values",
+      "title": "集合、数据变换与不可变更新",
+      "resource": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array",
+      "question": "为什么数组 map 后仍可能意外修改旧状态？",
+      "answer": "map 只保证返回一个新数组。若回调修改 item 属性或原样返回对象，新旧数组仍可能共享对象。更新条目时要复制该对象以及实际变化的嵌套层。",
+      "content": "# 集合、数据变换与不可变更新\r\n\r\n## 学完要能做到什么\r\n\r\n能用 map、filter、reduce 与集合工具表达数据处理，并在保留原数据的前提下更新嵌套条目。\r\n\r\n## 核心概念\r\n\r\nmap 把每项转换为一个新项，filter 选择满足条件的项，reduce 把多项累积为一个结果。回调应该清楚地返回所需值；使用这些方法不会自动阻止你在回调里修改原对象。\r\n\r\n数组展开、slice 和 map 都可能保留内部对象引用。不可变更新要求为发生变化的层创建新值，并保留未变化对象的引用，以便行为可追踪且避免不必要复制。\r\n\r\nSet 适合去重和成员判断，Map 支持非字符串键。sort 默认按字符串比较并修改原数组；数值排序应提供比较函数，并根据需要先复制或使用 toSorted。\r\n\r\n## 读懂一个最小例子\r\n\r\n```javascript\r\nconst items = [{ id: 1, done: false }, { id: 2, done: false }];\r\nconst next = items.map(item =>\r\n  item.id === 2 ? { ...item, done: true } : item\r\n);\r\nconst doneCount = next.filter(item => item.done).length;\r\n```\r\n\r\n只为 id 为 2 的条目创建新对象。原数组及原条目不被改写；完成数来自新数据，避免额外维护一个容易不同步的计数状态。\r\n\r\n## 两个容易混淆的地方\r\n\r\n- 默认比较使用字符串顺序；数值排序需要比较函数。\r\n- 修复同时涉及比较规则和原地修改，不能只改其中一个。\r\n\r\n## 动手完成一个小作品\r\n\r\n制作任务列表的数据模块，支持按 ID 切换完成状态、筛选未完成项与计算完成数。\r\n\r\n完成后，用下面的标准观察实际产出，而不是只看代码是否写完：\r\n\r\n- 按 ID 更新准确且不依赖数组位置\r\n- 原数据未被修改\r\n- 派生数量与筛选结果一致\r\n\r\n## 如何留下学习证据\r\n\r\n先完成本节练习，再在底部开始测验。选择、填空、排序与代码阅读自动判分；简答、改错和实战需要你对照参考答案逐项自评。自评不会计入自动正确率，也不代表系统已经执行或审查你的代码。\r\n\r\n把仍说不清的概念写进个人笔记。复习时先尝试回答“为什么数组 map 后仍可能意外修改旧状态？”，再核对参考解释。\r\n\r\n## 继续阅读\r\n\r\n[官方资料](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)。资料用于补充概念和边界，本节内容本身可以独立阅读。",
+      "quiz": [
+        {
+          "id": "fe-collections-single",
+          "type": "single",
+          "difficulty": "basic",
+          "prompt": "需要保留所有满足条件的项，应使用哪个数组方法？",
+          "explanation": "filter 返回所有符合条件的元素组成的新数组。",
+          "options": [
+            "filter",
+            "findIndex",
+            "map",
+            "join"
+          ],
+          "correctIndex": 0
+        },
+        {
+          "id": "fe-collections-multiple",
+          "type": "multiple",
+          "difficulty": "applied",
+          "prompt": "哪些说法正确？",
+          "explanation": "新数组与深复制内部元素是不同层次。",
+          "options": [
+            "filter 返回新数组但可能共享内部对象",
+            "sort 默认会修改原数组",
+            "map 通常保持数组长度",
+            "展开数组会自动深复制所有对象"
+          ],
+          "correctIndices": [
+            2,
+            0,
+            1
+          ]
+        },
+        {
+          "id": "fe-collections-boolean",
+          "type": "boolean",
+          "difficulty": "basic",
+          "prompt": "对数字数组直接调用 sort()，一定得到数值从小到大的顺序。",
+          "explanation": "默认比较使用字符串顺序；数值排序需要比较函数。",
+          "options": [
+            "正确",
+            "错误"
+          ],
+          "correctIndex": 1
+        },
+        {
+          "id": "fe-collections-fill",
+          "type": "fill",
+          "difficulty": "basic",
+          "prompt": "删除原始值数组中的重复值，可用哪种内置集合构造器？",
+          "explanation": "例如 [...new Set(values)]；对象去重仍按引用身份判断。",
+          "acceptedAnswers": [
+            "Set"
+          ],
+          "caseSensitive": false
+        },
+        {
+          "id": "fe-collections-order",
+          "type": "order",
+          "difficulty": "applied",
+          "prompt": "按流水线要求排序：选出有效订单，计算每单金额，最后求和。",
+          "explanation": "题目约定三步流水线；实际可以合并，但应优先表达清楚。",
+          "options": [
+            "map 计算每单金额",
+            "filter 选出有效订单",
+            "reduce 累加总金额"
+          ],
+          "correctOrder": [
+            1,
+            0,
+            2
+          ]
+        },
+        {
+          "id": "fe-collections-code_reading",
+          "type": "code_reading",
+          "difficulty": "applied",
+          "prompt": "输出的数字是多少？",
+          "explanation": "偶数是 2 和 4，转换为 20 和 40，总和为 60。",
+          "code": "const total = [1, 2, 3, 4]\n  .filter(n => n % 2 === 0)\n  .map(n => n * 10)\n  .reduce((sum, n) => sum + n, 0);\nconsole.log(total);",
+          "language": "javascript",
+          "acceptedAnswers": [
+            "60"
+          ],
+          "caseSensitive": true
+        },
+        {
+          "id": "fe-collections-short_answer",
+          "type": "short_answer",
+          "difficulty": "advanced",
+          "prompt": "为什么数组 map 后仍可能意外修改旧状态？",
+          "explanation": "map 只保证返回一个新数组。若回调修改 item 属性或原样返回对象，新旧数组仍可能共享对象。更新条目时要复制该对象以及实际变化的嵌套层。",
+          "referenceAnswer": "map 只保证返回一个新数组。若回调修改 item 属性或原样返回对象，新旧数组仍可能共享对象。更新条目时要复制该对象以及实际变化的嵌套层。",
+          "rubric": [
+            "区分数组容器与内部对象",
+            "指出回调修改或共享引用",
+            "给出逐层复制的改法"
+          ]
+        },
+        {
+          "id": "fe-collections-code_fix",
+          "type": "code_fix",
+          "difficulty": "applied",
+          "prompt": "返回按分数升序排列的新数组，保留原数组顺序。",
+          "explanation": "修复同时涉及比较规则和原地修改，不能只改其中一个。",
+          "code": "function ranked(scores) { return scores.sort(); }",
+          "language": "javascript",
+          "referenceAnswer": "function ranked(scores) { return [...scores].sort((a, b) => a - b); }",
+          "rubric": [
+            "复制后再排序或使用 toSorted",
+            "提供数值比较函数",
+            "原数组不被重排"
+          ]
+        },
+        {
+          "id": "fe-collections-project",
+          "type": "project",
+          "difficulty": "advanced",
+          "prompt": "制作任务列表的数据模块，支持按 ID 切换完成状态、筛选未完成项与计算完成数。",
+          "explanation": "用 map 更新目标条目，用 filter 派生列表与数量；处理不存在的 ID，记录操作前后数据，不直接修改输入对象。",
+          "referenceAnswer": "用 map 更新目标条目，用 filter 派生列表与数量；处理不存在的 ID，记录操作前后数据，不直接修改输入对象。",
+          "rubric": [
+            "按 ID 更新准确且不依赖数组位置",
+            "原数据未被修改",
+            "派生数量与筛选结果一致"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fe-async-loop",
+      "treeId": "fe-stage-javascript",
+      "parentId": "fe-scope-closures",
+      "title": "Promise、异步与事件循环",
+      "resource": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises",
+      "question": "两个独立请求何时适合 Promise.all，何时更适合 allSettled？",
+      "answer": "都成功才有意义时使用 all；任一失败会使组合拒绝。需要保留每项成功或失败结果并显示部分成果时使用 allSettled，还需分别处理拒绝原因。",
+      "content": "# Promise、异步与事件循环\r\n\r\n## 学完要能做到什么\r\n\r\n能推演同步代码、微任务与定时器的顺序，并正确处理 async 函数的结果和失败。\r\n\r\n## 核心概念\r\n\r\nJavaScript 在当前任务内先运行同步代码。Promise 的 then 回调和 await 之后的继续执行通常进入微任务队列；当前栈清空后处理微任务，再开始后续任务。定时器的延时表示最早具备执行条件的时间，不保证准时执行。\r\n\r\nasync 函数始终返回 Promise。await 暂停的是该异步函数的后续逻辑，不会让整个浏览器停止响应。try/catch 可以捕获被 await 的拒绝，但未等待或未返回的 Promise 需要自己的处理路径。\r\n\r\n独立请求可以用 Promise.all 并行等待，任意一个拒绝会使整体拒绝。业务允许部分成功时可考虑 allSettled。应根据失败语义和数据依赖选组合方式，不要为了并发忽略取消与过期结果。\r\n\r\n## 读懂一个最小例子\r\n\r\n```javascript\r\nconsole.log(\"A\");\r\nsetTimeout(() => console.log(\"D\"), 0);\r\nPromise.resolve().then(() => console.log(\"C\"));\r\nconsole.log(\"B\");\r\n```\r\n\r\n在这里的浏览器脚本中，输出 A B C D。A/B 是同步工作；C 是微任务；零延时定时器仍需等当前任务及微任务处理后执行。\r\n\r\n## 两个容易混淆的地方\r\n\r\n- 当前同步栈会先完成；0 不是立即打断当前代码。\r\n- 未 await 的异步拒绝不会被周围同步 try/catch 自动捕获；fetch 还需检查 HTTP 状态。\r\n\r\n## 动手完成一个小作品\r\n\r\n实现一个同时加载用户资料和课程列表的函数，并定义其中一项失败时的界面策略。\r\n\r\n完成后，用下面的标准观察实际产出，而不是只看代码是否写完：\r\n\r\n- 独立请求并发启动\r\n- 失败策略与组合方法匹配\r\n- 调用方可以等待结果且不会遗失拒绝\r\n\r\n## 如何留下学习证据\r\n\r\n先完成本节练习，再在底部开始测验。选择、填空、排序与代码阅读自动判分；简答、改错和实战需要你对照参考答案逐项自评。自评不会计入自动正确率，也不代表系统已经执行或审查你的代码。\r\n\r\n把仍说不清的概念写进个人笔记。复习时先尝试回答“两个独立请求何时适合 Promise.all，何时更适合 allSettled？”，再核对参考解释。\r\n\r\n## 继续阅读\r\n\r\n[官方资料](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)。资料用于补充概念和边界，本节内容本身可以独立阅读。",
+      "quiz": [
+        {
+          "id": "fe-async-loop-single",
+          "type": "single",
+          "difficulty": "basic",
+          "prompt": "async 函数返回一个数字时，调用方立即拿到的是什么？",
+          "explanation": "async 的返回值会被包装为 Promise。",
+          "options": [
+            "浏览器定时器 ID",
+            "一个 DOM 节点",
+            "一定是数字本身",
+            "兑现为该数字的 Promise"
+          ],
+          "correctIndex": 3
+        },
+        {
+          "id": "fe-async-loop-multiple",
+          "type": "multiple",
+          "difficulty": "applied",
+          "prompt": "哪些说法正确？",
+          "explanation": "计时器仍受事件循环和其他工作影响。",
+          "options": [
+            "Promise.all 可以等待独立任务",
+            "零延时定时器保证立刻执行",
+            "被 await 的拒绝可以被 try/catch 捕获",
+            "await 只暂停当前异步函数后续逻辑"
+          ],
+          "correctIndices": [
+            3,
+            0,
+            2
+          ]
+        },
+        {
+          "id": "fe-async-loop-boolean",
+          "type": "boolean",
+          "difficulty": "basic",
+          "prompt": "给 setTimeout 设置 0 毫秒，会让回调先于当前同步代码执行。",
+          "explanation": "当前同步栈会先完成；0 不是立即打断当前代码。",
+          "options": [
+            "正确",
+            "错误"
+          ],
+          "correctIndex": 1
+        },
+        {
+          "id": "fe-async-loop-fill",
+          "type": "fill",
+          "difficulty": "basic",
+          "prompt": "等待一组 Promise，且任意失败就让整体失败的静态方法是 ____。",
+          "explanation": "Promise.all 保留输入顺序返回结果，但不代表逐个串行启动。",
+          "acceptedAnswers": [
+            "Promise.all",
+            "Promise.all()"
+          ],
+          "caseSensitive": false
+        },
+        {
+          "id": "fe-async-loop-order",
+          "type": "order",
+          "difficulty": "applied",
+          "prompt": "针对示例脚本排列输出：同步 A；注册 Promise 输出 C；同步 B；定时器输出 D。",
+          "explanation": "同步先完成，再处理已排队微任务，最后才有此定时器任务。",
+          "options": [
+            "A",
+            "B",
+            "D",
+            "C"
+          ],
+          "correctOrder": [
+            0,
+            1,
+            3,
+            2
+          ]
+        },
+        {
+          "id": "fe-async-loop-code_reading",
+          "type": "code_reading",
+          "difficulty": "applied",
+          "prompt": "输出什么？按空格分隔。",
+          "explanation": "await 之前的部分同步执行，后续恢复排在当前同步代码之后。",
+          "code": "async function run() {\n  console.log(1);\n  await Promise.resolve();\n  console.log(3);\n}\nrun();\nconsole.log(2);",
+          "language": "javascript",
+          "acceptedAnswers": [
+            "1 2 3"
+          ],
+          "caseSensitive": true
+        },
+        {
+          "id": "fe-async-loop-short_answer",
+          "type": "short_answer",
+          "difficulty": "advanced",
+          "prompt": "两个独立请求何时适合 Promise.all，何时更适合 allSettled？",
+          "explanation": "都成功才有意义时使用 all；任一失败会使组合拒绝。需要保留每项成功或失败结果并显示部分成果时使用 allSettled，还需分别处理拒绝原因。",
+          "referenceAnswer": "都成功才有意义时使用 all；任一失败会使组合拒绝。需要保留每项成功或失败结果并显示部分成果时使用 allSettled，还需分别处理拒绝原因。",
+          "rubric": [
+            "说明 all 的失败行为",
+            "说明部分成功的场景",
+            "不把组合等待误当自动取消其他请求"
+          ]
+        },
+        {
+          "id": "fe-async-loop-code_fix",
+          "type": "code_fix",
+          "difficulty": "applied",
+          "prompt": "让调用者能等待 JSON 结果，并让请求或解析失败进入 catch。",
+          "explanation": "未 await 的异步拒绝不会被周围同步 try/catch 自动捕获；fetch 还需检查 HTTP 状态。",
+          "code": "async function load() {\n  try { fetch(\"/api/items\").then(r => r.json()); }\n  catch (error) { throw new Error(\"加载失败\"); }\n}",
+          "language": "javascript",
+          "referenceAnswer": "async function load() {\n  try {\n    const response = await fetch(\"/api/items\");\n    if (!response.ok) throw new Error(\"HTTP \" + response.status);\n    return await response.json();\n  } catch (error) {\n    throw new Error(\"加载失败\", { cause: error });\n  }\n}",
+          "rubric": [
+            "等待请求并返回结果",
+            "检查 HTTP 状态",
+            "JSON 解析拒绝也进入错误路径"
+          ]
+        },
+        {
+          "id": "fe-async-loop-project",
+          "type": "project",
+          "difficulty": "advanced",
+          "prompt": "实现一个同时加载用户资料和课程列表的函数，并定义其中一项失败时的界面策略。",
+          "explanation": "并行启动独立请求，根据页面需要选择整体失败或部分成功。提供加载、成功、失败状态和重试入口，解释为什么没有无意义的串行等待。",
+          "referenceAnswer": "并行启动独立请求，根据页面需要选择整体失败或部分成功。提供加载、成功、失败状态和重试入口，解释为什么没有无意义的串行等待。",
+          "rubric": [
+            "独立请求并发启动",
+            "失败策略与组合方法匹配",
+            "调用方可以等待结果且不会遗失拒绝"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fe-dom-events",
+      "treeId": "fe-stage-browser",
+      "parentId": null,
+      "title": "DOM、事件传播与交互",
+      "resource": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/Event_bubbling",
+      "question": "动态列表为什么适合事件委托，处理图标点击时应注意什么？",
+      "answer": "祖先监听器可以处理后续新增子项，不必逐个重新绑定。点击图标时 target 可能是内部元素，应使用 closest 找到按钮并限制在容器内，按需清理监听器。",
+      "content": "# DOM、事件传播与交互\r\n\r\n## 学完要能做到什么\r\n\r\n能建立可清理的 DOM 交互，区分 target/currentTarget，并在动态列表中使用安全的事件委托。\r\n\r\n## 核心概念\r\n\r\nDOM 是当前文档的对象表示。querySelector 可能返回 null；访问属性前应明确元素是否存在。更新用户提供的普通文字优先使用 textContent，避免把文本误当 HTML 执行。\r\n\r\n事件通常经历捕获、目标和冒泡阶段。target 是事件起源处的目标，currentTarget 是当前监听器注册所在元素。preventDefault 阻止默认动作，stopPropagation 阻止继续传播，两者不是同一回事。\r\n\r\n事件委托把监听器放到共同祖先上，通过 closest 找到实际操作元素，并确认它属于当前容器。监听器、订阅和定时器应有清理策略，重复挂载不能悄悄叠加行为。\r\n\r\n## 读懂一个最小例子\r\n\r\n```javascript\r\nconst list = document.querySelector(\"#tasks\");\r\nlist?.addEventListener(\"click\", event => {\r\n  if (!(event.target instanceof Element)) return;\r\n  const button = event.target.closest(\"button[data-id]\");\r\n  if (!button || !list.contains(button)) return;\r\n  console.log(button.dataset.id);\r\n});\r\n```\r\n\r\n按钮内部可能包含图标，因此不能假定 target 就是 button。closest 向上查找操作元素，容器范围检查避免误处理其他区域。\r\n\r\n## 两个容易混淆的地方\r\n\r\n- 阻止默认动作与阻止传播是不同操作。\r\n- 字符串替换几个危险词无法可靠净化 HTML；纯文本需求直接使用文本 API。\r\n\r\n## 动手完成一个小作品\r\n\r\n制作可动态新增和删除的任务列表，用一个列表监听器处理删除按钮。\r\n\r\n完成后，用下面的标准观察实际产出，而不是只看代码是否写完：\r\n\r\n- 新增项无需逐个重新绑定\r\n- 点击文字与图标均正确定位条目\r\n- 用户输入不被当作 HTML 且按钮可键盘操作\r\n\r\n## 如何留下学习证据\r\n\r\n先完成本节练习，再在底部开始测验。选择、填空、排序与代码阅读自动判分；简答、改错和实战需要你对照参考答案逐项自评。自评不会计入自动正确率，也不代表系统已经执行或审查你的代码。\r\n\r\n把仍说不清的概念写进个人笔记。复习时先尝试回答“动态列表为什么适合事件委托，处理图标点击时应注意什么？”，再核对参考解释。\r\n\r\n## 继续阅读\r\n\r\n[官方资料](https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/Event_bubbling)。资料用于补充概念和边界，本节内容本身可以独立阅读。",
+      "quiz": [
+        {
+          "id": "fe-dom-events-single",
+          "type": "single",
+          "difficulty": "basic",
+          "prompt": "监听器绑定在 ul，点击里面的 button，该监听器中的 currentTarget 是谁？",
+          "explanation": "currentTarget 对应正在执行的监听器所绑定的元素。",
+          "options": [
+            "鼠标图标",
+            "永远是 document",
+            "button",
+            "ul"
+          ],
+          "correctIndex": 3
+        },
+        {
+          "id": "fe-dom-events-multiple",
+          "type": "multiple",
+          "difficulty": "applied",
+          "prompt": "哪些说法正确？",
+          "explanation": "应处理查询为空和监听器生命周期。",
+          "options": [
+            "target 与 currentTarget 可能不同",
+            "重复添加不同函数对象可能导致重复处理",
+            "preventDefault 不等于停止传播",
+            "querySelector 保证总能找到元素"
+          ],
+          "correctIndices": [
+            0,
+            2,
+            1
+          ]
+        },
+        {
+          "id": "fe-dom-events-boolean",
+          "type": "boolean",
+          "difficulty": "basic",
+          "prompt": "调用 preventDefault() 一定会阻止事件继续冒泡。",
+          "explanation": "阻止默认动作与阻止传播是不同操作。",
+          "options": [
+            "正确",
+            "错误"
+          ],
+          "correctIndex": 1
+        },
+        {
+          "id": "fe-dom-events-fill",
+          "type": "fill",
+          "difficulty": "basic",
+          "prompt": "安全显示用户提供的普通文字，可优先设置元素的 ____ 属性。",
+          "explanation": "textContent 把输入作为文字，不会当作 HTML 解析。",
+          "acceptedAnswers": [
+            "textContent"
+          ],
+          "caseSensitive": false
+        },
+        {
+          "id": "fe-dom-events-order",
+          "type": "order",
+          "difficulty": "applied",
+          "prompt": "按常规事件路径从外层到目标再返回排列。",
+          "explanation": "不是所有事件都冒泡，应依据具体事件类型判断。",
+          "options": [
+            "祖先捕获阶段",
+            "祖先冒泡阶段",
+            "目标阶段"
+          ],
+          "correctOrder": [
+            0,
+            2,
+            1
+          ]
+        },
+        {
+          "id": "fe-dom-events-code_reading",
+          "type": "code_reading",
+          "difficulty": "applied",
+          "prompt": "忽略空白文本节点。列表有几个 li 元素？只填数字。",
+          "explanation": "先有两项，再追加一项。此处 innerHTML 是固定可信示例，用户输入不应直接拼入。",
+          "code": "const ul = document.createElement(\"ul\");\nul.innerHTML = \"<li>A</li><li>B</li>\";\nul.append(document.createElement(\"li\"));\nconsole.log(ul.querySelectorAll(\"li\").length);",
+          "language": "javascript",
+          "acceptedAnswers": [
+            "3"
+          ],
+          "caseSensitive": true
+        },
+        {
+          "id": "fe-dom-events-short_answer",
+          "type": "short_answer",
+          "difficulty": "advanced",
+          "prompt": "动态列表为什么适合事件委托，处理图标点击时应注意什么？",
+          "explanation": "祖先监听器可以处理后续新增子项，不必逐个重新绑定。点击图标时 target 可能是内部元素，应使用 closest 找到按钮并限制在容器内，按需清理监听器。",
+          "referenceAnswer": "祖先监听器可以处理后续新增子项，不必逐个重新绑定。点击图标时 target 可能是内部元素，应使用 closest 找到按钮并限制在容器内，按需清理监听器。",
+          "rubric": [
+            "解释动态子项的好处",
+            "处理嵌套图标目标",
+            "确认容器范围或清理策略"
+          ]
+        },
+        {
+          "id": "fe-dom-events-code_fix",
+          "type": "code_fix",
+          "difficulty": "applied",
+          "prompt": "评论只需要普通文字。修复把外部文本插入 HTML 的风险。",
+          "explanation": "字符串替换几个危险词无法可靠净化 HTML；纯文本需求直接使用文本 API。",
+          "code": "function showComment(element, userText) {\n  element.innerHTML = userText;\n}",
+          "language": "javascript",
+          "referenceAnswer": "function showComment(element, userText) {\n  element.textContent = userText;\n}",
+          "rubric": [
+            "将输入当作纯文本",
+            "不靠删除某个单一标签充当通用清洗",
+            "保留文本显示功能"
+          ]
+        },
+        {
+          "id": "fe-dom-events-project",
+          "type": "project",
+          "difficulty": "advanced",
+          "prompt": "制作可动态新增和删除的任务列表，用一个列表监听器处理删除按钮。",
+          "explanation": "使用真实 button 与 data-id，委托处理删除，插入任务名时使用 textContent；支持按钮内部图标点击并保留键盘操作。",
+          "referenceAnswer": "使用真实 button 与 data-id，委托处理删除，插入任务名时使用 textContent；支持按钮内部图标点击并保留键盘操作。",
+          "rubric": [
+            "新增项无需逐个重新绑定",
+            "点击文字与图标均正确定位条目",
+            "用户输入不被当作 HTML 且按钮可键盘操作"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fe-http-fetch",
+      "treeId": "fe-stage-browser",
+      "parentId": "fe-dom-events",
+      "title": "HTTP、Fetch 与请求状态",
+      "resource": "https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch",
+      "question": "搜索框输入从 a 变成 ab，怎样避免 a 的慢响应覆盖 ab？",
+      "answer": "为每轮请求建立取消控制器或递增编号；新请求开始时取消旧请求，更新状态前确认响应属于当前请求。取消不作为普通错误，并处理加载状态的归属。",
+      "content": "# HTTP、Fetch 与请求状态\r\n\r\n## 学完要能做到什么\r\n\r\n能处理 HTTP 错误、解析失败和请求取消，并阻止过期响应覆盖最新查询结果。\r\n\r\n## 核心概念\r\n\r\nHTTP 方法、状态码和响应头共同描述请求与响应。GET 通常用于读取；POST 常用于提交处理。fetch 在网络失败时拒绝，但收到 404 或 500 响应通常仍兑现，因此需要检查 response.ok 或 status。\r\n\r\n响应正文是流，常见的 json() 读取也可能失败；JSON 语法正确不代表字段结构满足业务要求。区分网络异常、HTTP 错误、解析失败与空数据，界面才能给出合适反馈。\r\n\r\n连续搜索可能出现先发请求后返回。AbortController 可以取消不再需要的请求，另外也可用请求编号判断结果是否过期。取消通常不应该展示为普通失败。跨域权限由浏览器与服务端协议决定，no-cors 不能让前端自由读取任意跨域响应。\r\n\r\n## 读懂一个最小例子\r\n\r\n```javascript\r\nasync function getCourses(signal) {\r\n  const response = await fetch(\"/api/courses\", { signal });\r\n  if (!response.ok) throw new Error(`HTTP ${response.status}`);\r\n  const data = await response.json();\r\n  if (!Array.isArray(data)) throw new Error(\"课程数据格式错误\");\r\n  return data;\r\n}\r\n```\r\n\r\n请求取消由传入 signal 控制。HTTP 检查、正文解析和数据结构检查分别覆盖不同失败层；调用方还要管理加载与错误状态。\r\n\r\n## 两个容易混淆的地方\r\n\r\n- 解析只说明正文可被解析为 JSON，仍需校验结构和业务含义。\r\n- fetch 默认不因为 HTTP 500 而拒绝，不能只依赖网络层 catch。\r\n\r\n## 动手完成一个小作品\r\n\r\n实现带加载、空结果、失败重试和取消能力的课程搜索界面。\r\n\r\n完成后，用下面的标准观察实际产出，而不是只看代码是否写完：\r\n\r\n- 过期请求不覆盖当前结果或加载状态\r\n- HTTP 与解析错误有可理解反馈\r\n- 空结果与失败区分且可重新请求\r\n\r\n## 如何留下学习证据\r\n\r\n先完成本节练习，再在底部开始测验。选择、填空、排序与代码阅读自动判分；简答、改错和实战需要你对照参考答案逐项自评。自评不会计入自动正确率，也不代表系统已经执行或审查你的代码。\r\n\r\n把仍说不清的概念写进个人笔记。复习时先尝试回答“搜索框输入从 a 变成 ab，怎样避免 a 的慢响应覆盖 ab？”，再核对参考解释。\r\n\r\n## 继续阅读\r\n\r\n[官方资料](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch)。资料用于补充概念和边界，本节内容本身可以独立阅读。",
+      "quiz": [
+        {
+          "id": "fe-http-fetch-single",
+          "type": "single",
+          "difficulty": "basic",
+          "prompt": "fetch 收到正常传输的 404 响应，通常会怎样？",
+          "explanation": "HTTP 错误状态与网络传输失败不同。",
+          "options": [
+            "兑现为 Response，需自行检查状态",
+            "必然以网络错误拒绝",
+            "自动返回空数组",
+            "自动重试到成功"
+          ],
+          "correctIndex": 0
+        },
+        {
+          "id": "fe-http-fetch-multiple",
+          "type": "multiple",
+          "difficulty": "applied",
+          "prompt": "哪些需要单独考虑？",
+          "explanation": "no-cors 往往得到不可读取的 opaque 响应，并非绕过权限。",
+          "options": [
+            "过期响应覆盖最新结果",
+            "JSON 解析失败",
+            "HTTP 非成功状态",
+            "用 no-cors 就能读取所有跨域 JSON"
+          ],
+          "correctIndices": [
+            2,
+            1,
+            0
+          ]
+        },
+        {
+          "id": "fe-http-fetch-boolean",
+          "type": "boolean",
+          "difficulty": "basic",
+          "prompt": "response.json() 成功，就能保证对象字段符合业务接口约定。",
+          "explanation": "解析只说明正文可被解析为 JSON，仍需校验结构和业务含义。",
+          "options": [
+            "正确",
+            "错误"
+          ],
+          "correctIndex": 1
+        },
+        {
+          "id": "fe-http-fetch-fill",
+          "type": "fill",
+          "difficulty": "basic",
+          "prompt": "用于取消 fetch 请求的控制器构造器是 ____。",
+          "explanation": "把控制器的 signal 传给 fetch，之后可调用 abort。",
+          "acceptedAnswers": [
+            "AbortController"
+          ],
+          "caseSensitive": false
+        },
+        {
+          "id": "fe-http-fetch-order",
+          "type": "order",
+          "difficulty": "applied",
+          "prompt": "按处理响应的约定管线排序。",
+          "explanation": "每一步都有自己的失败处理，不要把错误响应直接作为正常数据使用。",
+          "options": [
+            "检查 HTTP 状态",
+            "检查数据结构并更新界面",
+            "解析 JSON 正文",
+            "等待 fetch 响应"
+          ],
+          "correctOrder": [
+            3,
+            0,
+            2,
+            1
+          ]
+        },
+        {
+          "id": "fe-http-fetch-code_reading",
+          "type": "code_reading",
+          "difficulty": "applied",
+          "prompt": "此代码会打印什么？",
+          "explanation": "ok 为 false，选择错误分支并保留状态码。",
+          "code": "const response = { ok: false, status: 403 };\nconsole.log(response.ok ? \"success\" : `HTTP ${response.status}`);",
+          "language": "javascript",
+          "acceptedAnswers": [
+            "HTTP 403"
+          ],
+          "caseSensitive": true
+        },
+        {
+          "id": "fe-http-fetch-short_answer",
+          "type": "short_answer",
+          "difficulty": "advanced",
+          "prompt": "搜索框输入从 a 变成 ab，怎样避免 a 的慢响应覆盖 ab？",
+          "explanation": "为每轮请求建立取消控制器或递增编号；新请求开始时取消旧请求，更新状态前确认响应属于当前请求。取消不作为普通错误，并处理加载状态的归属。",
+          "referenceAnswer": "为每轮请求建立取消控制器或递增编号；新请求开始时取消旧请求，更新状态前确认响应属于当前请求。取消不作为普通错误，并处理加载状态的归属。",
+          "rubric": [
+            "说明响应乱序原因",
+            "提出取消或编号保护",
+            "覆盖错误和加载状态的过期更新"
+          ]
+        },
+        {
+          "id": "fe-http-fetch-code_fix",
+          "type": "code_fix",
+          "difficulty": "applied",
+          "prompt": "这个读取函数把 HTTP 500 也当成成功。补齐必要检查并保持异步返回数据。",
+          "explanation": "fetch 默认不因为 HTTP 500 而拒绝，不能只依赖网络层 catch。",
+          "code": "async function load() {\n  const r = await fetch(\"/api/items\");\n  return r.json();\n}",
+          "language": "javascript",
+          "referenceAnswer": "async function load() {\n  const r = await fetch(\"/api/items\");\n  if (!r.ok) throw new Error(`HTTP ${r.status}`);\n  return r.json();\n}",
+          "rubric": [
+            "在解析正常业务数据前检查 ok/status",
+            "失败向调用者报告",
+            "成功仍返回解析结果"
+          ]
+        },
+        {
+          "id": "fe-http-fetch-project",
+          "type": "project",
+          "difficulty": "advanced",
+          "prompt": "实现带加载、空结果、失败重试和取消能力的课程搜索界面。",
+          "explanation": "请求使用查询参数编码；为连续输入取消或忽略过期请求，分别展示加载、成功、空结果与失败。保留搜索词并提供重试。",
+          "referenceAnswer": "请求使用查询参数编码；为连续输入取消或忽略过期请求，分别展示加载、成功、空结果与失败。保留搜索词并提供重试。",
+          "rubric": [
+            "过期请求不覆盖当前结果或加载状态",
+            "HTTP 与解析错误有可理解反馈",
+            "空结果与失败区分且可重新请求"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fe-storage-security",
+      "treeId": "fe-stage-browser",
+      "parentId": "fe-http-fetch",
+      "title": "浏览器存储与安全边界",
+      "resource": "https://developer.mozilla.org/en-US/docs/Web/Security",
+      "question": "为什么不应把 localStorage 当作敏感信息保险箱或唯一备份？",
+      "answer": "同源脚本可以读取，XSS 可能窃取数据；它也可能因用户清理、配额或浏览器策略而不可用。应减少敏感持久化，使用合适会话机制并提供导出或服务端持久化策略。",
+      "content": "# 浏览器存储与安全边界\r\n\r\n## 学完要能做到什么\r\n\r\n能为偏好设置和结构化数据选择存储方式，识别 XSS、CSRF 与敏感凭证的边界。\r\n\r\n## 核心概念\r\n\r\nlocalStorage 是同源、同步、字符串键值存储，适合少量偏好；读写和 JSON 解析都可能失败。IndexedDB 更适合较多结构化数据及事务。浏览器存储可能被清理或受配额限制，不能把它当作永不丢失的唯一备份。\r\n\r\n同源限制协议、主机和端口的组合。localStorage 中的数据可被同源脚本读取，不能因为“存在本机”就认为敏感信息安全。HttpOnly Cookie 限制脚本直接读取，但仍要正确配置 Secure、SameSite 与服务端权限。\r\n\r\nXSS 让恶意脚本进入可信页面；减少危险 HTML 注入、正确编码与合理 CSP 都是防线。CSRF 则利用浏览器自动携带的凭证发起非预期请求，需要结合 SameSite、CSRF token 或来源检查等服务端策略，不能把二者混为同一问题。\r\n\r\n## 读懂一个最小例子\r\n\r\n```javascript\r\nfunction readTheme(storage) {\r\n  try {\r\n    const value = storage.getItem(\"theme\");\r\n    return value === \"dark\" ? \"dark\" : \"light\";\r\n  } catch {\r\n    return \"light\";\r\n  }\r\n}\r\n```\r\n\r\n主题是低敏感的小字符串，读取失败可以安全回退。传入 storage 让依赖明确；持久化失败应有合理降级，而不是让整个页面无法加载。\r\n\r\n## 两个容易混淆的地方\r\n\r\n- HttpOnly 只是限制直接读取 Cookie，其他攻击面仍需防护。\r\n- JSON.parse 成功也不保证数据结构正确，存储值同样需要验证。\r\n\r\n## 动手完成一个小作品\r\n\r\n为学习笔记应用设计持久化方案：偏好、离线笔记、登录会话分别如何保存？\r\n\r\n完成后，用下面的标准观察实际产出，而不是只看代码是否写完：\r\n\r\n- 三类数据按用途区别处理\r\n- 说明 XSS 与会话边界\r\n- 有存储失败和数据恢复策略\r\n\r\n## 如何留下学习证据\r\n\r\n先完成本节练习，再在底部开始测验。选择、填空、排序与代码阅读自动判分；简答、改错和实战需要你对照参考答案逐项自评。自评不会计入自动正确率，也不代表系统已经执行或审查你的代码。\r\n\r\n把仍说不清的概念写进个人笔记。复习时先尝试回答“为什么不应把 localStorage 当作敏感信息保险箱或唯一备份？”，再核对参考解释。\r\n\r\n## 继续阅读\r\n\r\n[官方资料](https://developer.mozilla.org/en-US/docs/Web/Security)。资料用于补充概念和边界，本节内容本身可以独立阅读。",
+      "quiz": [
+        {
+          "id": "fe-storage-security-single",
+          "type": "single",
+          "difficulty": "basic",
+          "prompt": "大量结构化离线数据通常更适合哪种浏览器存储？",
+          "explanation": "IndexedDB 提供异步结构化数据存储与事务。",
+          "options": [
+            "IndexedDB",
+            "只用一个 CSS 变量",
+            "把密码放到 localStorage",
+            "把所有数据塞进 URL"
+          ],
+          "correctIndex": 0
+        },
+        {
+          "id": "fe-storage-security-multiple",
+          "type": "multiple",
+          "difficulty": "applied",
+          "prompt": "哪些说法正确？",
+          "explanation": "存储位置本身不消除脚本注入及会话使用风险。",
+          "options": [
+            "localStorage 读写可能失败",
+            "同源脚本可读取 localStorage",
+            "把令牌放浏览器就自动不受 XSS 影响",
+            "HttpOnly 限制脚本读取 Cookie"
+          ],
+          "correctIndices": [
+            0,
+            1,
+            3
+          ]
+        },
+        {
+          "id": "fe-storage-security-boolean",
+          "type": "boolean",
+          "difficulty": "basic",
+          "prompt": "HttpOnly Cookie 能让整个应用自动免疫 XSS 和 CSRF。",
+          "explanation": "HttpOnly 只是限制直接读取 Cookie，其他攻击面仍需防护。",
+          "options": [
+            "正确",
+            "错误"
+          ],
+          "correctIndex": 1
+        },
+        {
+          "id": "fe-storage-security-fill",
+          "type": "fill",
+          "difficulty": "basic",
+          "prompt": "限制 JavaScript 直接读取某个 Cookie 的属性是 ____。",
+          "explanation": "Cookie 是否随请求发送还由其他属性和请求环境决定。",
+          "acceptedAnswers": [
+            "HttpOnly"
+          ],
+          "caseSensitive": false
+        },
+        {
+          "id": "fe-storage-security-order",
+          "type": "order",
+          "difficulty": "applied",
+          "prompt": "按读取带版本的本地设置流程排序。",
+          "explanation": "每步都需允许失败，不能把不可信存储直接当成正确对象。",
+          "options": [
+            "获取存储中的原始字符串",
+            "采用有效设置或回退默认值",
+            "尝试解析 JSON",
+            "检查版本及字段约束"
+          ],
+          "correctOrder": [
+            0,
+            2,
+            3,
+            1
+          ]
+        },
+        {
+          "id": "fe-storage-security-code_reading",
+          "type": "code_reading",
+          "difficulty": "applied",
+          "prompt": "输出什么？按空格分隔。",
+          "explanation": "主机名相同，但协议不同，所以不是同源。默认 HTTPS 端口不会改变这个结论。",
+          "code": "const a = new URL(\"https://learn.example:443/a\");\nconst b = new URL(\"http://learn.example/a\");\nconsole.log(a.origin === b.origin, a.hostname === b.hostname);",
+          "language": "javascript",
+          "acceptedAnswers": [
+            "false true"
+          ],
+          "caseSensitive": true
+        },
+        {
+          "id": "fe-storage-security-short_answer",
+          "type": "short_answer",
+          "difficulty": "advanced",
+          "prompt": "为什么不应把 localStorage 当作敏感信息保险箱或唯一备份？",
+          "explanation": "同源脚本可以读取，XSS 可能窃取数据；它也可能因用户清理、配额或浏览器策略而不可用。应减少敏感持久化，使用合适会话机制并提供导出或服务端持久化策略。",
+          "referenceAnswer": "同源脚本可以读取，XSS 可能窃取数据；它也可能因用户清理、配额或浏览器策略而不可用。应减少敏感持久化，使用合适会话机制并提供导出或服务端持久化策略。",
+          "rubric": [
+            "覆盖脚本可读取风险",
+            "覆盖清理或失败风险",
+            "给出与数据类型相符的替代策略"
+          ]
+        },
+        {
+          "id": "fe-storage-security-code_fix",
+          "type": "code_fix",
+          "difficulty": "applied",
+          "prompt": "修复损坏或不可用的本地存储会使页面崩溃的问题，并只接受字符串数组。",
+          "explanation": "JSON.parse 成功也不保证数据结构正确，存储值同样需要验证。",
+          "code": "function readNames() { return JSON.parse(localStorage.getItem(\"names\")); }",
+          "language": "javascript",
+          "referenceAnswer": "function readNames() {\n  try {\n    const value = JSON.parse(localStorage.getItem(\"names\") ?? \"[]\");\n    return Array.isArray(value) && value.every(x => typeof x === \"string\") ? value : [];\n  } catch { return []; }\n}",
+          "rubric": [
+            "捕获存储访问与解析异常",
+            "验证数组及元素类型",
+            "不存在或损坏时回退为空数组"
+          ]
+        },
+        {
+          "id": "fe-storage-security-project",
+          "type": "project",
+          "difficulty": "advanced",
+          "prompt": "为学习笔记应用设计持久化方案：偏好、离线笔记、登录会话分别如何保存？",
+          "explanation": "少量偏好可存 localStorage，结构化离线笔记可用 IndexedDB 并提供导出或同步；会话依实际服务端方案配置 Cookie 等机制，不持久化不必要的秘密。说明清理、失败与恢复行为。",
+          "referenceAnswer": "少量偏好可存 localStorage，结构化离线笔记可用 IndexedDB 并提供导出或同步；会话依实际服务端方案配置 Cookie 等机制，不持久化不必要的秘密。说明清理、失败与恢复行为。",
+          "rubric": [
+            "三类数据按用途区别处理",
+            "说明 XSS 与会话边界",
+            "有存储失败和数据恢复策略"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fe-ts-narrowing",
+      "treeId": "fe-stage-typescript",
+      "parentId": null,
+      "title": "TypeScript 类型与收窄",
+      "resource": "https://www.typescriptlang.org/docs/handbook/2/narrowing.html",
+      "question": "怎样避免 loading、error、data 三个独立字段出现互相矛盾的状态？",
+      "answer": "用 status 字面量构成可辨识联合，每个分支只带需要的字段。读取时先按 status 收窄；来自外部的数据要经过运行时校验，不能仅靠断言。",
+      "content": "# TypeScript 类型与收窄\r\n\r\n## 学完要能做到什么\r\n\r\n能用联合类型表达状态，通过运行时检查收窄 unknown，并分清类型断言和数据校验。\r\n\r\n## 核心概念\r\n\r\nTypeScript 为 JavaScript 提供静态类型分析。大多数类型信息编译后被擦除，不会自动检查网络响应。as 断言只是对编译器作出承诺，不会把字符串变成数字，也不会检查远程对象是否真实满足接口。\r\n\r\nunknown 要求你先确定类型再使用，比直接传播 any 更能保留边界检查。typeof、instanceof、in 和用户定义的类型守卫可以收窄类型；注意 typeof null 也是 object，因此对象校验要排除 null。\r\n\r\n可辨识联合通过字面量字段表达互斥状态，例如 status 为 loading、success 或 error。只在 success 分支提供 data，可让错误组合更难出现；可利用 never 做穷尽处理。\r\n\r\n## 读懂一个最小例子\r\n\r\n```typescript\r\ntype Result =\r\n  | { status: \"loading\" }\r\n  | { status: \"success\"; count: number }\r\n  | { status: \"error\"; message: string };\r\nfunction describe(result: Result): string {\r\n  switch (result.status) {\r\n    case \"loading\": return \"加载中\";\r\n    case \"success\": return `共 ${result.count} 项`;\r\n    case \"error\": return result.message;\r\n  }\r\n}\r\n```\r\n\r\n检查 status 后，编译器知道分支中哪些字段存在。运行时输入仍要先校验，不能直接把任意 JSON 断言成 Result。\r\n\r\n## 两个容易混淆的地方\r\n\r\n- 类型信息通常会被擦除，边界数据需要运行时校验。\r\n- as string 不能让数字获得字符串方法。\r\n\r\n## 动手完成一个小作品\r\n\r\n为课程加载过程定义 loading、success、error 三种状态，并编写显示文案函数。\r\n\r\n完成后，用下面的标准观察实际产出，而不是只看代码是否写完：\r\n\r\n- 互斥状态不会同时携带矛盾字段\r\n- 各分支访问字段受到类型约束\r\n- 说明外部数据如何被校验\r\n\r\n## 如何留下学习证据\r\n\r\n先完成本节练习，再在底部开始测验。选择、填空、排序与代码阅读自动判分；简答、改错和实战需要你对照参考答案逐项自评。自评不会计入自动正确率，也不代表系统已经执行或审查你的代码。\r\n\r\n把仍说不清的概念写进个人笔记。复习时先尝试回答“怎样避免 loading、error、data 三个独立字段出现互相矛盾的状态？”，再核对参考解释。\r\n\r\n## 继续阅读\r\n\r\n[官方资料](https://www.typescriptlang.org/docs/handbook/2/narrowing.html)。资料用于补充概念和边界，本节内容本身可以独立阅读。",
+      "quiz": [
+        {
+          "id": "fe-ts-narrowing-single",
+          "type": "single",
+          "difficulty": "basic",
+          "prompt": "把远程 JSON 写成 value as User 会发生什么？",
+          "explanation": "断言不会生成对应的数据检查逻辑。",
+          "options": [
+            "自动补齐缺失字段",
+            "自动过滤危险字符串",
+            "必然将数据保存到数据库",
+            "只影响静态类型判断，不做运行时校验"
+          ],
+          "correctIndex": 3
+        },
+        {
+          "id": "fe-ts-narrowing-multiple",
+          "type": "multiple",
+          "difficulty": "applied",
+          "prompt": "哪些操作可以帮助收窄类型？",
+          "explanation": "收窄需要可支持结论的检查；断言本身不证明外部数据有效。",
+          "options": [
+            "检查联合类型的 status 字段",
+            "排除 null 后检查对象属性",
+            "typeof value === \"string\"",
+            "只写 as 并认为已经校验了输入"
+          ],
+          "correctIndices": [
+            2,
+            0,
+            1
+          ]
+        },
+        {
+          "id": "fe-ts-narrowing-boolean",
+          "type": "boolean",
+          "difficulty": "basic",
+          "prompt": "TypeScript 接口会自动在运行时拒绝服务器返回的错误 JSON。",
+          "explanation": "类型信息通常会被擦除，边界数据需要运行时校验。",
+          "options": [
+            "正确",
+            "错误"
+          ],
+          "correctIndex": 1
+        },
+        {
+          "id": "fe-ts-narrowing-fill",
+          "type": "fill",
+          "difficulty": "basic",
+          "prompt": "表示暂时不知道具体类型、使用前需要检查的类型关键字是 ____。",
+          "explanation": "unknown 保留“需要证明才能使用”的约束。",
+          "acceptedAnswers": [
+            "unknown"
+          ],
+          "caseSensitive": false
+        },
+        {
+          "id": "fe-ts-narrowing-order",
+          "type": "order",
+          "difficulty": "applied",
+          "prompt": "处理不可信 JSON 中的 name 字段，按安全访问顺序排序。",
+          "explanation": "类型约束与运行时检查共同建立可信边界。",
+          "options": [
+            "以字符串使用 name",
+            "检查 name 存在且为字符串",
+            "排除 null 并确认是对象",
+            "接收为 unknown"
+          ],
+          "correctOrder": [
+            3,
+            2,
+            1,
+            0
+          ]
+        },
+        {
+          "id": "fe-ts-narrowing-code_reading",
+          "type": "code_reading",
+          "difficulty": "applied",
+          "prompt": "代码运行后输出什么？",
+          "explanation": "number 分支调用 toFixed，返回保留一位小数的字符串。",
+          "code": "function label(value: string | number) {\n  return typeof value === \"number\" ? value.toFixed(1) : value.toUpperCase();\n}\nconsole.log(label(2));",
+          "language": "typescript",
+          "acceptedAnswers": [
+            "2.0"
+          ],
+          "caseSensitive": true
+        },
+        {
+          "id": "fe-ts-narrowing-short_answer",
+          "type": "short_answer",
+          "difficulty": "advanced",
+          "prompt": "怎样避免 loading、error、data 三个独立字段出现互相矛盾的状态？",
+          "explanation": "用 status 字面量构成可辨识联合，每个分支只带需要的字段。读取时先按 status 收窄；来自外部的数据要经过运行时校验，不能仅靠断言。",
+          "referenceAnswer": "用 status 字面量构成可辨识联合，每个分支只带需要的字段。读取时先按 status 收窄；来自外部的数据要经过运行时校验，不能仅靠断言。",
+          "rubric": [
+            "给出互斥状态结构",
+            "说明按辨识字段收窄",
+            "保留运行时校验边界"
+          ]
+        },
+        {
+          "id": "fe-ts-narrowing-code_fix",
+          "type": "code_fix",
+          "difficulty": "applied",
+          "prompt": "不要用断言掩盖错误输入。让函数只接受运行时真正的字符串，否则抛出错误。",
+          "explanation": "as string 不能让数字获得字符串方法。",
+          "code": "function upper(value: unknown): string {\n  return (value as string).toUpperCase();\n}",
+          "language": "typescript",
+          "referenceAnswer": "function upper(value: unknown): string {\n  if (typeof value !== \"string\") throw new Error(\"需要字符串\");\n  return value.toUpperCase();\n}",
+          "rubric": [
+            "检查真实运行时类型",
+            "非法输入有明确处理",
+            "不使用 any 或断言绕过检查"
+          ]
+        },
+        {
+          "id": "fe-ts-narrowing-project",
+          "type": "project",
+          "difficulty": "advanced",
+          "prompt": "为课程加载过程定义 loading、success、error 三种状态，并编写显示文案函数。",
+          "explanation": "用可辨识联合表达数据和错误所属状态，switch 分支读取合法字段；补充网络数据进入 success 前的结构校验说明。",
+          "referenceAnswer": "用可辨识联合表达数据和错误所属状态，switch 分支读取合法字段；补充网络数据进入 success 前的结构校验说明。",
+          "rubric": [
+            "互斥状态不会同时携带矛盾字段",
+            "各分支访问字段受到类型约束",
+            "说明外部数据如何被校验"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fe-ts-generics",
+      "treeId": "fe-stage-typescript",
+      "parentId": "fe-ts-narrowing",
+      "title": "泛型、约束与可复用接口",
+      "resource": "https://www.typescriptlang.org/docs/handbook/2/generics.html",
+      "question": "什么时候一个函数值得使用泛型，而不是直接接受固定类型？",
+      "answer": "当函数对多种类型执行同样操作，同时需要保留输入、键或返回值之间的关系时。仅返回 boolean 且只需固定字段时，普通接口可能更简单；不要用泛型替代运行时校验。",
+      "content": "# 泛型、约束与可复用接口\r\n\r\n## 学完要能做到什么\r\n\r\n能用泛型保留输入与输出之间的类型关系，并用 keyof 约束可访问属性。\r\n\r\n## 核心概念\r\n\r\n泛型不是给所有参数贴上任意类型，而是保留多个位置之间的关系。identity<T>(value:T):T 表示返回类型与输入类型一致；若改成 any，调用方会丢失原本有用的约束。\r\n\r\n约束用于说明函数需要哪些能力。T extends {id:string} 允许保留更多字段，同时保证可以读取 id。K extends keyof T 表示键必须属于 T，返回 T[K] 才能继续精确描述属性值。\r\n\r\n类型可推断时通常不必手写类型实参。不要为了抽象而增加无法表达关系的泛型，也不要用复杂条件类型掩盖简单业务模型。泛型同样属于静态层，不会自动验证 HTTP 数据或创建运行时值。\r\n\r\n## 读懂一个最小例子\r\n\r\n```typescript\r\nfunction getProperty<T, K extends keyof T>(object: T, key: K): T[K] {\r\n  return object[key];\r\n}\r\nconst course = { title: \"CSS\", minutes: 20 };\r\nconst minutes = getProperty(course, \"minutes\");\r\n```\r\n\r\nminutes 保留 number 类型，错误键会受到静态约束。这里的泛型表达对象、键和值的关系，而不是放弃检查。\r\n\r\n## 两个容易混淆的地方\r\n\r\n- any 会放弃相关检查，调用方容易丢失类型信息。\r\n- 返回类型应反映空数组可能性，而不只是换掉 any 的拼写。\r\n\r\n## 动手完成一个小作品\r\n\r\n实现按 id 查找条目的泛型函数，适用于课程和任务两种不同对象。\r\n\r\n完成后，用下面的标准观察实际产出，而不是只看代码是否写完：\r\n\r\n- 只约束算法实际需要的 id\r\n- 保留不同对象的附加字段类型\r\n- 无匹配结果被调用方明确处理\r\n\r\n## 如何留下学习证据\r\n\r\n先完成本节练习，再在底部开始测验。选择、填空、排序与代码阅读自动判分；简答、改错和实战需要你对照参考答案逐项自评。自评不会计入自动正确率，也不代表系统已经执行或审查你的代码。\r\n\r\n把仍说不清的概念写进个人笔记。复习时先尝试回答“什么时候一个函数值得使用泛型，而不是直接接受固定类型？”，再核对参考解释。\r\n\r\n## 继续阅读\r\n\r\n[官方资料](https://www.typescriptlang.org/docs/handbook/2/generics.html)。资料用于补充概念和边界，本节内容本身可以独立阅读。",
+      "quiz": [
+        {
+          "id": "fe-ts-generics-single",
+          "type": "single",
+          "difficulty": "basic",
+          "prompt": "泛型函数 identity<T>(value:T):T 的核心价值是什么？",
+          "explanation": "同一个 T 连接输入与输出。",
+          "options": [
+            "把所有值自动序列化",
+            "保证网络请求一定成功",
+            "保留输入和返回值的类型关系",
+            "让所有非法输入通过"
+          ],
+          "correctIndex": 2
+        },
+        {
+          "id": "fe-ts-generics-multiple",
+          "type": "multiple",
+          "difficulty": "applied",
+          "prompt": "哪些说法正确？",
+          "explanation": "泛型是静态类型机制。",
+          "options": [
+            "泛型会自动在运行时校验 JSON",
+            "keyof T 描述 T 的键类型",
+            "extends 可约束泛型所需能力",
+            "泛型常可由实参推断"
+          ],
+          "correctIndices": [
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "id": "fe-ts-generics-boolean",
+          "type": "boolean",
+          "difficulty": "basic",
+          "prompt": "把所有泛型参数替换为 any，通常仍能保留同等精度的输入输出类型关系。",
+          "explanation": "any 会放弃相关检查，调用方容易丢失类型信息。",
+          "options": [
+            "正确",
+            "错误"
+          ],
+          "correctIndex": 1
+        },
+        {
+          "id": "fe-ts-generics-fill",
+          "type": "fill",
+          "difficulty": "basic",
+          "prompt": "提取对象类型键的联合类型，应使用哪个运算符？",
+          "explanation": "keyof 与索引访问类型 T[K] 经常配合使用。",
+          "acceptedAnswers": [
+            "keyof"
+          ],
+          "caseSensitive": false
+        },
+        {
+          "id": "fe-ts-generics-order",
+          "type": "order",
+          "difficulty": "applied",
+          "prompt": "按设计安全属性读取函数的依赖顺序排序。",
+          "explanation": "先表达关系，再实现与关系一致的读取。",
+          "options": [
+            "约束键 K extends keyof T",
+            "在函数体返回 object[key]",
+            "将返回类型声明为 T[K]",
+            "定义对象类型参数 T"
+          ],
+          "correctOrder": [
+            3,
+            0,
+            2,
+            1
+          ]
+        },
+        {
+          "id": "fe-ts-generics-code_reading",
+          "type": "code_reading",
+          "difficulty": "applied",
+          "prompt": "代码运行后输出什么？",
+          "explanation": "泛型保留元素类型；首项是 HTML，空数组需要考虑 undefined。",
+          "code": "function first<T>(items: readonly T[]): T | undefined { return items[0]; }\nconsole.log(first([\"HTML\", \"CSS\"]));",
+          "language": "typescript",
+          "acceptedAnswers": [
+            "HTML"
+          ],
+          "caseSensitive": true
+        },
+        {
+          "id": "fe-ts-generics-short_answer",
+          "type": "short_answer",
+          "difficulty": "advanced",
+          "prompt": "什么时候一个函数值得使用泛型，而不是直接接受固定类型？",
+          "explanation": "当函数对多种类型执行同样操作，同时需要保留输入、键或返回值之间的关系时。仅返回 boolean 且只需固定字段时，普通接口可能更简单；不要用泛型替代运行时校验。",
+          "referenceAnswer": "当函数对多种类型执行同样操作，同时需要保留输入、键或返回值之间的关系时。仅返回 boolean 且只需固定字段时，普通接口可能更简单；不要用泛型替代运行时校验。",
+          "rubric": [
+            "指出关系保留而非任意放宽",
+            "给出适用例子",
+            "说明不必泛型化的情况或静态边界"
+          ]
+        },
+        {
+          "id": "fe-ts-generics-code_fix",
+          "type": "code_fix",
+          "difficulty": "applied",
+          "prompt": "去掉 any，同时保留调用方数组元素类型并表达空数组结果。",
+          "explanation": "返回类型应反映空数组可能性，而不只是换掉 any 的拼写。",
+          "code": "function first(items: any[]): any { return items[0]; }",
+          "language": "typescript",
+          "referenceAnswer": "function first<T>(items: readonly T[]): T | undefined {\n  return items[0];\n}",
+          "rubric": [
+            "用泛型连接元素和返回类型",
+            "包含空数组的 undefined",
+            "不修改传入数组"
+          ]
+        },
+        {
+          "id": "fe-ts-generics-project",
+          "type": "project",
+          "difficulty": "advanced",
+          "prompt": "实现按 id 查找条目的泛型函数，适用于课程和任务两种不同对象。",
+          "explanation": "约束 T extends {id:string}，返回 T | undefined。给出两种输入示例，展示返回值保留各自附加字段，并处理没有匹配的情况。",
+          "referenceAnswer": "约束 T extends {id:string}，返回 T | undefined。给出两种输入示例，展示返回值保留各自附加字段，并处理没有匹配的情况。",
+          "rubric": [
+            "只约束算法实际需要的 id",
+            "保留不同对象的附加字段类型",
+            "无匹配结果被调用方明确处理"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fe-react-components",
+      "treeId": "fe-stage-react",
+      "parentId": null,
+      "title": "React 组件、Props 与列表",
+      "resource": "https://react.dev/learn/passing-props-to-a-component",
+      "question": "为什么可重排输入列表使用数组索引 key 容易出问题？",
+      "answer": "React 会按 key 复用组件。索引跟随位置而非业务条目，重排后局部状态或输入可能被复用给另一个条目；稳定 ID 能让身份跟随数据。",
+      "content": "# React 组件、Props 与列表\r\n\r\n## 学完要能做到什么\r\n\r\n能把界面拆成有明确输入的组件，用稳定 key 维持列表身份，并保持渲染过程可预测。\r\n\r\n## 核心概念\r\n\r\nReact 组件根据 props、state 和 context 描述界面。props 是只读输入；渲染应避免修改外部变量或直接发出请求。事件处理器承接用户动作，副作用在合适的生命周期中与外部系统同步。\r\n\r\n组件边界适合围绕独立职责和重复结构，而不是把每个 div 都拆成文件。数据从父级传入，操作通过回调表达；避免子组件偷偷修改父级传下来的对象。\r\n\r\n列表 key 帮助 React 识别同级元素身份。使用稳定业务 ID，不能用每次渲染的新随机数；可重排列表中使用索引可能让输入状态跟错条目。key 是 React 的特殊属性，需要 ID 时仍应显式传给组件。\r\n\r\n## 读懂一个最小例子\r\n\r\n```jsx\r\nfunction CourseCard({ course, onSelect }) {\r\n  return <button onClick={() => onSelect(course.id)}>{course.title}</button>;\r\n}\r\nfunction CourseList({ courses, onSelect }) {\r\n  return <div>{courses.map(course =>\r\n    <CourseCard key={course.id} course={course} onSelect={onSelect} />\r\n  )}</div>;\r\n}\r\n```\r\n\r\n父组件拥有数据和选择行为；卡片描述展示与点击意图。key 表达列表身份，course.id 通过普通 props 提供给业务代码。\r\n\r\n## 两个容易混淆的地方\r\n\r\n- key 是特殊属性，需要在组件中使用时应另传 id 等普通 prop。\r\n- 事件属性需要一个可调用处理器，不能在渲染时执行用户动作。\r\n\r\n## 动手完成一个小作品\r\n\r\n实现可排序的课程卡片列表，卡片有标题、简述和学习按钮，由父级记录当前课程。\r\n\r\n完成后，用下面的标准观察实际产出，而不是只看代码是否写完：\r\n\r\n- 组件职责与输入输出明确\r\n- 重排后 ID 和选择仍一致\r\n- 操作由事件触发且不修改 props\r\n\r\n## 如何留下学习证据\r\n\r\n先完成本节练习，再在底部开始测验。选择、填空、排序与代码阅读自动判分；简答、改错和实战需要你对照参考答案逐项自评。自评不会计入自动正确率，也不代表系统已经执行或审查你的代码。\r\n\r\n把仍说不清的概念写进个人笔记。复习时先尝试回答“为什么可重排输入列表使用数组索引 key 容易出问题？”，再核对参考解释。\r\n\r\n## 继续阅读\r\n\r\n[官方资料](https://react.dev/learn/passing-props-to-a-component)。资料用于补充概念和边界，本节内容本身可以独立阅读。",
+      "quiz": [
+        {
+          "id": "fe-react-components-single",
+          "type": "single",
+          "difficulty": "basic",
+          "prompt": "可增删、重排的课程列表应优先使用什么作为 key？",
+          "explanation": "稳定业务 ID 能跟随条目身份而不是当前位置。",
+          "options": [
+            "所有项共用同一个字符串",
+            "当前数组索引，不考虑变化",
+            "稳定的课程 ID",
+            "每次 render 生成的 Math.random()"
+          ],
+          "correctIndex": 2
+        },
+        {
+          "id": "fe-react-components-multiple",
+          "type": "multiple",
+          "difficulty": "applied",
+          "prompt": "哪些做法符合组件数据流？",
+          "explanation": "修改输入会让数据变化难以追踪。",
+          "options": [
+            "列表项使用稳定 ID",
+            "在渲染时直接修改父级传来的对象",
+            "props 作为只读输入",
+            "通过回调通知父级用户操作"
+          ],
+          "correctIndices": [
+            2,
+            3,
+            0
+          ]
+        },
+        {
+          "id": "fe-react-components-boolean",
+          "type": "boolean",
+          "difficulty": "basic",
+          "prompt": "给组件设置 key 后，该组件可以直接从 props.key 读取同一个值。",
+          "explanation": "key 是特殊属性，需要在组件中使用时应另传 id 等普通 prop。",
+          "options": [
+            "正确",
+            "错误"
+          ],
+          "correctIndex": 1
+        },
+        {
+          "id": "fe-react-components-fill",
+          "type": "fill",
+          "difficulty": "basic",
+          "prompt": "用于标识同级列表元素身份的 React 属性是 ____。",
+          "explanation": "它应在同级唯一且跨渲染稳定。",
+          "acceptedAnswers": [
+            "key"
+          ],
+          "caseSensitive": false
+        },
+        {
+          "id": "fe-react-components-order",
+          "type": "order",
+          "difficulty": "applied",
+          "prompt": "按一次父子交互的数据流排序。",
+          "explanation": "子组件表达意图，拥有状态的一层决定实际更新。",
+          "options": [
+            "子组件调用回调传递条目 ID",
+            "父组件传入数据与回调",
+            "子组件展示输入并接收点击",
+            "父组件更新数据并触发重新渲染"
+          ],
+          "correctOrder": [
+            1,
+            2,
+            0,
+            3
+          ]
+        },
+        {
+          "id": "fe-react-components-code_reading",
+          "type": "code_reading",
+          "difficulty": "applied",
+          "prompt": "按钮上可见的文字是什么？只填文字。",
+          "explanation": "JSX 花括号读取传入的字符串并作为文本渲染。",
+          "code": "function Greeting({ name }) { return <button>你好，{name}</button>; }\n// 使用：<Greeting name=\"小林\" />",
+          "language": "jsx",
+          "acceptedAnswers": [
+            "你好，小林"
+          ],
+          "caseSensitive": true
+        },
+        {
+          "id": "fe-react-components-short_answer",
+          "type": "short_answer",
+          "difficulty": "advanced",
+          "prompt": "为什么可重排输入列表使用数组索引 key 容易出问题？",
+          "explanation": "React 会按 key 复用组件。索引跟随位置而非业务条目，重排后局部状态或输入可能被复用给另一个条目；稳定 ID 能让身份跟随数据。",
+          "referenceAnswer": "React 会按 key 复用组件。索引跟随位置而非业务条目，重排后局部状态或输入可能被复用给另一个条目；稳定 ID 能让身份跟随数据。",
+          "rubric": [
+            "说明复用按 key 判断",
+            "描述重排造成的错位",
+            "给出稳定业务 ID 方案"
+          ]
+        },
+        {
+          "id": "fe-react-components-code_fix",
+          "type": "code_fix",
+          "difficulty": "applied",
+          "prompt": "修复渲染时立即调用处理函数的问题，要求点击才传入当前 ID。",
+          "explanation": "事件属性需要一个可调用处理器，不能在渲染时执行用户动作。",
+          "code": "<button onClick={onSelect(course.id)}>学习</button>",
+          "language": "jsx",
+          "referenceAnswer": "<button onClick={() => onSelect(course.id)}>学习</button>",
+          "rubric": [
+            "传递函数而不是调用结果",
+            "只在点击时调用",
+            "保留当前 course.id"
+          ]
+        },
+        {
+          "id": "fe-react-components-project",
+          "type": "project",
+          "difficulty": "advanced",
+          "prompt": "实现可排序的课程卡片列表，卡片有标题、简述和学习按钮，由父级记录当前课程。",
+          "explanation": "列表用业务 ID 作 key，卡片用 props 接收内容并通过回调回传 ID；改变排序后选择与条目保持一致，不在卡片内修改原课程对象。",
+          "referenceAnswer": "列表用业务 ID 作 key，卡片用 props 接收内容并通过回调回传 ID；改变排序后选择与条目保持一致，不在卡片内修改原课程对象。",
+          "rubric": [
+            "组件职责与输入输出明确",
+            "重排后 ID 和选择仍一致",
+            "操作由事件触发且不修改 props"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fe-react-state",
+      "treeId": "fe-stage-react",
+      "parentId": "fe-react-components",
+      "title": "状态、派生数据与副作用",
+      "resource": "https://react.dev/learn/synchronizing-with-effects",
+      "question": "为什么不应把 filteredItems 同时保存在 state，再用 effect 跟随 items 和 query？",
+      "answer": "它可以直接从已有数据计算。额外状态引入同步负担和一次额外更新，容易短暂过期；直接派生更清楚，昂贵计算在有证据时再考虑缓存。",
+      "content": "# 状态、派生数据与副作用\r\n\r\n## 学完要能做到什么\r\n\r\n能用函数式更新处理连续状态变化，避免冗余状态，并为外部订阅写出对称清理。\r\n\r\n## 核心概念\r\n\r\n状态是某次渲染看到的快照。事件处理器读取当次渲染的值，多次 setCount(count + 1) 可能重复提交同一个新值。基于前一个状态计算时，使用 setCount(previous => previous + 1)。\r\n\r\n能从 props 或现有状态直接计算的值通常不需要再保存为独立状态。过滤列表、完成数等可以在渲染时派生，避免两个来源不同步。需要优化时先确认性能成本，不要把所有计算都套进副作用。\r\n\r\nEffect 用于与外部系统同步，例如订阅、定时器或网络连接。声明真实依赖并返回清理函数；重新运行之前会清理旧的 effect，卸载也会清理。开发环境 Strict Mode 的额外设置/清理有助于发现不对称资源管理。\r\n\r\n## 读懂一个最小例子\r\n\r\n```jsx\r\nfunction Counter() {\r\n  const [count, setCount] = useState(0);\r\n  function addTwo() {\r\n    setCount(n => n + 1);\r\n    setCount(n => n + 1);\r\n  }\r\n  return <button onClick={addTwo}>{count}</button>;\r\n}\r\n```\r\n\r\n两个更新函数依次基于前一次待处理值计算，因此一次点击增加 2。这里不需要 effect 来同步 count。\r\n\r\n## 两个容易混淆的地方\r\n\r\n- 当前渲染的状态是快照，更新会影响后续渲染。\r\n- 匿名创建不同函数交给 removeEventListener 并不能移除原监听器。\r\n\r\n## 动手完成一个小作品\r\n\r\n制作带关键词筛选和完成数的任务面板，再添加窗口宽度订阅。\r\n\r\n完成后，用下面的标准观察实际产出，而不是只看代码是否写完：\r\n\r\n- 没有重复保存可派生列表或数量\r\n- 任务更新使用明确的不可变数据流\r\n- 监听设置与清理对称\r\n\r\n## 如何留下学习证据\r\n\r\n先完成本节练习，再在底部开始测验。选择、填空、排序与代码阅读自动判分；简答、改错和实战需要你对照参考答案逐项自评。自评不会计入自动正确率，也不代表系统已经执行或审查你的代码。\r\n\r\n把仍说不清的概念写进个人笔记。复习时先尝试回答“为什么不应把 filteredItems 同时保存在 state，再用 effect 跟随 items 和 query？”，再核对参考解释。\r\n\r\n## 继续阅读\r\n\r\n[官方资料](https://react.dev/learn/synchronizing-with-effects)。资料用于补充概念和边界，本节内容本身可以独立阅读。",
+      "quiz": [
+        {
+          "id": "fe-react-state-single",
+          "type": "single",
+          "difficulty": "basic",
+          "prompt": "在一次事件中连续递增两次，哪个更新方式可靠表达“基于前值加一”？",
+          "explanation": "函数式更新按队列中的前值计算。",
+          "options": [
+            "setCount(count + 1) 并假设变量立即变化",
+            "setCount(n => n + 1)",
+            "直接 count++",
+            "document.title++"
+          ],
+          "correctIndex": 1
+        },
+        {
+          "id": "fe-react-state-multiple",
+          "type": "multiple",
+          "difficulty": "applied",
+          "prompt": "哪些做法合理？",
+          "explanation": "依赖表达实际使用的数据，不能通过隐藏依赖修复逻辑。",
+          "options": [
+            "为了消除告警随意把依赖数组改为空",
+            "完成数可从任务列表派生",
+            "订阅 effect 返回解除订阅函数",
+            "依赖变化时处理旧资源清理"
+          ],
+          "correctIndices": [
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "id": "fe-react-state-boolean",
+          "type": "boolean",
+          "difficulty": "basic",
+          "prompt": "调用 setState 后，当前处理器中的状态变量会立即变成新值。",
+          "explanation": "当前渲染的状态是快照，更新会影响后续渲染。",
+          "options": [
+            "正确",
+            "错误"
+          ],
+          "correctIndex": 1
+        },
+        {
+          "id": "fe-react-state-fill",
+          "type": "fill",
+          "difficulty": "basic",
+          "prompt": "useEffect 返回的函数通常负责资源的什么操作？填中文两字。",
+          "explanation": "例如移除监听器、取消订阅或清除定时器。",
+          "acceptedAnswers": [
+            "清理"
+          ],
+          "caseSensitive": false
+        },
+        {
+          "id": "fe-react-state-order",
+          "type": "order",
+          "difficulty": "applied",
+          "prompt": "某 effect 依赖 roomId，从 A 改成 B 后再卸载，按资源生命周期排序。",
+          "explanation": "清理应与每次设置的资源对应。",
+          "options": [
+            "清理 A 的订阅",
+            "为 A 建立订阅",
+            "为 B 建立订阅",
+            "卸载时清理 B 的订阅"
+          ],
+          "correctOrder": [
+            1,
+            0,
+            2,
+            3
+          ]
+        },
+        {
+          "id": "fe-react-state-code_reading",
+          "type": "code_reading",
+          "difficulty": "applied",
+          "prompt": "count 初始为 0，点击一次后下一次渲染的值是多少？",
+          "explanation": "函数更新串行应用到待处理状态，得到 2。",
+          "code": "function onClick() {\n  setCount(n => n + 1);\n  setCount(n => n + 1);\n}",
+          "language": "jsx",
+          "acceptedAnswers": [
+            "2"
+          ],
+          "caseSensitive": true
+        },
+        {
+          "id": "fe-react-state-short_answer",
+          "type": "short_answer",
+          "difficulty": "advanced",
+          "prompt": "为什么不应把 filteredItems 同时保存在 state，再用 effect 跟随 items 和 query？",
+          "explanation": "它可以直接从已有数据计算。额外状态引入同步负担和一次额外更新，容易短暂过期；直接派生更清楚，昂贵计算在有证据时再考虑缓存。",
+          "referenceAnswer": "它可以直接从已有数据计算。额外状态引入同步负担和一次额外更新，容易短暂过期；直接派生更清楚，昂贵计算在有证据时再考虑缓存。",
+          "rubric": [
+            "识别重复数据源",
+            "说明同步或额外渲染风险",
+            "给出直接派生的方案"
+          ]
+        },
+        {
+          "id": "fe-react-state-code_fix",
+          "type": "code_fix",
+          "difficulty": "applied",
+          "prompt": "组件重复挂载会累积 resize 监听器。补齐清理，并使用同一个处理器引用。",
+          "explanation": "匿名创建不同函数交给 removeEventListener 并不能移除原监听器。",
+          "code": "useEffect(() => {\n  window.addEventListener(\"resize\", onResize);\n}, [onResize]);",
+          "language": "jsx",
+          "referenceAnswer": "useEffect(() => {\n  window.addEventListener(\"resize\", onResize);\n  return () => window.removeEventListener(\"resize\", onResize);\n}, [onResize]);",
+          "rubric": [
+            "返回清理函数",
+            "移除同类型同函数引用的监听器",
+            "保留真实依赖"
+          ]
+        },
+        {
+          "id": "fe-react-state-project",
+          "type": "project",
+          "difficulty": "advanced",
+          "prompt": "制作带关键词筛选和完成数的任务面板，再添加窗口宽度订阅。",
+          "explanation": "任务与查询词作为必要状态，筛选结果和数量直接派生；宽度监听在 effect 中设置并清理。说明重新挂载和依赖变化时资源如何释放。",
+          "referenceAnswer": "任务与查询词作为必要状态，筛选结果和数量直接派生；宽度监听在 effect 中设置并清理。说明重新挂载和依赖变化时资源如何释放。",
+          "rubric": [
+            "没有重复保存可派生列表或数量",
+            "任务更新使用明确的不可变数据流",
+            "监听设置与清理对称"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fe-routing-data",
+      "treeId": "fe-stage-react",
+      "parentId": "fe-react-state",
+      "title": "路由、表单与数据流",
+      "resource": "https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams",
+      "question": "怎样决定筛选词、弹窗展开和课程详情分别放在哪里？",
+      "answer": "需要分享和历史恢复的筛选词放 URL；纯临时弹窗状态放界面状态；课程内容作为服务端数据，通过路由 ID 读取并管理加载和失败。避免在多个位置维护互相冲突的副本。",
+      "content": "# 路由、表单与数据流\r\n\r\n## 学完要能做到什么\r\n\r\n能区分 URL 状态、临时界面状态与服务端数据，设计可刷新恢复的详情页与可靠提交反馈。\r\n\r\n## 核心概念\r\n\r\n路径参数适合定位资源，例如 /courses/42；查询参数适合表达可分享的筛选或分页。弹窗暂时展开状态未必需要写进 URL。选择状态归属时考虑是否需要刷新恢复、分享和前进后退。\r\n\r\n服务端数据有加载、空、错误和过期状态，不能只用一个数组代表所有阶段。路由切换时旧请求可能晚到，需要取消或忽略过期响应；详情页也必须处理不存在的 ID。\r\n\r\n表单应有明确的提交中、成功和失败反馈，失败保留输入，避免重复提交。客户端禁用按钮只能改善交互；涉及真正的重复写入风险时，还需要服务端幂等键或数据库约束。\r\n\r\n## 读懂一个最小例子\r\n\r\n```jsx\r\nconst params = new URLSearchParams(window.location.search);\r\nconst query = params.get(\"q\") ?? \"\";\r\nfunction searchUrl(nextQuery) {\r\n  const next = new URLSearchParams(params);\r\n  next.set(\"q\", nextQuery);\r\n  return `?${next.toString()}`;\r\n}\r\n```\r\n\r\nURLSearchParams 负责参数编码并保留其他参数。真正应用还需要让路由系统订阅地址变化，避免只改地址栏却不更新界面。\r\n\r\n## 两个容易混淆的地方\r\n\r\n- 重试、多标签页和网络不确定性仍可能产生重复请求，需要服务端保证。\r\n- 整条 URL 编码与单个参数编码不同，应使用针对查询参数的工具。\r\n\r\n## 动手完成一个小作品\r\n\r\n制作课程搜索页和详情页：搜索可分享，刷新详情可恢复，收藏表单失败后保留状态并可重试。\r\n\r\n完成后，用下面的标准观察实际产出，而不是只看代码是否写完：\r\n\r\n- 分享或刷新仍指向同一搜索或详情\r\n- 旧请求不覆盖新路由数据\r\n- 提交反馈明确且失败不丢失输入\r\n\r\n## 如何留下学习证据\r\n\r\n先完成本节练习，再在底部开始测验。选择、填空、排序与代码阅读自动判分；简答、改错和实战需要你对照参考答案逐项自评。自评不会计入自动正确率，也不代表系统已经执行或审查你的代码。\r\n\r\n把仍说不清的概念写进个人笔记。复习时先尝试回答“怎样决定筛选词、弹窗展开和课程详情分别放在哪里？”，再核对参考解释。\r\n\r\n## 继续阅读\r\n\r\n[官方资料](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams)。资料用于补充概念和边界，本节内容本身可以独立阅读。",
+      "quiz": [
+        {
+          "id": "fe-routing-data-single",
+          "type": "single",
+          "difficulty": "basic",
+          "prompt": "需要分享和刷新恢复的搜索词，通常最适合放在哪里？",
+          "explanation": "查询参数自然支持链接分享和刷新恢复。",
+          "options": [
+            "随机生成的 DOM id",
+            "URL 查询参数",
+            "只放一个不可恢复的局部变量",
+            "按钮的 CSS class"
+          ],
+          "correctIndex": 1
+        },
+        {
+          "id": "fe-routing-data-multiple",
+          "type": "multiple",
+          "difficulty": "applied",
+          "prompt": "哪些是可靠的数据页面应考虑的状态？",
+          "explanation": "空结果是成功语义，不等同于请求失败。",
+          "options": [
+            "加载中",
+            "任何失败都伪装成空数组",
+            "成功但没有结果",
+            "失败和重试"
+          ],
+          "correctIndices": [
+            0,
+            2,
+            3
+          ]
+        },
+        {
+          "id": "fe-routing-data-boolean",
+          "type": "boolean",
+          "difficulty": "basic",
+          "prompt": "只要提交按钮在请求中禁用，服务端就永远不会发生重复写入。",
+          "explanation": "重试、多标签页和网络不确定性仍可能产生重复请求，需要服务端保证。",
+          "options": [
+            "正确",
+            "错误"
+          ],
+          "correctIndex": 1
+        },
+        {
+          "id": "fe-routing-data-fill",
+          "type": "fill",
+          "difficulty": "basic",
+          "prompt": "处理 URL 查询参数编码与读取的浏览器内置类是 ____。",
+          "explanation": "不要直接拼接未经编码的任意输入。",
+          "acceptedAnswers": [
+            "URLSearchParams"
+          ],
+          "caseSensitive": false
+        },
+        {
+          "id": "fe-routing-data-order",
+          "type": "order",
+          "difficulty": "applied",
+          "prompt": "按一次保守表单提交流程排序。",
+          "explanation": "错误时保留输入；生产写入还应考虑服务端幂等。",
+          "options": [
+            "校验并读取当前输入",
+            "进入提交中状态并发送请求",
+            "退出提交中状态并给出结果反馈",
+            "根据响应确认成功或保留错误"
+          ],
+          "correctOrder": [
+            0,
+            1,
+            3,
+            2
+          ]
+        },
+        {
+          "id": "fe-routing-data-code_reading",
+          "type": "code_reading",
+          "difficulty": "applied",
+          "prompt": "读取的 q 值是什么？",
+          "explanation": "URLSearchParams 会解码百分号编码。",
+          "code": "const params = new URLSearchParams(\"?q=hello%20world&page=2\");\nconsole.log(params.get(\"q\"));",
+          "language": "jsx",
+          "acceptedAnswers": [
+            "hello world"
+          ],
+          "caseSensitive": true
+        },
+        {
+          "id": "fe-routing-data-short_answer",
+          "type": "short_answer",
+          "difficulty": "advanced",
+          "prompt": "怎样决定筛选词、弹窗展开和课程详情分别放在哪里？",
+          "explanation": "需要分享和历史恢复的筛选词放 URL；纯临时弹窗状态放界面状态；课程内容作为服务端数据，通过路由 ID 读取并管理加载和失败。避免在多个位置维护互相冲突的副本。",
+          "referenceAnswer": "需要分享和历史恢复的筛选词放 URL；纯临时弹窗状态放界面状态；课程内容作为服务端数据，通过路由 ID 读取并管理加载和失败。避免在多个位置维护互相冲突的副本。",
+          "rubric": [
+            "区分三种状态职责",
+            "以分享和恢复需求解释 URL 选择",
+            "说明服务端数据生命周期"
+          ]
+        },
+        {
+          "id": "fe-routing-data-code_fix",
+          "type": "code_fix",
+          "difficulty": "applied",
+          "prompt": "查询词可能包含 & 和空格。修复直接拼接 URL 导致参数错乱的问题。",
+          "explanation": "整条 URL 编码与单个参数编码不同，应使用针对查询参数的工具。",
+          "code": "function buildUrl(query) { return \"/api/search?q=\" + query; }",
+          "language": "jsx",
+          "referenceAnswer": "function buildUrl(query) {\n  const params = new URLSearchParams({ q: query });\n  return `/api/search?${params.toString()}`;\n}",
+          "rubric": [
+            "使用 URLSearchParams 或正确的分量编码",
+            "输入不会注入额外参数",
+            "保留原始查询语义"
+          ]
+        },
+        {
+          "id": "fe-routing-data-project",
+          "type": "project",
+          "difficulty": "advanced",
+          "prompt": "制作课程搜索页和详情页：搜索可分享，刷新详情可恢复，收藏表单失败后保留状态并可重试。",
+          "explanation": "URL 表达搜索词与课程 ID，局部状态管理临时交互；数据层处理加载、空、404 和失败；写操作有提交锁与服务端幂等策略说明。",
+          "referenceAnswer": "URL 表达搜索词与课程 ID，局部状态管理临时交互；数据层处理加载、空、404 和失败；写操作有提交锁与服务端幂等策略说明。",
+          "rubric": [
+            "分享或刷新仍指向同一搜索或详情",
+            "旧请求不覆盖新路由数据",
+            "提交反馈明确且失败不丢失输入"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fe-git-tooling",
+      "treeId": "fe-stage-engineering",
+      "parentId": null,
+      "title": "Git、依赖与可复现构建",
+      "resource": "https://docs.npmjs.com/cli/v11/commands/npm-ci",
+      "question": "为什么只写“npm install 后能跑”不足以描述可复现交付？",
+      "answer": "还需要一致的锁文件、兼容的运行时版本、必要配置及构建/启动命令。install 可能受依赖解析与本地环境影响，交付应说明如何从干净环境恢复相同输入。",
+      "content": "# Git、依赖与可复现构建\r\n\r\n## 学完要能做到什么\r\n\r\n能区分工作区、暂存区与提交，使用锁文件重建依赖，并保持配置、秘密和构建产物的清晰边界。\r\n\r\n## 核心概念\r\n\r\nGit 的工作区是正在编辑的文件，暂存区决定下一次提交包含哪些内容，提交记录一个快照。提交前应看清 diff，避免把本地数据或无关改动一起带入；分支有助于隔离任务，但不会替你判断改动是否属于当前需求。\r\n\r\npackage.json 描述依赖范围和项目脚本，锁文件记录解析结果。npm ci 面向已有且一致的锁文件安装，会重建 node_modules；不要把它和随意更新版本混在一起。运行时版本、锁文件、配置和构建命令共同影响可复现性。\r\n\r\n前端打包器会把可访问的客户端配置编入产物，环境变量名带有“secret”也不能阻止泄露。秘密必须保留在服务端。dist、node_modules 和本地数据库通常按项目约定忽略；示例配置应保留字段说明但不含真实凭证。\r\n\r\n## 读懂一个最小例子\r\n\r\n```text\r\ngit status\r\ngit diff\r\ngit add src/CourseCard.tsx\r\ngit diff --cached\r\ngit commit -m \"修复课程卡片名称\"\r\n```\r\n\r\n先看改动，再精确暂存，最后确认暂存内容形成的提交。这里的路径与说明是示例，实际提交范围应与任务一致。\r\n\r\n## 两个容易混淆的地方\r\n\r\n- 客户端产物和请求可被查看，秘密应保留在服务端。\r\n- 只改环境变量名称不能保护会被打包进浏览器的秘密。\r\n\r\n## 动手完成一个小作品\r\n\r\n为一个前端项目写可复现交付说明，并整理一次只含目标改动的提交。\r\n\r\n完成后，用下面的标准观察实际产出，而不是只看代码是否写完：\r\n\r\n- 其他人可按说明恢复环境\r\n- 锁文件与依赖定义一起维护\r\n- 提交范围明确且不含秘密或本地数据\r\n\r\n## 如何留下学习证据\r\n\r\n先完成本节练习，再在底部开始测验。选择、填空、排序与代码阅读自动判分；简答、改错和实战需要你对照参考答案逐项自评。自评不会计入自动正确率，也不代表系统已经执行或审查你的代码。\r\n\r\n把仍说不清的概念写进个人笔记。复习时先尝试回答“为什么只写“npm install 后能跑”不足以描述可复现交付？”，再核对参考解释。\r\n\r\n## 继续阅读\r\n\r\n[官方资料](https://docs.npmjs.com/cli/v11/commands/npm-ci)。资料用于补充概念和边界，本节内容本身可以独立阅读。",
+      "quiz": [
+        {
+          "id": "fe-git-tooling-single",
+          "type": "single",
+          "difficulty": "basic",
+          "prompt": "决定下一次 git commit 包含哪些普通文件改动的是哪个区域？",
+          "explanation": "git add 把选定内容加入暂存区，commit 记录该快照。",
+          "options": [
+            "暂存区",
+            "浏览器缓存",
+            "npm 下载缓存",
+            "远程分支名称"
+          ],
+          "correctIndex": 0
+        },
+        {
+          "id": "fe-git-tooling-multiple",
+          "type": "multiple",
+          "difficulty": "applied",
+          "prompt": "哪些做法有助于可复现构建？",
+          "explanation": "自动升级会改变输入，降低结果的可复现性。",
+          "options": [
+            "声明和使用兼容的 Node 版本",
+            "提交匹配的锁文件",
+            "每次构建自动升级到最新依赖",
+            "记录必要的构建命令"
+          ],
+          "correctIndices": [
+            1,
+            0,
+            3
+          ]
+        },
+        {
+          "id": "fe-git-tooling-boolean",
+          "type": "boolean",
+          "difficulty": "basic",
+          "prompt": "把 API 私钥放进会被前端打包器公开的环境变量，就能避免浏览器用户读取。",
+          "explanation": "客户端产物和请求可被查看，秘密应保留在服务端。",
+          "options": [
+            "正确",
+            "错误"
+          ],
+          "correctIndex": 1
+        },
+        {
+          "id": "fe-git-tooling-fill",
+          "type": "fill",
+          "difficulty": "basic",
+          "prompt": "在锁文件已存在且与 package.json 一致时，执行干净依赖安装的 npm 命令是 ____。",
+          "explanation": "npm ci 不用于随意更新依赖，会按锁文件安装并重建依赖目录。",
+          "acceptedAnswers": [
+            "npm ci"
+          ],
+          "caseSensitive": false
+        },
+        {
+          "id": "fe-git-tooling-order",
+          "type": "order",
+          "difficulty": "applied",
+          "prompt": "按一个小改动的 Git 提交流程排序。",
+          "explanation": "明确提交边界比一次性暂存所有文件更利于审查。",
+          "options": [
+            "创建提交",
+            "查看差异并暂存目标改动",
+            "查看暂存区差异",
+            "编辑工作区文件"
+          ],
+          "correctOrder": [
+            3,
+            1,
+            2,
+            0
+          ]
+        },
+        {
+          "id": "fe-git-tooling-code_reading",
+          "type": "code_reading",
+          "difficulty": "applied",
+          "prompt": "这些操作完成后，紧接着执行 git commit 会保存哪版文本？填 A 或 B。",
+          "explanation": "暂存区记录 A，继续编辑工作区不会自动更新暂存内容。",
+          "code": "# 文件最初已提交\n# 把文件编辑成 A\ngit add note.txt\n# 继续把工作区文件编辑成 B\n# 尚未再次 git add",
+          "language": "text",
+          "acceptedAnswers": [
+            "A"
+          ],
+          "caseSensitive": true
+        },
+        {
+          "id": "fe-git-tooling-short_answer",
+          "type": "short_answer",
+          "difficulty": "advanced",
+          "prompt": "为什么只写“npm install 后能跑”不足以描述可复现交付？",
+          "explanation": "还需要一致的锁文件、兼容的运行时版本、必要配置及构建/启动命令。install 可能受依赖解析与本地环境影响，交付应说明如何从干净环境恢复相同输入。",
+          "referenceAnswer": "还需要一致的锁文件、兼容的运行时版本、必要配置及构建/启动命令。install 可能受依赖解析与本地环境影响，交付应说明如何从干净环境恢复相同输入。",
+          "rubric": [
+            "指出锁文件与运行时",
+            "指出配置和命令",
+            "区分本机可运行与可复现"
+          ]
+        },
+        {
+          "id": "fe-git-tooling-code_fix",
+          "type": "code_fix",
+          "difficulty": "applied",
+          "prompt": "客户端代码暴露私钥。改写为调用本项目服务端代理，私钥由服务端保管。",
+          "explanation": "只改环境变量名称不能保护会被打包进浏览器的秘密。",
+          "code": "fetch(\"https://vendor.example/data\", {\n  headers: { Authorization: \"Bearer PRIVATE_KEY\" }\n});",
+          "language": "text",
+          "referenceAnswer": "fetch(\"/api/vendor-data\");\n// 服务端 /api/vendor-data 读取服务端环境变量，\n// 校验请求权限并调用供应商接口；私钥不进入客户端产物。",
+          "rubric": [
+            "客户端不再包含或接收私钥",
+            "请求通过明确的服务端边界",
+            "服务端仍校验权限并限制代理用途"
+          ]
+        },
+        {
+          "id": "fe-git-tooling-project",
+          "type": "project",
+          "difficulty": "advanced",
+          "prompt": "为一个前端项目写可复现交付说明，并整理一次只含目标改动的提交。",
+          "explanation": "说明 Node 版本、锁文件、安装、构建、启动和配置；提供无秘密示例配置，并记录暂存差异。不要提交 node_modules、本地数据库或真实凭证。",
+          "referenceAnswer": "说明 Node 版本、锁文件、安装、构建、启动和配置；提供无秘密示例配置，并记录暂存差异。不要提交 node_modules、本地数据库或真实凭证。",
+          "rubric": [
+            "其他人可按说明恢复环境",
+            "锁文件与依赖定义一起维护",
+            "提交范围明确且不含秘密或本地数据"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fe-testing-debugging",
+      "treeId": "fe-stage-engineering",
+      "parentId": "fe-git-tooling",
+      "title": "测试设计与调试定位",
+      "resource": "https://testing-library.com/docs/guiding-principles/",
+      "question": "为什么按钮保存成功的组件测试仍不能单独证明 SQLite 持久化正确？",
+      "answer": "组件测试可能替换了 API 或只检查提示。真实持久化还涉及请求、服务端事务、数据库写入和重新读取，需要针对该契约的集成路径证据。",
+      "content": "# 测试设计与调试定位\r\n\r\n## 学完要能做到什么\r\n\r\n能从失败现象建立可复现案例，选择合适的测试层级，并用可观察行为而非内部实现作为断言。\r\n\r\n## 核心概念\r\n\r\n调试先描述具体输入、步骤、预期与实际结果，再缩小问题边界。Console、Network、断点和调用栈分别提供不同证据；随意同时修改多个位置容易掩盖真正原因。\r\n\r\n纯计算适合单元测试，组件交互适合通过可访问角色与文字操作，关键跨系统流程适合少量端到端路径。测试层级由风险与真实边界决定，不是越大越好，也不是全靠 mock 就能证明数据库或网络集成。\r\n\r\n好的断言描述用户可观察结果或稳定契约。等待异步条件优于固定睡眠；隔离数据和可控时钟有助于减少偶发失败。修复应针对已证实原因，回归测试保护有价值的失败模式。\r\n\r\n## 读懂一个最小例子\r\n\r\n```javascript\r\nconst result = total([{ price: 10, count: 2 }, { price: 5, count: 1 }]);\r\nexpect(result).toBe(25);\r\n// 组件测试中：点击“保存”，等待“已保存”或明确的错误反馈。\r\n```\r\n\r\n金额函数用明确输入输出验证；界面则观察点击后的结果。不要只断言内部函数被调用，就假定保存与持久化一定成功。\r\n\r\n## 两个容易混淆的地方\r\n\r\n- 调用记录不能证明真实持久化与恢复结果，需要覆盖相关边界。\r\n- 用户点击完成并不总意味着所有异步业务已结束。\r\n\r\n## 动手完成一个小作品\r\n\r\n为“刷新后任务消失”写一份缺陷定位记录和最小回归方案。\r\n\r\n完成后，用下面的标准观察实际产出，而不是只看代码是否写完：\r\n\r\n- 预期与实际及输入可复现\r\n- 区分界面、API、数据库和恢复环节\r\n- 回归方案保护实际丢失问题而非仅检查函数调用\r\n\r\n## 如何留下学习证据\r\n\r\n先完成本节练习，再在底部开始测验。选择、填空、排序与代码阅读自动判分；简答、改错和实战需要你对照参考答案逐项自评。自评不会计入自动正确率，也不代表系统已经执行或审查你的代码。\r\n\r\n把仍说不清的概念写进个人笔记。复习时先尝试回答“为什么按钮保存成功的组件测试仍不能单独证明 SQLite 持久化正确？”，再核对参考解释。\r\n\r\n## 继续阅读\r\n\r\n[官方资料](https://testing-library.com/docs/guiding-principles/)。资料用于补充概念和边界，本节内容本身可以独立阅读。",
+      "quiz": [
+        {
+          "id": "fe-testing-debugging-single",
+          "type": "single",
+          "difficulty": "basic",
+          "prompt": "报告“保存按钮坏了”后，最有帮助的第一步是什么？",
+          "explanation": "先建立可重复证据才能定位问题边界。",
+          "options": [
+            "补齐复现步骤、输入、预期与实际结果",
+            "立刻重写整个组件",
+            "任意增加五秒延时",
+            "删除所有错误日志"
+          ],
+          "correctIndex": 0
+        },
+        {
+          "id": "fe-testing-debugging-multiple",
+          "type": "multiple",
+          "difficulty": "applied",
+          "prompt": "哪些做法可以提高测试价值？",
+          "explanation": "固定睡眠既慢又不稳定，无法说明真正完成条件。",
+          "options": [
+            "所有异步测试都固定睡眠十秒",
+            "为异步操作等待明确条件",
+            "隔离测试数据",
+            "断言用户可见结果"
+          ],
+          "correctIndices": [
+            3,
+            1,
+            2
+          ]
+        },
+        {
+          "id": "fe-testing-debugging-boolean",
+          "type": "boolean",
+          "difficulty": "basic",
+          "prompt": "只断言保存函数被调用，就足以证明数据已成功写入并在刷新后存在。",
+          "explanation": "调用记录不能证明真实持久化与恢复结果，需要覆盖相关边界。",
+          "options": [
+            "正确",
+            "错误"
+          ],
+          "correctIndex": 1
+        },
+        {
+          "id": "fe-testing-debugging-fill",
+          "type": "fill",
+          "difficulty": "basic",
+          "prompt": "调试暂停后，查看函数调用链通常使用开发者工具中的哪个面板信息？填英文。",
+          "explanation": "调用栈展示当前执行路径，结合局部变量理解错误来源。",
+          "acceptedAnswers": [
+            "Call Stack",
+            "call stack"
+          ],
+          "caseSensitive": false
+        },
+        {
+          "id": "fe-testing-debugging-order",
+          "type": "order",
+          "difficulty": "applied",
+          "prompt": "按基于证据的缺陷修复顺序排序。",
+          "explanation": "不要把无关改动和目标修复混在一起。",
+          "options": [
+            "缩小边界并定位原因",
+            "记录可复现的输入和现象",
+            "实施针对原因的修复",
+            "用原复现路径确认结果"
+          ],
+          "correctOrder": [
+            1,
+            0,
+            2,
+            3
+          ]
+        },
+        {
+          "id": "fe-testing-debugging-code_reading",
+          "type": "code_reading",
+          "difficulty": "applied",
+          "prompt": "下面金额函数对给定输入返回多少？",
+          "explanation": "8×3 + 2×2 = 28，断言应针对明确的业务结果。",
+          "code": "function total(items) {\n  return items.reduce((sum, item) => sum + item.price * item.count, 0);\n}\nconsole.log(total([{ price: 8, count: 3 }, { price: 2, count: 2 }]));",
+          "language": "javascript",
+          "acceptedAnswers": [
+            "28"
+          ],
+          "caseSensitive": true
+        },
+        {
+          "id": "fe-testing-debugging-short_answer",
+          "type": "short_answer",
+          "difficulty": "advanced",
+          "prompt": "为什么按钮保存成功的组件测试仍不能单独证明 SQLite 持久化正确？",
+          "explanation": "组件测试可能替换了 API 或只检查提示。真实持久化还涉及请求、服务端事务、数据库写入和重新读取，需要针对该契约的集成路径证据。",
+          "referenceAnswer": "组件测试可能替换了 API 或只检查提示。真实持久化还涉及请求、服务端事务、数据库写入和重新读取，需要针对该契约的集成路径证据。",
+          "rubric": [
+            "说明 mock 或边界限制",
+            "指出数据库写入与重读",
+            "提出最小有代表性的集成路径"
+          ]
+        },
+        {
+          "id": "fe-testing-debugging-code_fix",
+          "type": "code_fix",
+          "difficulty": "applied",
+          "prompt": "这个测试在异步保存完成前读取结果。修复为等待明确完成条件；沿用 Testing Library 风格 API。",
+          "explanation": "用户点击完成并不总意味着所有异步业务已结束。",
+          "code": "await user.click(screen.getByRole(\"button\", { name: \"保存\" }));\nexpect(screen.getByText(\"已保存\")).toBeVisible();",
+          "language": "javascript",
+          "referenceAnswer": "await user.click(screen.getByRole(\"button\", { name: \"保存\" }));\nexpect(await screen.findByText(\"已保存\")).toBeVisible();",
+          "rubric": [
+            "等待异步出现的结果",
+            "不增加任意固定睡眠",
+            "断言用户可观察反馈"
+          ]
+        },
+        {
+          "id": "fe-testing-debugging-project",
+          "type": "project",
+          "difficulty": "advanced",
+          "prompt": "为“刷新后任务消失”写一份缺陷定位记录和最小回归方案。",
+          "explanation": "给出创建任务、保存和刷新步骤，分别观察请求响应、持久化结果和再次加载；定位失败边界，再选择能覆盖该边界的测试。",
+          "referenceAnswer": "给出创建任务、保存和刷新步骤，分别观察请求响应、持久化结果和再次加载；定位失败边界，再选择能覆盖该边界的测试。",
+          "rubric": [
+            "预期与实际及输入可复现",
+            "区分界面、API、数据库和恢复环节",
+            "回归方案保护实际丢失问题而非仅检查函数调用"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fe-web-performance",
+      "treeId": "fe-stage-engineering",
+      "parentId": "fe-testing-debugging",
+      "title": "性能、加载与测量",
+      "resource": "https://web.dev/articles/vitals",
+      "question": "为什么不能把所有图片都设 loading=\"lazy\" 当成通用性能方案？",
+      "answer": "屏外图片延迟加载可节省带宽，但首屏关键图片可能因延后发现或加载而恶化 LCP。应区分关键与非关键资源，并测量实际加载路径。",
+      "content": "# 性能、加载与测量\r\n\r\n## 学完要能做到什么\r\n\r\n能区分加载、响应与布局稳定性，用测量定位瓶颈，并解释资源优化和交互优化的适用范围。\r\n\r\n## 核心概念\r\n\r\nCore Web Vitals 用 LCP 描述主要内容加载体验，INP 描述交互响应，CLS 描述意外布局偏移。真实用户数据与实验室数据用途不同；单次本机快并不代表所有设备与网络都快。\r\n\r\n图片尺寸、格式、优先级与缓存会影响加载。提前为图片保留比例可减少布局跳动；首屏关键图不宜盲目懒加载。代码拆分减少初始下载，但拆分粒度和请求瀑布也需要权衡。\r\n\r\n长任务会占据主线程，拖慢输入响应。先定位昂贵计算或渲染，再考虑分片、减少工作量、虚拟列表或 Worker。仅减小图片无法解决所有脚本卡顿，优化应有同条件前后证据。\r\n\r\n## 读懂一个最小例子\r\n\r\n```html\r\n<img\r\n  src=\"course-cover.webp\"\r\n  width=\"800\" height=\"450\"\r\n  alt=\"课程章节示意\"\r\n  style=\"max-width:100%;height:auto\"\r\n>\r\n```\r\n\r\n明确宽高比例让浏览器在图片下载前保留空间。它有助于布局稳定，但不自动保证图片字节小或首屏加载快。\r\n\r\n## 两个容易混淆的地方\r\n\r\n- 真实设备、网络和使用路径不同，应结合真实用户数据与可复现测量。\r\n- 预留几何空间解决布局跳动；压缩字节解决的是另一类加载问题。\r\n\r\n## 动手完成一个小作品\r\n\r\n为一个含封面和长列表的页面写性能改进记录，只选择一个已定位瓶颈实施改动。\r\n\r\n完成后，用下面的标准观察实际产出，而不是只看代码是否写完：\r\n\r\n- 场景和基线可复现\r\n- 改动直接对应已定位瓶颈\r\n- 结果比较包含限制与副作用而非只报一个分数\r\n\r\n## 如何留下学习证据\r\n\r\n先完成本节练习，再在底部开始测验。选择、填空、排序与代码阅读自动判分；简答、改错和实战需要你对照参考答案逐项自评。自评不会计入自动正确率，也不代表系统已经执行或审查你的代码。\r\n\r\n把仍说不清的概念写进个人笔记。复习时先尝试回答“为什么不能把所有图片都设 loading=\"lazy\" 当成通用性能方案？”，再核对参考解释。\r\n\r\n## 继续阅读\r\n\r\n[官方资料](https://web.dev/articles/vitals)。资料用于补充概念和边界，本节内容本身可以独立阅读。",
+      "quiz": [
+        {
+          "id": "fe-web-performance-single",
+          "type": "single",
+          "difficulty": "basic",
+          "prompt": "衡量意外布局偏移的 Core Web Vital 是哪个？",
+          "explanation": "CLS 关注布局稳定性。",
+          "options": [
+            "CLS",
+            "Git SHA",
+            "CSS specificity",
+            "HTTP 404"
+          ],
+          "correctIndex": 0
+        },
+        {
+          "id": "fe-web-performance-multiple",
+          "type": "multiple",
+          "difficulty": "applied",
+          "prompt": "哪些优化与对应问题匹配？",
+          "explanation": "关键图片懒加载可能延后主要内容出现。",
+          "options": [
+            "减少长任务改善交互响应",
+            "为图片保留尺寸减少布局跳动",
+            "按需拆分非关键代码减少初始下载",
+            "给首屏主图统一懒加载保证 LCP 更好"
+          ],
+          "correctIndices": [
+            1,
+            0,
+            2
+          ]
+        },
+        {
+          "id": "fe-web-performance-boolean",
+          "type": "boolean",
+          "difficulty": "basic",
+          "prompt": "一次高性能电脑上的实验室分数，能完全代表全部真实用户体验。",
+          "explanation": "真实设备、网络和使用路径不同，应结合真实用户数据与可复现测量。",
+          "options": [
+            "正确",
+            "错误"
+          ],
+          "correctIndex": 1
+        },
+        {
+          "id": "fe-web-performance-fill",
+          "type": "fill",
+          "difficulty": "basic",
+          "prompt": "描述与下一次绘制有关的交互响应体验的指标缩写是 ____。",
+          "explanation": "INP 关注用户交互到下一次绘制的响应延迟。",
+          "acceptedAnswers": [
+            "INP"
+          ],
+          "caseSensitive": false
+        },
+        {
+          "id": "fe-web-performance-order",
+          "type": "order",
+          "difficulty": "applied",
+          "prompt": "按性能优化的证据流程排序。",
+          "explanation": "没有一致基线容易把网络或设备差异误当优化收益。",
+          "options": [
+            "在相同条件下比较结果",
+            "定义目标场景并记录基线",
+            "定位主要瓶颈",
+            "实施针对性改动"
+          ],
+          "correctOrder": [
+            1,
+            2,
+            3,
+            0
+          ]
+        },
+        {
+          "id": "fe-web-performance-code_reading",
+          "type": "code_reading",
+          "difficulty": "applied",
+          "prompt": "四个项目中只渲染 visible 为 true 的项，渲染几项？只填数字。",
+          "explanation": "减少实际渲染的工作量可能有帮助，但是否值得优化仍需结合场景测量。",
+          "code": "const rows = [true, false, true, false];\nconst rendered = rows.filter(Boolean);\nconsole.log(rendered.length);",
+          "language": "html",
+          "acceptedAnswers": [
+            "2"
+          ],
+          "caseSensitive": true
+        },
+        {
+          "id": "fe-web-performance-short_answer",
+          "type": "short_answer",
+          "difficulty": "advanced",
+          "prompt": "为什么不能把所有图片都设 loading=\"lazy\" 当成通用性能方案？",
+          "explanation": "屏外图片延迟加载可节省带宽，但首屏关键图片可能因延后发现或加载而恶化 LCP。应区分关键与非关键资源，并测量实际加载路径。",
+          "referenceAnswer": "屏外图片延迟加载可节省带宽，但首屏关键图片可能因延后发现或加载而恶化 LCP。应区分关键与非关键资源，并测量实际加载路径。",
+          "rubric": [
+            "区分首屏关键与屏外资源",
+            "说明对 LCP 的潜在影响",
+            "提出测量而非统一开关"
+          ]
+        },
+        {
+          "id": "fe-web-performance-code_fix",
+          "type": "code_fix",
+          "difficulty": "applied",
+          "prompt": "这张后加载的卡片封面让下方内容跳动。补充已知 800×450 比例并保持响应式。",
+          "explanation": "预留几何空间解决布局跳动；压缩字节解决的是另一类加载问题。",
+          "code": "<img src=\"cover.webp\" alt=\"课程封面\">",
+          "language": "html",
+          "referenceAnswer": "<img src=\"cover.webp\" alt=\"课程封面\" width=\"800\" height=\"450\" style=\"max-width:100%;height:auto\">",
+          "rubric": [
+            "提前提供正确比例或等效 aspect-ratio",
+            "维持响应式且不拉伸",
+            "不通过隐藏后续内容掩盖跳动"
+          ]
+        },
+        {
+          "id": "fe-web-performance-project",
+          "type": "project",
+          "difficulty": "advanced",
+          "prompt": "为一个含封面和长列表的页面写性能改进记录，只选择一个已定位瓶颈实施改动。",
+          "explanation": "记录场景、设备与网络条件、基线指标、瓶颈证据和改动。可处理布局跳动、初始资源或长任务，最后比较同条件结果并记录副作用。",
+          "referenceAnswer": "记录场景、设备与网络条件、基线指标、瓶颈证据和改动。可处理布局跳动、初始资源或长任务，最后比较同条件结果并记录副作用。",
+          "rubric": [
+            "场景和基线可复现",
+            "改动直接对应已定位瓶颈",
+            "结果比较包含限制与副作用而非只报一个分数"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fe-quality-a11y",
+      "treeId": "fe-stage-delivery",
+      "parentId": null,
+      "title": "可访问性与交付质量",
+      "resource": "https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/",
+      "question": "为什么给 div 加 role=\"button\" 仍不足以获得完整按钮体验？",
+      "answer": "角色只提供语义，不自动添加可聚焦性、Enter/Space 激活、禁用和表单行为。优先使用原生 button，减少遗漏并保持标准交互。",
+      "content": "# 可访问性与交付质量\r\n\r\n## 学完要能做到什么\r\n\r\n能通过键盘、名称和反馈建立完整操作路径，处理焦点管理，并理解自动检查的覆盖边界。\r\n\r\n## 核心概念\r\n\r\n可访问性首先依赖清晰语义、可操作控件与合理阅读顺序。可访问名称告诉用户控件做什么；图标按钮需要明确名称，装饰图不应重复制造噪声。优先使用原生元素，ARIA 用于补足实际缺失的信息。\r\n\r\n键盘操作需要可见焦点和合理顺序。对话框打开后应把焦点放到适当位置、限制在模态内容内，关闭后回到触发位置；Escape 行为要符合组件预期。仅加 role=dialog 不会自动实现全部行为。\r\n\r\n错误与成功不能只靠颜色表达。动态重要反馈可通过适合的 live region 提示，但避免不断播报造成干扰。自动工具能发现部分问题，键盘路径、读屏语义和内容理解仍需要实际观察。\r\n\r\n## 读懂一个最小例子\r\n\r\n```html\r\n<button type=\"button\" aria-label=\"删除这条笔记\">\r\n  <svg aria-hidden=\"true\" focusable=\"false\" viewBox=\"0 0 24 24\"><path d=\"M6 6h12v14H6z\"/></svg>\r\n</button>\r\n<p role=\"status\">笔记已保存</p>\r\n```\r\n\r\n按钮拥有明确名称，装饰图标不重复朗读。status 适合温和提示状态变化；不要把每次输入都当成需要抢占注意的警报。\r\n\r\n## 两个容易混淆的地方\r\n\r\n- 自动工具只覆盖部分可检测规则，真实交互仍需观察。\r\n- 符号外观不保证用户理解操作，也不提供完整键盘行为。\r\n\r\n## 动手完成一个小作品\r\n\r\n为学习应用的“打开笔记 → 编辑 → 保存 → 关闭”设计一条完整键盘路径，并改进错误反馈。\r\n\r\n完成后，用下面的标准观察实际产出，而不是只看代码是否写完：\r\n\r\n- 全部主要操作可用键盘完成\r\n- 焦点管理和名称清楚\r\n- 成功错误可感知且失败不丢输入\r\n\r\n## 如何留下学习证据\r\n\r\n先完成本节练习，再在底部开始测验。选择、填空、排序与代码阅读自动判分；简答、改错和实战需要你对照参考答案逐项自评。自评不会计入自动正确率，也不代表系统已经执行或审查你的代码。\r\n\r\n把仍说不清的概念写进个人笔记。复习时先尝试回答“为什么给 div 加 role=\"button\" 仍不足以获得完整按钮体验？”，再核对参考解释。\r\n\r\n## 继续阅读\r\n\r\n[官方资料](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/)。资料用于补充概念和边界，本节内容本身可以独立阅读。",
+      "quiz": [
+        {
+          "id": "fe-quality-a11y-single",
+          "type": "single",
+          "difficulty": "basic",
+          "prompt": "只有垃圾桶图标的删除按钮首先应补充什么？",
+          "explanation": "用户需要知道控件执行的操作。",
+          "options": [
+            "隐藏键盘焦点",
+            "清晰的可访问名称",
+            "更复杂的阴影",
+            "把 button 改成 div"
+          ],
+          "correctIndex": 1
+        },
+        {
+          "id": "fe-quality-a11y-multiple",
+          "type": "multiple",
+          "difficulty": "applied",
+          "prompt": "模态对话框通常需要哪些行为？",
+          "explanation": "角色描述语义，不能替代实际交互实现。",
+          "options": [
+            "只写 role=\"dialog\" 后忽略全部键盘行为",
+            "关闭后恢复触发位置焦点",
+            "明确标题与关闭方式",
+            "打开时合理放置焦点"
+          ],
+          "correctIndices": [
+            3,
+            1,
+            2
+          ]
+        },
+        {
+          "id": "fe-quality-a11y-boolean",
+          "type": "boolean",
+          "difficulty": "basic",
+          "prompt": "自动可访问性工具没有报错，就代表所有键盘和读屏路径都一定可用。",
+          "explanation": "自动工具只覆盖部分可检测规则，真实交互仍需观察。",
+          "options": [
+            "正确",
+            "错误"
+          ],
+          "correctIndex": 1
+        },
+        {
+          "id": "fe-quality-a11y-fill",
+          "type": "fill",
+          "difficulty": "basic",
+          "prompt": "为没有可见文字的按钮提供简短可访问名称，常用的 ARIA 属性是 ____。",
+          "explanation": "有可见标签时应优先保持可见名称与可访问名称一致。",
+          "acceptedAnswers": [
+            "aria-label"
+          ],
+          "caseSensitive": false
+        },
+        {
+          "id": "fe-quality-a11y-order",
+          "type": "order",
+          "difficulty": "applied",
+          "prompt": "按打开并关闭模态对话框的焦点生命周期排序。",
+          "explanation": "触发元素已不存在时，需要选择合理的后续焦点位置。",
+          "options": [
+            "关闭后把焦点还给合理触发位置",
+            "打开并把焦点移入对话框",
+            "在对话框内完成操作或关闭",
+            "记录触发控件"
+          ],
+          "correctOrder": [
+            3,
+            1,
+            2,
+            0
+          ]
+        },
+        {
+          "id": "fe-quality-a11y-code_reading",
+          "type": "code_reading",
+          "difficulty": "applied",
+          "prompt": "这个按钮的可访问名称是什么？",
+          "explanation": "aria-label 提供名称，装饰符号被隐藏于辅助技术。",
+          "code": "<button aria-label=\"打开学习笔记\"><span aria-hidden=\"true\">✎</span></button>",
+          "language": "html",
+          "acceptedAnswers": [
+            "打开学习笔记"
+          ],
+          "caseSensitive": true
+        },
+        {
+          "id": "fe-quality-a11y-short_answer",
+          "type": "short_answer",
+          "difficulty": "advanced",
+          "prompt": "为什么给 div 加 role=\"button\" 仍不足以获得完整按钮体验？",
+          "explanation": "角色只提供语义，不自动添加可聚焦性、Enter/Space 激活、禁用和表单行为。优先使用原生 button，减少遗漏并保持标准交互。",
+          "referenceAnswer": "角色只提供语义，不自动添加可聚焦性、Enter/Space 激活、禁用和表单行为。优先使用原生 button，减少遗漏并保持标准交互。",
+          "rubric": [
+            "区分语义与行为",
+            "列出键盘或焦点缺失",
+            "优先选择原生控件"
+          ]
+        },
+        {
+          "id": "fe-quality-a11y-code_fix",
+          "type": "code_fix",
+          "difficulty": "applied",
+          "prompt": "修复无名称且不可原生键盘操作的图标控件。",
+          "explanation": "符号外观不保证用户理解操作，也不提供完整键盘行为。",
+          "code": "<div onclick=\"removeNote()\">×</div>",
+          "language": "html",
+          "referenceAnswer": "<button type=\"button\" aria-label=\"删除笔记\" onclick=\"removeNote()\">\n  <span aria-hidden=\"true\">×</span>\n</button>",
+          "rubric": [
+            "使用原生 button",
+            "提供描述动作的名称",
+            "装饰字符不制造重复或模糊名称"
+          ]
+        },
+        {
+          "id": "fe-quality-a11y-project",
+          "type": "project",
+          "difficulty": "advanced",
+          "prompt": "为学习应用的“打开笔记 → 编辑 → 保存 → 关闭”设计一条完整键盘路径，并改进错误反馈。",
+          "explanation": "记录焦点顺序、打开/关闭后的焦点位置、保存状态播报和错误关联。保证可见焦点，错误有文字原因，失败保留编辑内容。",
+          "referenceAnswer": "记录焦点顺序、打开/关闭后的焦点位置、保存状态播报和错误关联。保证可见焦点，错误有文字原因，失败保留编辑内容。",
+          "rubric": [
+            "全部主要操作可用键盘完成",
+            "焦点管理和名称清楚",
+            "成功错误可感知且失败不丢输入"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fe-deployment-project",
+      "treeId": "fe-stage-delivery",
+      "parentId": "fe-quality-a11y",
+      "title": "部署、恢复与毕业实战",
+      "resource": "https://www.sqlite.org/backup.html",
+      "question": "为什么“回滚前端文件”不一定能恢复一次有数据库变更的发布？",
+      "answer": "旧代码可能不兼容新 schema 或新数据语义；还需考虑服务端版本、配置和备份恢复。发布前应明确兼容迁移、可回退范围与一致性备份。",
+      "content": "# 部署、恢复与毕业实战\r\n\r\n## 学完要能做到什么\r\n\r\n能交付一个可启动、可导入数据、可保存学习结果的完整作品，并说明环境配置、深链接和恢复策略。\r\n\r\n## 核心概念\r\n\r\n部署把构建产物、服务端程序、配置和持久化数据放到可运行环境。前端构建成功不代表后端数据库已就绪。应明确启动入口、健康状态、静态资源、API 地址和数据库路径，避免把可写数据放在会随发布替换的临时目录。\r\n\r\n单页应用的深链接刷新通常需要静态服务器回退到入口文档，但 /api 路由必须保留真实 JSON 错误而非返回 HTML。公开部署还需要 HTTPS、认证、授权和相应运维边界；本地单用户应用不能自动等同于公开多用户服务。\r\n\r\n发布要考虑失败与回滚。备份 SQLite 时应使用一致性备份方式，不能假定运行中的主文件单独复制就包含所有 WAL 数据。恢复需要兼容的代码、schema 和配置；仅保留旧前端文件不一定足够。\r\n\r\n## 读懂一个最小例子\r\n\r\n```text\r\n# 示例部署配置，具体名称以项目约定为准\r\nPORT=3001\r\nDATABASE_PATH=/srv/learningtree/data/learningtree.sqlite\r\n# 静态构建产物可替换；data 目录应持久化并独立备份。\r\n```\r\n\r\n将持久化数据与可替换产物分开。发布脚本、进程权限与目录挂载都必须遵守同一个路径约定，配置文件里不应写入公开仓库中的真实秘密。\r\n\r\n## 两个容易混淆的地方\r\n\r\n- 最新提交可能仍在 WAL；应使用支持一致性的备份方案或受控停机与检查点流程。\r\n- 示例是路由伪代码；实际还要按框架处理路径安全与静态资源缺失。\r\n\r\n## 动手完成一个小作品\r\n\r\n毕业实战：完成一个可导入课程、浏览科技树、阅读课程、测验并保存历史的个人学习网页应用。\r\n\r\n完成后，用下面的标准观察实际产出，而不是只看代码是否写完：\r\n\r\n- 从课程导入到学习测验形成完整路径\r\n- 客观判分与主观自评明确区分\r\n- 学习历史存入数据库且内容与进度分离\r\n- 启动、配置、数据备份和恢复说明齐全\r\n- 真实限制被说明且无硬编码秘密\r\n\r\n## 如何留下学习证据\r\n\r\n先完成本节练习，再在底部开始测验。选择、填空、排序与代码阅读自动判分；简答、改错和实战需要你对照参考答案逐项自评。自评不会计入自动正确率，也不代表系统已经执行或审查你的代码。\r\n\r\n把仍说不清的概念写进个人笔记。复习时先尝试回答“为什么“回滚前端文件”不一定能恢复一次有数据库变更的发布？”，再核对参考解释。\r\n\r\n## 继续阅读\r\n\r\n[官方资料](https://www.sqlite.org/backup.html)。资料用于补充概念和边界，本节内容本身可以独立阅读。",
+      "quiz": [
+        {
+          "id": "fe-deployment-project-single",
+          "type": "single",
+          "difficulty": "basic",
+          "prompt": "数据库文件应优先放在哪里？",
+          "explanation": "学习历史需要跨进程和发布周期保留。",
+          "options": [
+            "浏览器 CSS 文件里",
+            "独立持久化目录，发布时保留",
+            "任意临时目录且不记录路径",
+            "每次构建都会清空的 dist 内"
+          ],
+          "correctIndex": 1
+        },
+        {
+          "id": "fe-deployment-project-multiple",
+          "type": "multiple",
+          "difficulty": "applied",
+          "prompt": "哪些属于完整交付要考虑的内容？",
+          "explanation": "交付需要覆盖关键状态与数据边界。",
+          "options": [
+            "数据备份及恢复策略",
+            "深链接与 API 路由行为",
+            "只要首页打开就说明所有持久化正确",
+            "启动和配置说明"
+          ],
+          "correctIndices": [
+            3,
+            1,
+            0
+          ]
+        },
+        {
+          "id": "fe-deployment-project-boolean",
+          "type": "boolean",
+          "difficulty": "basic",
+          "prompt": "SQLite 使用 WAL 时，运行中只复制主数据库文件永远足以得到完整一致的最新备份。",
+          "explanation": "最新提交可能仍在 WAL；应使用支持一致性的备份方案或受控停机与检查点流程。",
+          "options": [
+            "正确",
+            "错误"
+          ],
+          "correctIndex": 1
+        },
+        {
+          "id": "fe-deployment-project-fill",
+          "type": "fill",
+          "difficulty": "basic",
+          "prompt": "提供传输加密的 Web 协议通常写作 ____。",
+          "explanation": "HTTPS 保护传输通道，但不替代应用权限与数据校验。",
+          "acceptedAnswers": [
+            "HTTPS"
+          ],
+          "caseSensitive": false
+        },
+        {
+          "id": "fe-deployment-project-order",
+          "type": "order",
+          "difficulty": "applied",
+          "prompt": "按一次保守发布与回退准备流程排序。",
+          "explanation": "如果涉及不可逆数据迁移，应在执行前明确恢复边界。",
+          "options": [
+            "异常时按兼容性方案回退和恢复",
+            "记录版本并准备一致性数据备份",
+            "启动服务并确认关键路径",
+            "部署兼容代码和配置"
+          ],
+          "correctOrder": [
+            1,
+            3,
+            2,
+            0
+          ]
+        },
+        {
+          "id": "fe-deployment-project-code_reading",
+          "type": "code_reading",
+          "difficulty": "applied",
+          "prompt": "响应首字符是 <，而客户端调用 json()。最可能遇到的是哪类问题？填“解析失败”。",
+          "explanation": "错误地把 API 路径回退到 HTML 入口，会在 JSON 解析阶段失败，即使 HTTP 状态为 200。",
+          "code": "HTTP/1.1 200 OK\nContent-Type: text/html\n\n<!doctype html><html><body>App</body></html>",
+          "language": "text",
+          "acceptedAnswers": [
+            "解析失败"
+          ],
+          "caseSensitive": true
+        },
+        {
+          "id": "fe-deployment-project-short_answer",
+          "type": "short_answer",
+          "difficulty": "advanced",
+          "prompt": "为什么“回滚前端文件”不一定能恢复一次有数据库变更的发布？",
+          "explanation": "旧代码可能不兼容新 schema 或新数据语义；还需考虑服务端版本、配置和备份恢复。发布前应明确兼容迁移、可回退范围与一致性备份。",
+          "referenceAnswer": "旧代码可能不兼容新 schema 或新数据语义；还需考虑服务端版本、配置和备份恢复。发布前应明确兼容迁移、可回退范围与一致性备份。",
+          "rubric": [
+            "指出代码与 schema 耦合",
+            "包含服务端和配置",
+            "提出备份及兼容性策略"
+          ]
+        },
+        {
+          "id": "fe-deployment-project-code_fix",
+          "type": "code_fix",
+          "difficulty": "applied",
+          "prompt": "服务端把不存在的 API 也回退成 HTML。修复路由优先级，API 不存在时返回 JSON 404。",
+          "explanation": "示例是路由伪代码；实际还要按框架处理路径安全与静态资源缺失。",
+          "code": "if (fileExists(pathname)) serveFile(pathname);\nelse serveFile(\"index.html\");",
+          "language": "text",
+          "referenceAnswer": "if (pathname.startsWith(\"/api/\")) {\n  if (apiRouteExists(pathname)) handleApi(pathname);\n  else sendJson(404, { error: \"API 不存在\" });\n} else if (fileExists(pathname)) {\n  serveFile(pathname);\n} else {\n  serveFile(\"index.html\");\n}",
+          "rubric": [
+            "API 分支优先于 SPA 回退",
+            "不存在 API 返回正确状态和 JSON",
+            "页面深链接仍能回退入口"
+          ]
+        },
+        {
+          "id": "fe-deployment-project-project",
+          "type": "project",
+          "difficulty": "advanced",
+          "prompt": "毕业实战：完成一个可导入课程、浏览科技树、阅读课程、测验并保存历史的个人学习网页应用。",
+          "explanation": "交付前后端与数据库，课程内容采用独立包。自动题按明确规则判分，主观题提供参考与自评；学习历史跨刷新与重启保留。提供 README、示例课程、运行配置、数据位置与恢复说明，并列出公开部署前仍需补齐的边界。",
+          "referenceAnswer": "交付前后端与数据库，课程内容采用独立包。自动题按明确规则判分，主观题提供参考与自评；学习历史跨刷新与重启保留。提供 README、示例课程、运行配置、数据位置与恢复说明，并列出公开部署前仍需补齐的边界。",
+          "rubric": [
+            "从课程导入到学习测验形成完整路径",
+            "客观判分与主观自评明确区分",
+            "学习历史存入数据库且内容与进度分离",
+            "启动、配置、数据备份和恢复说明齐全",
+            "真实限制被说明且无硬编码秘密"
+          ]
+        }
+      ]
+    }
+  ]
+}

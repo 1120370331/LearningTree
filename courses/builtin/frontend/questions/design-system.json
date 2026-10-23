@@ -1,0 +1,129 @@
+[
+  {
+    "id": "fe-design-system-single",
+    "type": "single",
+    "difficulty": "basic",
+    "prompt": "哪个变量名更能表达颜色用途？",
+    "explanation": "用途语义比偶然的色名更便于维护。",
+    "options": [
+      "--light-blue-37",
+      "--pretty-color",
+      "--random-gray",
+      "--text-primary"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "fe-design-system-multiple",
+    "type": "multiple",
+    "difficulty": "applied",
+    "prompt": "哪些做法能帮助区分交互状态？",
+    "explanation": "状态需要可辨识且不只依赖颜色。",
+    "options": [
+      "清晰的焦点轮廓",
+      "所有状态只换成几乎相同的浅蓝",
+      "成功图标配合文字",
+      "错误文字说明"
+    ],
+    "correctIndices": [
+      0,
+      3,
+      2
+    ]
+  },
+  {
+    "id": "fe-design-system-boolean",
+    "type": "boolean",
+    "difficulty": "basic",
+    "prompt": "为了减少视觉疲劳，应把正文颜色一直调浅直到几乎接近背景。",
+    "explanation": "低对比会增加辨认负担，柔和背景仍需要清晰文字。",
+    "options": [
+      "正确",
+      "错误"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "fe-design-system-fill",
+    "type": "fill",
+    "difficulty": "basic",
+    "prompt": "用 CSS 变量取值的函数是 ____。",
+    "explanation": "例如 color:var(--text-primary)。",
+    "acceptedAnswers": [
+      "var",
+      "var()"
+    ],
+    "caseSensitive": false
+  },
+  {
+    "id": "fe-design-system-order",
+    "type": "order",
+    "difficulty": "applied",
+    "prompt": "按给定层级从最低到最高排列：页面底层、内容表面、浮层。",
+    "explanation": "层级应服务信息结构，配合边界、位置和必要阴影。",
+    "options": [
+      "弹出层",
+      "内容面板",
+      "页面背景"
+    ],
+    "correctOrder": [
+      2,
+      1,
+      0
+    ]
+  },
+  {
+    "id": "fe-design-system-code_reading",
+    "type": "code_reading",
+    "difficulty": "applied",
+    "prompt": "下面 title 的 color 最终是什么？填写颜色关键字。",
+    "explanation": "var 读取当前作用域中的自定义属性。",
+    "code": ":root { --text: navy; }\n.title { color:var(--text); }",
+    "language": "css",
+    "acceptedAnswers": [
+      "navy"
+    ],
+    "caseSensitive": true
+  },
+  {
+    "id": "fe-design-system-short_answer",
+    "type": "short_answer",
+    "difficulty": "advanced",
+    "prompt": "为什么统一变量后仍然需要分别考虑正文、按钮和禁用态？",
+    "explanation": "变量统一的是用途与来源，不是把所有元素变成同一种视觉权重。不同状态需要不同的对比、背景和行为，禁用与可操作也应明确区分。",
+    "referenceAnswer": "变量统一的是用途与来源，不是把所有元素变成同一种视觉权重。不同状态需要不同的对比、背景和行为，禁用与可操作也应明确区分。",
+    "rubric": [
+      "区分统一与单调",
+      "说明至少两种状态的不同职责",
+      "保留可读性和可辨识操作"
+    ]
+  },
+  {
+    "id": "fe-design-system-code_fix",
+    "type": "code_fix",
+    "difficulty": "applied",
+    "prompt": "修复删除全部键盘焦点提示的样式。",
+    "explanation": "焦点提示帮助用户知道下一次键盘操作会作用在哪个控件。",
+    "code": "button:focus { outline:none; }",
+    "language": "css",
+    "referenceAnswer": "button:focus-visible { outline:2px solid var(--action); outline-offset:3px; }",
+    "rubric": [
+      "恢复可见键盘焦点",
+      "使用明确的边界而非只变字色",
+      "不误把 hover 当作唯一焦点态"
+    ]
+  },
+  {
+    "id": "fe-design-system-project",
+    "type": "project",
+    "difficulty": "advanced",
+    "prompt": "为学习卡片、按钮、输入框制作一组语义变量，并列出默认、选中、错误、禁用状态。",
+    "explanation": "把背景、正文、边框和操作色集中定义；每种状态配合文字或图标，让组件在浅背景上可辨识，并保留键盘焦点。",
+    "referenceAnswer": "把背景、正文、边框和操作色集中定义；每种状态配合文字或图标，让组件在浅背景上可辨识，并保留键盘焦点。",
+    "rubric": [
+      "变量按用途命名且能复用",
+      "状态之间有清楚区别",
+      "正文与交互文字保持清晰且错误不只靠颜色"
+    ]
+  }
+]

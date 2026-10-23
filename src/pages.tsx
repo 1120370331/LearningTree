@@ -40,20 +40,23 @@ export interface Actions {
   navigate: (page: Page) => void;
   study: (id?: string) => void;
   learn: (id: string) => void;
-  saveNote: (id: string, note: string) => boolean;
-  recordQuiz: (session: Session) => boolean;
-  tree: (tree?: Tree) => void;
+  saveNote: (id: string, note: string) => Promise<boolean>;
+  recordQuiz: (session: Session) => Promise<boolean>;
+  tree: (tree?: Tree, parentTreeId?: string) => void;
   topic: (treeId: string, topic?: Topic, parentId?: string) => void;
   select: (id: string) => void;
-  deleteTopic: (id: string) => void;
+  markLearned: (id: string, note?: string) => Promise<boolean>;
   deleteTree: (id: string) => void;
-  review: (id: string, rating: Grade, response: string) => boolean;
+  review: (id: string, rating: Grade, response: string) => Promise<boolean>;
   deleteSession: (id: string) => void;
-  export: () => void;
+  export: () => Promise<void>;
   import: (file: File) => void;
+  importCourse: (file: File) => Promise<void>;
+  courseTemplate: () => Promise<void>;
+  migrateLegacy: () => void;
   reset: () => void;
-  demo: () => void;
-  settings: (settings: Data["settings"]) => boolean;
+  demo: () => Promise<void>;
+  settings: (settings: Data["settings"]) => Promise<boolean>;
 }
 type Props = { data: Data; actions: Actions };
 export function Home({
@@ -220,6 +223,10 @@ export function Home({
                 data={data}
                 tree={tree}
                 onSelect={actions.select}
+                onOpenTree={(id) => {
+                  setTreeId(id);
+                  actions.navigate("trees");
+                }}
                 compact
               />
               <div className="tree-bottom">
@@ -416,8 +423,8 @@ export function Reviews({ data, actions }: Props) {
           <ReviewCard
             key={current.id}
             node={current}
-            onRate={(rating, response) => {
-              if (actions.review(current.id, rating, response)) {
+            onRate={async (rating, response) => {
+              if (await actions.review(current.id, rating, response)) {
                 setDone((n) => n + 1);
                 setChosen(null);
               }
@@ -451,10 +458,11 @@ function ReviewCard({
   onRate,
 }: {
   node: Topic;
-  onRate: (rating: Grade, response: string) => void;
+  onRate: (rating: Grade, response: string) => Promise<void>;
 }) {
   const [revealed, setRevealed] = useState(false),
     [response, setResponse] = useState("");
+  const [saving, setSaving] = useState(false);
   const preview = scheduler.repeat(hydrateCard(node.card), new Date());
   return (
     <section className="panel review-card">
@@ -496,7 +504,16 @@ function ReviewCard({
               <button
                 key={rating}
                 className={`rating rating-${rating}`}
-                onClick={() => onRate(rating, response)}
+                disabled={saving}
+                onClick={async () => {
+                  if (saving) return;
+                  setSaving(true);
+                  try {
+                    await onRate(rating, response);
+                  } finally {
+                    setSaving(false);
+                  }
+                }}
               >
                 <strong>
                   {["没想起来", "有些吃力", "基本记得", "轻松记得"][i]}
@@ -571,8 +588,16 @@ export function Feedback({ data, actions }: Props) {
                     x2="0"
                     y2="1"
                   >
-                    <stop offset="0%" stopColor="#4d8af0" stopOpacity=".2" />
-                    <stop offset="100%" stopColor="#4d8af0" stopOpacity="0" />
+                    <stop
+                      offset="0%"
+                      stopColor="var(--primary)"
+                      stopOpacity=".12"
+                    />
+                    <stop
+                      offset="100%"
+                      stopColor="var(--primary)"
+                      stopOpacity="0"
+                    />
                   </linearGradient>
                 </defs>
                 {[0, 50, 100].map((v) => (
@@ -582,7 +607,7 @@ export function Feedback({ data, actions }: Props) {
                       y1={175 - v * 1.4}
                       x2="515"
                       y2={175 - v * 1.4}
-                      stroke="#e1eafa"
+                      stroke="var(--border)"
                       strokeDasharray="4 5"
                     />
                     <text x="5" y={180 - v * 1.4}>
@@ -598,7 +623,7 @@ export function Feedback({ data, actions }: Props) {
                     />
                     <polyline
                       fill="none"
-                      stroke="#4d8af0"
+                      stroke="var(--primary)"
                       strokeWidth="2.5"
                       points={scored
                         .map(
@@ -619,8 +644,8 @@ export function Feedback({ data, actions }: Props) {
                     }
                     cy={175 - ((s.correct ?? 0) / s.total!) * 140}
                     r="4.5"
-                    fill="#4d8af0"
-                    stroke="#fff"
+                    fill="var(--primary)"
+                    stroke="var(--card)"
                     strokeWidth="2"
                   >
                     <title>
@@ -676,7 +701,7 @@ export function Feedback({ data, actions }: Props) {
             ))}
           </div>
           <p className="chart-note">
-            深蓝色表示达到每日 {data.settings.dailyMinutes} 分钟的小目标。
+            绿色表示达到每日 {data.settings.dailyMinutes} 分钟的小目标。
           </p>
         </section>
       </div>
@@ -797,7 +822,11 @@ export function Journal({ data, actions }: Props) {
                       <span>
                         {r.total
                           ? `自测 ${r.correct}/${r.total}`
-                          : "未记录自测"}
+                          : r.quizAnswers?.some(
+                                (answer) => answer.grading === "self",
+                              )
+                            ? "标准自评"
+                            : "未记录自测"}
                       </span>
                     </>
                   ) : (
@@ -848,64 +877,73 @@ export function Settings({ data, actions }: Props) {
   const [name, setName] = useState(data.settings.name),
     [minutes, setMinutes] = useState(String(data.settings.dailyMinutes));
   const [saved, setSaved] = useState(false);
+  const [saving, setSaving] = useState(false);
   return (
     <>
       <PageHeading
         eyebrow="让这里，成为你的学习角落"
         title="偏好与数据"
-        description="学习记录保存在当前浏览器中。定期导出一份备份，可以带走你的全部进展。"
+        description="学习记录由本机数据库保存。课程包管理学习内容，完整备份包含你的全部进展。"
       />
       <div className="settings-layout">
         <section className="panel settings-panel">
           <h2>按自己的节奏来</h2>
           <form
-            onSubmit={(e) => {
+            onSubmit={async (e) => {
               e.preventDefault();
-              setSaved(
-                actions.settings({
-                  name: name.trim(),
-                  dailyMinutes: Number(minutes),
-                }),
-              );
+              if (saving) return;
+              setSaving(true);
+              try {
+                setSaved(
+                  await actions.settings({
+                    name: name.trim(),
+                    dailyMinutes: Number(minutes),
+                  }),
+                );
+              } finally {
+                setSaving(false);
+              }
             }}
           >
-            <label>
-              怎么称呼你
-              <input
-                required
-                maxLength={30}
-                value={name}
-                onChange={(e) => {
-                  setName(e.target.value);
-                  setSaved(false);
-                }}
-              />
-            </label>
-            <label>
-              每天的小目标（分钟）
-              <input
-                type="number"
-                required
-                min={5}
-                max={480}
-                value={minutes}
-                onChange={(e) => {
-                  setMinutes(e.target.value);
-                  setSaved(false);
-                }}
-              />
-            </label>
-            <p className="muted">选择一个容易开始、可以持续的时长。</p>
-            <button className="button primary" disabled={!name.trim()}>
-              {saved ? (
-                <>
-                  <Check size={16} />
-                  已保存
-                </>
-              ) : (
-                "保存偏好"
-              )}
-            </button>
+            <fieldset disabled={saving}>
+              <label>
+                怎么称呼你
+                <input
+                  required
+                  maxLength={30}
+                  value={name}
+                  onChange={(e) => {
+                    setName(e.target.value);
+                    setSaved(false);
+                  }}
+                />
+              </label>
+              <label>
+                每天的小目标（分钟）
+                <input
+                  type="number"
+                  required
+                  min={5}
+                  max={480}
+                  value={minutes}
+                  onChange={(e) => {
+                    setMinutes(e.target.value);
+                    setSaved(false);
+                  }}
+                />
+              </label>
+              <p className="muted">选择一个容易开始、可以持续的时长。</p>
+              <button className="button primary" disabled={!name.trim()}>
+                {saved ? (
+                  <>
+                    <Check size={16} />
+                    已保存
+                  </>
+                ) : (
+                  "保存偏好"
+                )}
+              </button>
+            </fieldset>
           </form>
         </section>
         <section className="panel settings-panel">
@@ -933,34 +971,76 @@ export function Settings({ data, actions }: Props) {
             />
           </label>
           <p className="caption">
-            仅支持本应用导出的 JSON，最大 2 MB。恢复前会校验内容并让你确认替换。
+            支持本应用导出的完整 JSON 备份，最大 32
+            MB。恢复会替换数据库中的整个学习空间。
           </p>
+          <button
+            className="text-button demo-link"
+            onClick={actions.migrateLegacy}
+          >
+            迁移此浏览器的旧版数据
+            <ArrowUpRight size={14} />
+          </button>
           <div className="settings-divider" />
           <h3>{data.demo ? "准备开始自己的学习？" : "从新的一页开始"}</h3>
           <p>
             {data.demo
               ? "当前是示例空间。清空示例后，就能建立属于你的学习树。"
-              : "清空当前浏览器中的全部学习数据。建议先导出备份。"}
+              : "清空数据库中的学习内容与进度。建议先导出完整备份。"}
           </p>
           <button className="button danger" onClick={actions.reset}>
             {data.demo ? "清空示例，开始我的学习" : "清空全部学习数据"}
           </button>
           {!data.trees.length && (
             <button className="text-button demo-link" onClick={actions.demo}>
-              查看示例空间
+              载入内置前端课程
               <ArrowUpRight size={14} />
             </button>
           )}
         </section>
       </div>
+      <section className="panel settings-panel course-settings">
+        <h2>导入学习内容</h2>
+        <p>
+          课程包包含学习树、讲义、回忆题和测验题。按相同 ID
+          更新内容时保留笔记、答题历史和学习进度；未包含的节点不会被删除。
+        </p>
+        <div className="course-import-actions">
+          <label className="button import-button">
+            <FileUp size={16} />
+            导入课程包
+            <input
+              type="file"
+              accept=".json,application/json"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) void actions.importCourse(file);
+                e.target.value = "";
+              }}
+            />
+          </label>
+          <button className="button" onClick={actions.courseTemplate}>
+            <ArrowDownToLine size={16} />
+            下载内置课程包
+          </button>
+          <button className="button" onClick={actions.demo}>
+            <BookOpen size={16} />
+            重新导入内置课程
+          </button>
+        </div>
+        <p className="caption">
+          课程包格式为 learning-tree-course，单文件最大 32
+          MB，不包含个人笔记或测验成绩。
+        </p>
+      </section>
       <section className="panel method-note">
         <Leaf size={22} />
         <div>
           <h3>关于这里的反馈</h3>
           <p>
             反馈由实际学习记录和明确规则生成；自测正确率、主观信心和复习自评分开记录。复习采用
-            FSRS 算法安排时间。当前版本无需账号、不调用
-            AI，也不上传学习数据；换设备或清理浏览器前，请导出备份。
+            FSRS 算法安排时间。课程和学习数据通过本机后端写入
+            SQLite，当前为单人工作区，无需账号、不调用 AI。请定期导出完整备份。
           </p>
         </div>
       </section>

@@ -1,0 +1,130 @@
+[
+  {
+    "id": "fe-ts-generics-single",
+    "type": "single",
+    "difficulty": "basic",
+    "prompt": "泛型函数 identity<T>(value:T):T 的核心价值是什么？",
+    "explanation": "同一个 T 连接输入与输出。",
+    "options": [
+      "把所有值自动序列化",
+      "保证网络请求一定成功",
+      "保留输入和返回值的类型关系",
+      "让所有非法输入通过"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "fe-ts-generics-multiple",
+    "type": "multiple",
+    "difficulty": "applied",
+    "prompt": "哪些说法正确？",
+    "explanation": "泛型是静态类型机制。",
+    "options": [
+      "泛型会自动在运行时校验 JSON",
+      "keyof T 描述 T 的键类型",
+      "extends 可约束泛型所需能力",
+      "泛型常可由实参推断"
+    ],
+    "correctIndices": [
+      1,
+      2,
+      3
+    ]
+  },
+  {
+    "id": "fe-ts-generics-boolean",
+    "type": "boolean",
+    "difficulty": "basic",
+    "prompt": "把所有泛型参数替换为 any，通常仍能保留同等精度的输入输出类型关系。",
+    "explanation": "any 会放弃相关检查，调用方容易丢失类型信息。",
+    "options": [
+      "正确",
+      "错误"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "fe-ts-generics-fill",
+    "type": "fill",
+    "difficulty": "basic",
+    "prompt": "提取对象类型键的联合类型，应使用哪个运算符？",
+    "explanation": "keyof 与索引访问类型 T[K] 经常配合使用。",
+    "acceptedAnswers": [
+      "keyof"
+    ],
+    "caseSensitive": false
+  },
+  {
+    "id": "fe-ts-generics-order",
+    "type": "order",
+    "difficulty": "applied",
+    "prompt": "按设计安全属性读取函数的依赖顺序排序。",
+    "explanation": "先表达关系，再实现与关系一致的读取。",
+    "options": [
+      "约束键 K extends keyof T",
+      "在函数体返回 object[key]",
+      "将返回类型声明为 T[K]",
+      "定义对象类型参数 T"
+    ],
+    "correctOrder": [
+      3,
+      0,
+      2,
+      1
+    ]
+  },
+  {
+    "id": "fe-ts-generics-code_reading",
+    "type": "code_reading",
+    "difficulty": "applied",
+    "prompt": "代码运行后输出什么？",
+    "explanation": "泛型保留元素类型；首项是 HTML，空数组需要考虑 undefined。",
+    "code": "function first<T>(items: readonly T[]): T | undefined { return items[0]; }\nconsole.log(first([\"HTML\", \"CSS\"]));",
+    "language": "typescript",
+    "acceptedAnswers": [
+      "HTML"
+    ],
+    "caseSensitive": true
+  },
+  {
+    "id": "fe-ts-generics-short_answer",
+    "type": "short_answer",
+    "difficulty": "advanced",
+    "prompt": "什么时候一个函数值得使用泛型，而不是直接接受固定类型？",
+    "explanation": "当函数对多种类型执行同样操作，同时需要保留输入、键或返回值之间的关系时。仅返回 boolean 且只需固定字段时，普通接口可能更简单；不要用泛型替代运行时校验。",
+    "referenceAnswer": "当函数对多种类型执行同样操作，同时需要保留输入、键或返回值之间的关系时。仅返回 boolean 且只需固定字段时，普通接口可能更简单；不要用泛型替代运行时校验。",
+    "rubric": [
+      "指出关系保留而非任意放宽",
+      "给出适用例子",
+      "说明不必泛型化的情况或静态边界"
+    ]
+  },
+  {
+    "id": "fe-ts-generics-code_fix",
+    "type": "code_fix",
+    "difficulty": "applied",
+    "prompt": "去掉 any，同时保留调用方数组元素类型并表达空数组结果。",
+    "explanation": "返回类型应反映空数组可能性，而不只是换掉 any 的拼写。",
+    "code": "function first(items: any[]): any { return items[0]; }",
+    "language": "typescript",
+    "referenceAnswer": "function first<T>(items: readonly T[]): T | undefined {\n  return items[0];\n}",
+    "rubric": [
+      "用泛型连接元素和返回类型",
+      "包含空数组的 undefined",
+      "不修改传入数组"
+    ]
+  },
+  {
+    "id": "fe-ts-generics-project",
+    "type": "project",
+    "difficulty": "advanced",
+    "prompt": "实现按 id 查找条目的泛型函数，适用于课程和任务两种不同对象。",
+    "explanation": "约束 T extends {id:string}，返回 T | undefined。给出两种输入示例，展示返回值保留各自附加字段，并处理没有匹配的情况。",
+    "referenceAnswer": "约束 T extends {id:string}，返回 T | undefined。给出两种输入示例，展示返回值保留各自附加字段，并处理没有匹配的情况。",
+    "rubric": [
+      "只约束算法实际需要的 id",
+      "保留不同对象的附加字段类型",
+      "无匹配结果被调用方明确处理"
+    ]
+  }
+]

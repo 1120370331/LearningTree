@@ -1,0 +1,128 @@
+[
+  {
+    "id": "fe-collections-single",
+    "type": "single",
+    "difficulty": "basic",
+    "prompt": "需要保留所有满足条件的项，应使用哪个数组方法？",
+    "explanation": "filter 返回所有符合条件的元素组成的新数组。",
+    "options": [
+      "filter",
+      "findIndex",
+      "map",
+      "join"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "fe-collections-multiple",
+    "type": "multiple",
+    "difficulty": "applied",
+    "prompt": "哪些说法正确？",
+    "explanation": "新数组与深复制内部元素是不同层次。",
+    "options": [
+      "filter 返回新数组但可能共享内部对象",
+      "sort 默认会修改原数组",
+      "map 通常保持数组长度",
+      "展开数组会自动深复制所有对象"
+    ],
+    "correctIndices": [
+      2,
+      0,
+      1
+    ]
+  },
+  {
+    "id": "fe-collections-boolean",
+    "type": "boolean",
+    "difficulty": "basic",
+    "prompt": "对数字数组直接调用 sort()，一定得到数值从小到大的顺序。",
+    "explanation": "默认比较使用字符串顺序；数值排序需要比较函数。",
+    "options": [
+      "正确",
+      "错误"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "fe-collections-fill",
+    "type": "fill",
+    "difficulty": "basic",
+    "prompt": "删除原始值数组中的重复值，可用哪种内置集合构造器？",
+    "explanation": "例如 [...new Set(values)]；对象去重仍按引用身份判断。",
+    "acceptedAnswers": [
+      "Set"
+    ],
+    "caseSensitive": false
+  },
+  {
+    "id": "fe-collections-order",
+    "type": "order",
+    "difficulty": "applied",
+    "prompt": "按流水线要求排序：选出有效订单，计算每单金额，最后求和。",
+    "explanation": "题目约定三步流水线；实际可以合并，但应优先表达清楚。",
+    "options": [
+      "map 计算每单金额",
+      "filter 选出有效订单",
+      "reduce 累加总金额"
+    ],
+    "correctOrder": [
+      1,
+      0,
+      2
+    ]
+  },
+  {
+    "id": "fe-collections-code_reading",
+    "type": "code_reading",
+    "difficulty": "applied",
+    "prompt": "输出的数字是多少？",
+    "explanation": "偶数是 2 和 4，转换为 20 和 40，总和为 60。",
+    "code": "const total = [1, 2, 3, 4]\n  .filter(n => n % 2 === 0)\n  .map(n => n * 10)\n  .reduce((sum, n) => sum + n, 0);\nconsole.log(total);",
+    "language": "javascript",
+    "acceptedAnswers": [
+      "60"
+    ],
+    "caseSensitive": true
+  },
+  {
+    "id": "fe-collections-short_answer",
+    "type": "short_answer",
+    "difficulty": "advanced",
+    "prompt": "为什么数组 map 后仍可能意外修改旧状态？",
+    "explanation": "map 只保证返回一个新数组。若回调修改 item 属性或原样返回对象，新旧数组仍可能共享对象。更新条目时要复制该对象以及实际变化的嵌套层。",
+    "referenceAnswer": "map 只保证返回一个新数组。若回调修改 item 属性或原样返回对象，新旧数组仍可能共享对象。更新条目时要复制该对象以及实际变化的嵌套层。",
+    "rubric": [
+      "区分数组容器与内部对象",
+      "指出回调修改或共享引用",
+      "给出逐层复制的改法"
+    ]
+  },
+  {
+    "id": "fe-collections-code_fix",
+    "type": "code_fix",
+    "difficulty": "applied",
+    "prompt": "返回按分数升序排列的新数组，保留原数组顺序。",
+    "explanation": "修复同时涉及比较规则和原地修改，不能只改其中一个。",
+    "code": "function ranked(scores) { return scores.sort(); }",
+    "language": "javascript",
+    "referenceAnswer": "function ranked(scores) { return [...scores].sort((a, b) => a - b); }",
+    "rubric": [
+      "复制后再排序或使用 toSorted",
+      "提供数值比较函数",
+      "原数组不被重排"
+    ]
+  },
+  {
+    "id": "fe-collections-project",
+    "type": "project",
+    "difficulty": "advanced",
+    "prompt": "制作任务列表的数据模块，支持按 ID 切换完成状态、筛选未完成项与计算完成数。",
+    "explanation": "用 map 更新目标条目，用 filter 派生列表与数量；处理不存在的 ID，记录操作前后数据，不直接修改输入对象。",
+    "referenceAnswer": "用 map 更新目标条目，用 filter 派生列表与数量；处理不存在的 ID，记录操作前后数据，不直接修改输入对象。",
+    "rubric": [
+      "按 ID 更新准确且不依赖数组位置",
+      "原数据未被修改",
+      "派生数量与筛选结果一致"
+    ]
+  }
+]

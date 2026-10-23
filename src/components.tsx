@@ -1,26 +1,19 @@
 import { useEffect, useId, useRef, useState, type ReactNode } from "react";
-import {
-  ArrowUpRight,
-  Sprout,
-  X,
-} from "lucide-react";
-import {
-  statusLabels,
-  topicStatus,
-  type Data,
-  type Topic,
-} from "./domain";
+import { ArrowUpRight, Sprout, X } from "lucide-react";
+import { statusLabels, topicStatus, type Data, type Topic } from "./domain";
 
 export function Modal({
   title,
   children,
   onClose,
   wide = false,
+  busy = false,
 }: {
   title: string;
   children: ReactNode;
   onClose: () => void;
   wide?: boolean;
+  busy?: boolean;
 }) {
   const ref = useRef<HTMLDialogElement>(null);
   const titleId = useId();
@@ -46,9 +39,13 @@ export function Modal({
       className={`modal ${wide ? "wide" : ""}`}
       ref={ref}
       aria-labelledby={titleId}
-      onCancel={onClose}
+      onCancel={(event) => {
+        event.preventDefault();
+        if (!busy) onClose();
+      }}
       onClick={(e) => {
         if (
+          !busy &&
           e.target === e.currentTarget &&
           (e.clientX < e.currentTarget.getBoundingClientRect().left ||
             e.clientX > e.currentTarget.getBoundingClientRect().right ||
@@ -60,7 +57,17 @@ export function Modal({
     >
       <div className="modal-head">
         <h2 id={titleId}>{title}</h2>
-        <button className="icon-button" aria-label="关闭弹窗" onClick={onClose}>
+        {busy && (
+          <span className="modal-saving" role="status">
+            正在保存…
+          </span>
+        )}
+        <button
+          className="icon-button"
+          aria-label="关闭弹窗"
+          disabled={busy}
+          onClick={onClose}
+        >
           <X size={20} />
         </button>
       </div>

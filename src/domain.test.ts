@@ -20,6 +20,8 @@ function fixture(): Data {
   const data = blankData();
   data.trees.push({
     id: "tree",
+    parentTreeId: null,
+    prerequisiteTreeIds: [],
     title: "测试",
     description: "",
     color: "green",

@@ -3,10 +3,10 @@
 JavaScript 当前任务里的同步代码会先执行完，之后才会处理排队的回调。异步并不是把当前函数从中间打断。
 
 ```js
-console.log('A');
-setTimeout(() => console.log('B'), 0);
-Promise.resolve().then(() => console.log('C'));
-console.log('D');
+console.log("A");
+setTimeout(() => console.log("B"), 0);
+Promise.resolve().then(() => console.log("C"));
+console.log("D");
 // 通常依次输出 A、D、C、B
 ```
 

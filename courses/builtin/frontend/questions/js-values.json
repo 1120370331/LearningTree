@@ -1,0 +1,131 @@
+[
+  {
+    "id": "fe-js-values-single",
+    "type": "single",
+    "difficulty": "basic",
+    "prompt": "const a = {n:1}; const b = a; b.n = 2; 此时 a.n 是多少？",
+    "explanation": "const 不会冻结属性；两个变量引用同一对象。",
+    "options": [
+      "1",
+      "代码必然因为 const 报错",
+      "2",
+      "undefined"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "fe-js-values-multiple",
+    "type": "multiple",
+    "difficulty": "applied",
+    "prompt": "关于值和转换，哪些说法正确？",
+    "explanation": "声明绑定、复制深度和转换规则是不同概念。",
+    "options": [
+      "const 自动深冻结所有属性",
+      "严格相等不进行跨类型转换",
+      "Number(\"not-a-number\") 得到 NaN",
+      "对象展开是浅复制"
+    ],
+    "correctIndices": [
+      1,
+      3,
+      2
+    ]
+  },
+  {
+    "id": "fe-js-values-boolean",
+    "type": "boolean",
+    "difficulty": "basic",
+    "prompt": "const 声明的数组可以调用 push 添加元素。",
+    "explanation": "const 禁止给变量重新赋值，数组内容仍可修改。",
+    "options": [
+      "正确",
+      "错误"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "fe-js-values-fill",
+    "type": "fill",
+    "difficulty": "basic",
+    "prompt": "检查一个值是否为 NaN，推荐使用 Number 的哪个方法？填完整调用名，不带参数。",
+    "explanation": "Number.isNaN 不会先把任意输入强制转成数字。",
+    "acceptedAnswers": [
+      "Number.isNaN",
+      "Number.isNaN()"
+    ],
+    "caseSensitive": false
+  },
+  {
+    "id": "fe-js-values-order",
+    "type": "order",
+    "difficulty": "applied",
+    "prompt": "按明确的数据处理管线排序：输入来自文本框，结果必须为 1 到 10 的有限数。",
+    "explanation": "先保留并检查原始输入，避免空字符串被转成 0 后误判。",
+    "options": [
+      "使用已校验的数字更新结果",
+      "读取原始文本",
+      "排除空文本并显式转成数字",
+      "校验有限数和 1 到 10 的范围"
+    ],
+    "correctOrder": [
+      1,
+      2,
+      3,
+      0
+    ]
+  },
+  {
+    "id": "fe-js-values-code_reading",
+    "type": "code_reading",
+    "difficulty": "applied",
+    "prompt": "下面 console.log 输出什么？按空格分隔两项。",
+    "explanation": "第一项发生字符串拼接，第二项显式转换后相加。",
+    "code": "console.log(\"5\" + 1, Number(\"5\") + 1);",
+    "language": "javascript",
+    "acceptedAnswers": [
+      "51 6"
+    ],
+    "caseSensitive": true
+  },
+  {
+    "id": "fe-js-values-short_answer",
+    "type": "short_answer",
+    "difficulty": "advanced",
+    "prompt": "为什么 {...state} 之后修改 next.user.name 仍可能影响 state？",
+    "explanation": "展开只复制外层。next.user 与 state.user 可能仍引用同一对象；应在更新 name 时也复制 user，或者针对合适的数据使用深复制方案。",
+    "referenceAnswer": "展开只复制外层。next.user 与 state.user 可能仍引用同一对象；应在更新 name 时也复制 user，或者针对合适的数据使用深复制方案。",
+    "rubric": [
+      "指出共享的嵌套引用",
+      "给出复制到修改层的方案",
+      "不把 const 或展开误当深冻结"
+    ]
+  },
+  {
+    "id": "fe-js-values-code_fix",
+    "type": "code_fix",
+    "difficulty": "applied",
+    "prompt": "表单提供的是字符串。修复错误的加法，并拒绝空文本或非有限数。",
+    "explanation": "仅用 Number 不足以表达所有输入规则；空字符串会转成 0。",
+    "code": "function addOne(raw) { return raw + 1; }",
+    "language": "javascript",
+    "referenceAnswer": "function addOne(raw) {\n  if (raw.trim() === \"\") throw new Error(\"请输入数字\");\n  const n = Number(raw);\n  if (!Number.isFinite(n)) throw new Error(\"请输入有限数字\");\n  return n + 1;\n}",
+    "rubric": [
+      "显式转换字符串",
+      "空文本单独处理",
+      "用有限数检查拒绝无效输入"
+    ]
+  },
+  {
+    "id": "fe-js-values-project",
+    "type": "project",
+    "difficulty": "advanced",
+    "prompt": "做一个分数调整器：输入当前分数和增量，显示结果，保留原始分数对象。",
+    "explanation": "先将输入转换并校验，再通过创建新对象计算结果。演示空输入、普通数字和非法输入，说明为什么原对象不应被意外改变。",
+    "referenceAnswer": "先将输入转换并校验，再通过创建新对象计算结果。演示空输入、普通数字和非法输入，说明为什么原对象不应被意外改变。",
+    "rubric": [
+      "合法输入得到数值加法结果",
+      "空文本与非法数字有明确反馈",
+      "更新后原对象的值保持可解释且未被意外修改"
+    ]
+  }
+]

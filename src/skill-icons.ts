@@ -1,4 +1,25 @@
-import { Atom, Braces, Box, Code2, Component, Database, FileCode2, Frame, GitBranch, Globe2, Layers3, LayoutGrid, Palette, Rocket, ShieldCheck, Sparkles, Terminal, Type, Workflow, Zap } from "lucide-react";
+import {
+  Atom,
+  Braces,
+  Box,
+  Code2,
+  Component,
+  Database,
+  FileCode2,
+  Frame,
+  GitBranch,
+  Globe2,
+  Layers3,
+  LayoutGrid,
+  Palette,
+  Rocket,
+  ShieldCheck,
+  Sparkles,
+  Terminal,
+  Type,
+  Workflow,
+  Zap,
+} from "lucide-react";
 
 export function skillIcon(title: string) {
   if (/html|语义/i.test(title)) return FileCode2;

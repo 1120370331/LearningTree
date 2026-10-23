@@ -1,0 +1,130 @@
+[
+  {
+    "id": "fe-quality-a11y-single",
+    "type": "single",
+    "difficulty": "basic",
+    "prompt": "只有垃圾桶图标的删除按钮首先应补充什么？",
+    "explanation": "用户需要知道控件执行的操作。",
+    "options": [
+      "隐藏键盘焦点",
+      "清晰的可访问名称",
+      "更复杂的阴影",
+      "把 button 改成 div"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "fe-quality-a11y-multiple",
+    "type": "multiple",
+    "difficulty": "applied",
+    "prompt": "模态对话框通常需要哪些行为？",
+    "explanation": "角色描述语义，不能替代实际交互实现。",
+    "options": [
+      "只写 role=\"dialog\" 后忽略全部键盘行为",
+      "关闭后恢复触发位置焦点",
+      "明确标题与关闭方式",
+      "打开时合理放置焦点"
+    ],
+    "correctIndices": [
+      3,
+      1,
+      2
+    ]
+  },
+  {
+    "id": "fe-quality-a11y-boolean",
+    "type": "boolean",
+    "difficulty": "basic",
+    "prompt": "自动可访问性工具没有报错，就代表所有键盘和读屏路径都一定可用。",
+    "explanation": "自动工具只覆盖部分可检测规则，真实交互仍需观察。",
+    "options": [
+      "正确",
+      "错误"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "fe-quality-a11y-fill",
+    "type": "fill",
+    "difficulty": "basic",
+    "prompt": "为没有可见文字的按钮提供简短可访问名称，常用的 ARIA 属性是 ____。",
+    "explanation": "有可见标签时应优先保持可见名称与可访问名称一致。",
+    "acceptedAnswers": [
+      "aria-label"
+    ],
+    "caseSensitive": false
+  },
+  {
+    "id": "fe-quality-a11y-order",
+    "type": "order",
+    "difficulty": "applied",
+    "prompt": "按打开并关闭模态对话框的焦点生命周期排序。",
+    "explanation": "触发元素已不存在时，需要选择合理的后续焦点位置。",
+    "options": [
+      "关闭后把焦点还给合理触发位置",
+      "打开并把焦点移入对话框",
+      "在对话框内完成操作或关闭",
+      "记录触发控件"
+    ],
+    "correctOrder": [
+      3,
+      1,
+      2,
+      0
+    ]
+  },
+  {
+    "id": "fe-quality-a11y-code_reading",
+    "type": "code_reading",
+    "difficulty": "applied",
+    "prompt": "这个按钮的可访问名称是什么？",
+    "explanation": "aria-label 提供名称，装饰符号被隐藏于辅助技术。",
+    "code": "<button aria-label=\"打开学习笔记\"><span aria-hidden=\"true\">✎</span></button>",
+    "language": "html",
+    "acceptedAnswers": [
+      "打开学习笔记"
+    ],
+    "caseSensitive": true
+  },
+  {
+    "id": "fe-quality-a11y-short_answer",
+    "type": "short_answer",
+    "difficulty": "advanced",
+    "prompt": "为什么给 div 加 role=\"button\" 仍不足以获得完整按钮体验？",
+    "explanation": "角色只提供语义，不自动添加可聚焦性、Enter/Space 激活、禁用和表单行为。优先使用原生 button，减少遗漏并保持标准交互。",
+    "referenceAnswer": "角色只提供语义，不自动添加可聚焦性、Enter/Space 激活、禁用和表单行为。优先使用原生 button，减少遗漏并保持标准交互。",
+    "rubric": [
+      "区分语义与行为",
+      "列出键盘或焦点缺失",
+      "优先选择原生控件"
+    ]
+  },
+  {
+    "id": "fe-quality-a11y-code_fix",
+    "type": "code_fix",
+    "difficulty": "applied",
+    "prompt": "修复无名称且不可原生键盘操作的图标控件。",
+    "explanation": "符号外观不保证用户理解操作，也不提供完整键盘行为。",
+    "code": "<div onclick=\"removeNote()\">×</div>",
+    "language": "html",
+    "referenceAnswer": "<button type=\"button\" aria-label=\"删除笔记\" onclick=\"removeNote()\">\n  <span aria-hidden=\"true\">×</span>\n</button>",
+    "rubric": [
+      "使用原生 button",
+      "提供描述动作的名称",
+      "装饰字符不制造重复或模糊名称"
+    ]
+  },
+  {
+    "id": "fe-quality-a11y-project",
+    "type": "project",
+    "difficulty": "advanced",
+    "prompt": "为学习应用的“打开笔记 → 编辑 → 保存 → 关闭”设计一条完整键盘路径，并改进错误反馈。",
+    "explanation": "记录焦点顺序、打开/关闭后的焦点位置、保存状态播报和错误关联。保证可见焦点，错误有文字原因，失败保留编辑内容。",
+    "referenceAnswer": "记录焦点顺序、打开/关闭后的焦点位置、保存状态播报和错误关联。保证可见焦点，错误有文字原因，失败保留编辑内容。",
+    "rubric": [
+      "全部主要操作可用键盘完成",
+      "焦点管理和名称清楚",
+      "成功错误可感知且失败不丢输入"
+    ]
+  }
+]

@@ -1,0 +1,128 @@
+[
+  {
+    "id": "fe-flex-grid-single",
+    "type": "single",
+    "difficulty": "basic",
+    "prompt": "想同时对齐多行多列卡片，优先考虑什么？",
+    "explanation": "Grid 直接描述二维轨道。",
+    "options": [
+      "每个元素固定坐标",
+      "连续插入 br",
+      "Grid",
+      "只设置 text-align"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "fe-flex-grid-multiple",
+    "type": "multiple",
+    "difficulty": "applied",
+    "prompt": "选择正确说法。",
+    "explanation": "视觉顺序与 DOM 顺序需要分别考虑。",
+    "options": [
+      "order 必然改变 DOM 顺序",
+      "Flex 的主轴由 flex-direction 决定",
+      "Grid 与 Flex 可以组合",
+      "gap 可以表达项目间距"
+    ],
+    "correctIndices": [
+      1,
+      2,
+      3
+    ]
+  },
+  {
+    "id": "fe-flex-grid-boolean",
+    "type": "boolean",
+    "difficulty": "basic",
+    "prompt": "flex-direction: column 时，justify-content 沿竖直主轴对齐。",
+    "explanation": "justify-content 始终沿主轴，不固定代表水平方向。",
+    "options": [
+      "正确",
+      "错误"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "fe-flex-grid-fill",
+    "type": "fill",
+    "difficulty": "basic",
+    "prompt": "Flex 中沿交叉轴对齐项目的常用属性是 ____。",
+    "explanation": "align-items 与 justify-content 对应不同的轴。",
+    "acceptedAnswers": [
+      "align-items"
+    ],
+    "caseSensitive": false
+  },
+  {
+    "id": "fe-flex-grid-order",
+    "type": "order",
+    "difficulty": "applied",
+    "prompt": "三项 DOM 顺序为 A、B、C，order 分别为 0、2、-1。按视觉先后排序。",
+    "explanation": "较小 order 先出现，相同 order 再看原始顺序。",
+    "options": [
+      "B",
+      "A",
+      "C"
+    ],
+    "correctOrder": [
+      2,
+      1,
+      0
+    ]
+  },
+  {
+    "id": "fe-flex-grid-code_reading",
+    "type": "code_reading",
+    "difficulty": "applied",
+    "prompt": "600px 容器内 repeat(3, 1fr)，gap=15px；每列宽多少？只填数字。",
+    "explanation": "三列有两个间隙：(600-30)/3=190。",
+    "code": ".grid { width: 600px; display:grid; grid-template-columns:repeat(3,1fr); gap:15px; }",
+    "language": "css",
+    "acceptedAnswers": [
+      "190"
+    ],
+    "caseSensitive": true
+  },
+  {
+    "id": "fe-flex-grid-short_answer",
+    "type": "short_answer",
+    "difficulty": "advanced",
+    "prompt": "如何为外层卡片列表和卡片内部操作栏分别选择布局？",
+    "explanation": "外层多行多列可用 Grid；内部图标、标题、按钮的一行关系可用 Flex。根据内容维度和对齐目标选择，并保留合理 DOM 顺序。",
+    "referenceAnswer": "外层多行多列可用 Grid；内部图标、标题、按钮的一行关系可用 Flex。根据内容维度和对齐目标选择，并保留合理 DOM 顺序。",
+    "rubric": [
+      "分别说明两层需求",
+      "合理使用 Grid 与 Flex",
+      "考虑内容或阅读顺序而非只谈外观"
+    ]
+  },
+  {
+    "id": "fe-flex-grid-code_fix",
+    "type": "code_fix",
+    "difficulty": "applied",
+    "prompt": "让竖直主轴上的项目整体居中。",
+    "explanation": "记住轴而非固定的水平/竖直口诀。",
+    "code": ".panel { display:flex; flex-direction:column; height:300px; align-items:center; }",
+    "language": "css",
+    "referenceAnswer": ".panel { display:flex; flex-direction:column; height:300px; justify-content:center; align-items:center; }",
+    "rubric": [
+      "识别 column 的主轴方向",
+      "用 justify-content 控制竖直主轴",
+      "说明 align-items 的职责不同"
+    ]
+  },
+  {
+    "id": "fe-flex-grid-project",
+    "type": "project",
+    "difficulty": "advanced",
+    "prompt": "制作一个三列卡片列表，每张卡片的图标与按钮使用一维排列，窄屏变为单列。",
+    "explanation": "外层 Grid 定义轨道，内层 Flex 排列控件；用内容驱动的断点或自适应轨道处理窄屏，保留自然阅读顺序。",
+    "referenceAnswer": "外层 Grid 定义轨道，内层 Flex 排列控件；用内容驱动的断点或自适应轨道处理窄屏，保留自然阅读顺序。",
+    "rubric": [
+      "外层与内层布局职责清楚",
+      "窄屏不出现必要内容被挤出",
+      "按钮顺序与键盘阅读一致"
+    ]
+  }
+]

@@ -1,0 +1,130 @@
+[
+  {
+    "id": "fe-react-state-single",
+    "type": "single",
+    "difficulty": "basic",
+    "prompt": "在一次事件中连续递增两次，哪个更新方式可靠表达“基于前值加一”？",
+    "explanation": "函数式更新按队列中的前值计算。",
+    "options": [
+      "setCount(count + 1) 并假设变量立即变化",
+      "setCount(n => n + 1)",
+      "直接 count++",
+      "document.title++"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "fe-react-state-multiple",
+    "type": "multiple",
+    "difficulty": "applied",
+    "prompt": "哪些做法合理？",
+    "explanation": "依赖表达实际使用的数据，不能通过隐藏依赖修复逻辑。",
+    "options": [
+      "为了消除告警随意把依赖数组改为空",
+      "完成数可从任务列表派生",
+      "订阅 effect 返回解除订阅函数",
+      "依赖变化时处理旧资源清理"
+    ],
+    "correctIndices": [
+      1,
+      2,
+      3
+    ]
+  },
+  {
+    "id": "fe-react-state-boolean",
+    "type": "boolean",
+    "difficulty": "basic",
+    "prompt": "调用 setState 后，当前处理器中的状态变量会立即变成新值。",
+    "explanation": "当前渲染的状态是快照，更新会影响后续渲染。",
+    "options": [
+      "正确",
+      "错误"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "fe-react-state-fill",
+    "type": "fill",
+    "difficulty": "basic",
+    "prompt": "useEffect 返回的函数通常负责资源的什么操作？填中文两字。",
+    "explanation": "例如移除监听器、取消订阅或清除定时器。",
+    "acceptedAnswers": [
+      "清理"
+    ],
+    "caseSensitive": false
+  },
+  {
+    "id": "fe-react-state-order",
+    "type": "order",
+    "difficulty": "applied",
+    "prompt": "某 effect 依赖 roomId，从 A 改成 B 后再卸载，按资源生命周期排序。",
+    "explanation": "清理应与每次设置的资源对应。",
+    "options": [
+      "清理 A 的订阅",
+      "为 A 建立订阅",
+      "为 B 建立订阅",
+      "卸载时清理 B 的订阅"
+    ],
+    "correctOrder": [
+      1,
+      0,
+      2,
+      3
+    ]
+  },
+  {
+    "id": "fe-react-state-code_reading",
+    "type": "code_reading",
+    "difficulty": "applied",
+    "prompt": "count 初始为 0，点击一次后下一次渲染的值是多少？",
+    "explanation": "函数更新串行应用到待处理状态，得到 2。",
+    "code": "function onClick() {\n  setCount(n => n + 1);\n  setCount(n => n + 1);\n}",
+    "language": "jsx",
+    "acceptedAnswers": [
+      "2"
+    ],
+    "caseSensitive": true
+  },
+  {
+    "id": "fe-react-state-short_answer",
+    "type": "short_answer",
+    "difficulty": "advanced",
+    "prompt": "为什么不应把 filteredItems 同时保存在 state，再用 effect 跟随 items 和 query？",
+    "explanation": "它可以直接从已有数据计算。额外状态引入同步负担和一次额外更新，容易短暂过期；直接派生更清楚，昂贵计算在有证据时再考虑缓存。",
+    "referenceAnswer": "它可以直接从已有数据计算。额外状态引入同步负担和一次额外更新，容易短暂过期；直接派生更清楚，昂贵计算在有证据时再考虑缓存。",
+    "rubric": [
+      "识别重复数据源",
+      "说明同步或额外渲染风险",
+      "给出直接派生的方案"
+    ]
+  },
+  {
+    "id": "fe-react-state-code_fix",
+    "type": "code_fix",
+    "difficulty": "applied",
+    "prompt": "组件重复挂载会累积 resize 监听器。补齐清理，并使用同一个处理器引用。",
+    "explanation": "匿名创建不同函数交给 removeEventListener 并不能移除原监听器。",
+    "code": "useEffect(() => {\n  window.addEventListener(\"resize\", onResize);\n}, [onResize]);",
+    "language": "jsx",
+    "referenceAnswer": "useEffect(() => {\n  window.addEventListener(\"resize\", onResize);\n  return () => window.removeEventListener(\"resize\", onResize);\n}, [onResize]);",
+    "rubric": [
+      "返回清理函数",
+      "移除同类型同函数引用的监听器",
+      "保留真实依赖"
+    ]
+  },
+  {
+    "id": "fe-react-state-project",
+    "type": "project",
+    "difficulty": "advanced",
+    "prompt": "制作带关键词筛选和完成数的任务面板，再添加窗口宽度订阅。",
+    "explanation": "任务与查询词作为必要状态，筛选结果和数量直接派生；宽度监听在 effect 中设置并清理。说明重新挂载和依赖变化时资源如何释放。",
+    "referenceAnswer": "任务与查询词作为必要状态，筛选结果和数量直接派生；宽度监听在 effect 中设置并清理。说明重新挂载和依赖变化时资源如何释放。",
+    "rubric": [
+      "没有重复保存可派生列表或数量",
+      "任务更新使用明确的不可变数据流",
+      "监听设置与清理对称"
+    ]
+  }
+]

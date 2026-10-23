@@ -1,0 +1,128 @@
+[
+  {
+    "id": "fe-responsive-single",
+    "type": "single",
+    "difficulty": "basic",
+    "prompt": "选择断点最合理的依据是什么？",
+    "explanation": "断点服务于内容与操作。",
+    "options": [
+      "内容开始拥挤的宽度",
+      "页面标题长度",
+      "显示器品牌",
+      "固定每隔100px一个断点"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "fe-responsive-multiple",
+    "type": "multiple",
+    "difficulty": "applied",
+    "prompt": "哪些可能造成窄屏横向溢出？",
+    "explanation": "应查找实际约束，而不是统一隐藏溢出。",
+    "options": [
+      "子项最小宽度约束",
+      "合理的流式宽度本身",
+      "过大的固定宽度",
+      "不能换行的长内容"
+    ],
+    "correctIndices": [
+      2,
+      3,
+      0
+    ]
+  },
+  {
+    "id": "fe-responsive-boolean",
+    "type": "boolean",
+    "difficulty": "basic",
+    "prompt": "禁止用户缩放是解决移动端布局问题的推荐方法。",
+    "explanation": "应修复布局并允许用户按需要放大文字。",
+    "options": [
+      "正确",
+      "错误"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "fe-responsive-fill",
+    "type": "fill",
+    "difficulty": "basic",
+    "prompt": "移动页面 viewport 常见的宽度设置为 ____。",
+    "explanation": "让布局视口对应设备宽度。",
+    "acceptedAnswers": [
+      "width=device-width"
+    ],
+    "caseSensitive": false
+  },
+  {
+    "id": "fe-responsive-order",
+    "type": "order",
+    "difficulty": "applied",
+    "prompt": "按给定 max-width 断点从最窄到最宽排列。",
+    "explanation": "本题只比较断点数值，不要求采用这些固定断点。",
+    "options": [
+      "max-width: 1024px",
+      "max-width: 480px",
+      "max-width: 768px"
+    ],
+    "correctOrder": [
+      1,
+      2,
+      0
+    ]
+  },
+  {
+    "id": "fe-responsive-code_reading",
+    "type": "code_reading",
+    "difficulty": "applied",
+    "prompt": "视口宽 600px 时，最终列数是多少？只填数字。",
+    "explanation": "600 满足 max-width:700px，后声明的规则使其单列。",
+    "code": ".grid { grid-template-columns:repeat(3,1fr); }\n@media (max-width:700px) { .grid { grid-template-columns:1fr; } }",
+    "language": "css",
+    "acceptedAnswers": [
+      "1"
+    ],
+    "caseSensitive": true
+  },
+  {
+    "id": "fe-responsive-short_answer",
+    "type": "short_answer",
+    "difficulty": "advanced",
+    "prompt": "为什么 overflow-x:hidden 不能作为所有横向溢出的修复方案？",
+    "explanation": "它可能只隐藏错误并裁掉必要内容。应找出固定宽度、长内容、轨道或最小宽度问题，让内容在容器内可访问地布局。",
+    "referenceAnswer": "它可能只隐藏错误并裁掉必要内容。应找出固定宽度、长内容、轨道或最小宽度问题，让内容在容器内可访问地布局。",
+    "rubric": [
+      "区分隐藏现象与修复原因",
+      "给出至少两类溢出来源",
+      "考虑内容可访问性"
+    ]
+  },
+  {
+    "id": "fe-responsive-code_fix",
+    "type": "code_fix",
+    "difficulty": "applied",
+    "prompt": "让图片在窄容器内不溢出并保持比例。",
+    "explanation": "固定宽高可能同时导致溢出和变形。",
+    "code": "img { width:1200px; height:500px; }",
+    "language": "css",
+    "referenceAnswer": "img { max-width:100%; height:auto; }",
+    "rubric": [
+      "限制相对容器的最大宽度",
+      "高度随比例变化",
+      "不靠隐藏图片解决问题"
+    ]
+  },
+  {
+    "id": "fe-responsive-project",
+    "type": "project",
+    "difficulty": "advanced",
+    "prompt": "为一个内容卡片页制作窄、中、宽三种空间下的布局说明，并处理一条很长的 URL。",
+    "explanation": "使用流式布局和必要断点，允许长内容换行；记录每种空间下列数、操作位置、文字放大后的表现。",
+    "referenceAnswer": "使用流式布局和必要断点，允许长内容换行；记录每种空间下列数、操作位置、文字放大后的表现。",
+    "rubric": [
+      "不同空间均可阅读和操作",
+      "长内容不迫使页面横向溢出",
+      "没有通过隐藏关键操作或禁止缩放应付适配"
+    ]
+  }
+]

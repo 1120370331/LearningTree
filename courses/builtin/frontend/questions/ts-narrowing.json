@@ -1,0 +1,130 @@
+[
+  {
+    "id": "fe-ts-narrowing-single",
+    "type": "single",
+    "difficulty": "basic",
+    "prompt": "把远程 JSON 写成 value as User 会发生什么？",
+    "explanation": "断言不会生成对应的数据检查逻辑。",
+    "options": [
+      "自动补齐缺失字段",
+      "自动过滤危险字符串",
+      "必然将数据保存到数据库",
+      "只影响静态类型判断，不做运行时校验"
+    ],
+    "correctIndex": 3
+  },
+  {
+    "id": "fe-ts-narrowing-multiple",
+    "type": "multiple",
+    "difficulty": "applied",
+    "prompt": "哪些操作可以帮助收窄类型？",
+    "explanation": "收窄需要可支持结论的检查；断言本身不证明外部数据有效。",
+    "options": [
+      "检查联合类型的 status 字段",
+      "排除 null 后检查对象属性",
+      "typeof value === \"string\"",
+      "只写 as 并认为已经校验了输入"
+    ],
+    "correctIndices": [
+      2,
+      0,
+      1
+    ]
+  },
+  {
+    "id": "fe-ts-narrowing-boolean",
+    "type": "boolean",
+    "difficulty": "basic",
+    "prompt": "TypeScript 接口会自动在运行时拒绝服务器返回的错误 JSON。",
+    "explanation": "类型信息通常会被擦除，边界数据需要运行时校验。",
+    "options": [
+      "正确",
+      "错误"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "fe-ts-narrowing-fill",
+    "type": "fill",
+    "difficulty": "basic",
+    "prompt": "表示暂时不知道具体类型、使用前需要检查的类型关键字是 ____。",
+    "explanation": "unknown 保留“需要证明才能使用”的约束。",
+    "acceptedAnswers": [
+      "unknown"
+    ],
+    "caseSensitive": false
+  },
+  {
+    "id": "fe-ts-narrowing-order",
+    "type": "order",
+    "difficulty": "applied",
+    "prompt": "处理不可信 JSON 中的 name 字段，按安全访问顺序排序。",
+    "explanation": "类型约束与运行时检查共同建立可信边界。",
+    "options": [
+      "以字符串使用 name",
+      "检查 name 存在且为字符串",
+      "排除 null 并确认是对象",
+      "接收为 unknown"
+    ],
+    "correctOrder": [
+      3,
+      2,
+      1,
+      0
+    ]
+  },
+  {
+    "id": "fe-ts-narrowing-code_reading",
+    "type": "code_reading",
+    "difficulty": "applied",
+    "prompt": "代码运行后输出什么？",
+    "explanation": "number 分支调用 toFixed，返回保留一位小数的字符串。",
+    "code": "function label(value: string | number) {\n  return typeof value === \"number\" ? value.toFixed(1) : value.toUpperCase();\n}\nconsole.log(label(2));",
+    "language": "typescript",
+    "acceptedAnswers": [
+      "2.0"
+    ],
+    "caseSensitive": true
+  },
+  {
+    "id": "fe-ts-narrowing-short_answer",
+    "type": "short_answer",
+    "difficulty": "advanced",
+    "prompt": "怎样避免 loading、error、data 三个独立字段出现互相矛盾的状态？",
+    "explanation": "用 status 字面量构成可辨识联合，每个分支只带需要的字段。读取时先按 status 收窄；来自外部的数据要经过运行时校验，不能仅靠断言。",
+    "referenceAnswer": "用 status 字面量构成可辨识联合，每个分支只带需要的字段。读取时先按 status 收窄；来自外部的数据要经过运行时校验，不能仅靠断言。",
+    "rubric": [
+      "给出互斥状态结构",
+      "说明按辨识字段收窄",
+      "保留运行时校验边界"
+    ]
+  },
+  {
+    "id": "fe-ts-narrowing-code_fix",
+    "type": "code_fix",
+    "difficulty": "applied",
+    "prompt": "不要用断言掩盖错误输入。让函数只接受运行时真正的字符串，否则抛出错误。",
+    "explanation": "as string 不能让数字获得字符串方法。",
+    "code": "function upper(value: unknown): string {\n  return (value as string).toUpperCase();\n}",
+    "language": "typescript",
+    "referenceAnswer": "function upper(value: unknown): string {\n  if (typeof value !== \"string\") throw new Error(\"需要字符串\");\n  return value.toUpperCase();\n}",
+    "rubric": [
+      "检查真实运行时类型",
+      "非法输入有明确处理",
+      "不使用 any 或断言绕过检查"
+    ]
+  },
+  {
+    "id": "fe-ts-narrowing-project",
+    "type": "project",
+    "difficulty": "advanced",
+    "prompt": "为课程加载过程定义 loading、success、error 三种状态，并编写显示文案函数。",
+    "explanation": "用可辨识联合表达数据和错误所属状态，switch 分支读取合法字段；补充网络数据进入 success 前的结构校验说明。",
+    "referenceAnswer": "用可辨识联合表达数据和错误所属状态，switch 分支读取合法字段；补充网络数据进入 success 前的结构校验说明。",
+    "rubric": [
+      "互斥状态不会同时携带矛盾字段",
+      "各分支访问字段受到类型约束",
+      "说明外部数据如何被校验"
+    ]
+  }
+]

@@ -1,0 +1,130 @@
+[
+  {
+    "id": "fe-react-components-single",
+    "type": "single",
+    "difficulty": "basic",
+    "prompt": "可增删、重排的课程列表应优先使用什么作为 key？",
+    "explanation": "稳定业务 ID 能跟随条目身份而不是当前位置。",
+    "options": [
+      "所有项共用同一个字符串",
+      "当前数组索引，不考虑变化",
+      "稳定的课程 ID",
+      "每次 render 生成的 Math.random()"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "fe-react-components-multiple",
+    "type": "multiple",
+    "difficulty": "applied",
+    "prompt": "哪些做法符合组件数据流？",
+    "explanation": "修改输入会让数据变化难以追踪。",
+    "options": [
+      "列表项使用稳定 ID",
+      "在渲染时直接修改父级传来的对象",
+      "props 作为只读输入",
+      "通过回调通知父级用户操作"
+    ],
+    "correctIndices": [
+      2,
+      3,
+      0
+    ]
+  },
+  {
+    "id": "fe-react-components-boolean",
+    "type": "boolean",
+    "difficulty": "basic",
+    "prompt": "给组件设置 key 后，该组件可以直接从 props.key 读取同一个值。",
+    "explanation": "key 是特殊属性，需要在组件中使用时应另传 id 等普通 prop。",
+    "options": [
+      "正确",
+      "错误"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "fe-react-components-fill",
+    "type": "fill",
+    "difficulty": "basic",
+    "prompt": "用于标识同级列表元素身份的 React 属性是 ____。",
+    "explanation": "它应在同级唯一且跨渲染稳定。",
+    "acceptedAnswers": [
+      "key"
+    ],
+    "caseSensitive": false
+  },
+  {
+    "id": "fe-react-components-order",
+    "type": "order",
+    "difficulty": "applied",
+    "prompt": "按一次父子交互的数据流排序。",
+    "explanation": "子组件表达意图，拥有状态的一层决定实际更新。",
+    "options": [
+      "子组件调用回调传递条目 ID",
+      "父组件传入数据与回调",
+      "子组件展示输入并接收点击",
+      "父组件更新数据并触发重新渲染"
+    ],
+    "correctOrder": [
+      1,
+      2,
+      0,
+      3
+    ]
+  },
+  {
+    "id": "fe-react-components-code_reading",
+    "type": "code_reading",
+    "difficulty": "applied",
+    "prompt": "按钮上可见的文字是什么？只填文字。",
+    "explanation": "JSX 花括号读取传入的字符串并作为文本渲染。",
+    "code": "function Greeting({ name }) { return <button>你好，{name}</button>; }\n// 使用：<Greeting name=\"小林\" />",
+    "language": "jsx",
+    "acceptedAnswers": [
+      "你好，小林"
+    ],
+    "caseSensitive": true
+  },
+  {
+    "id": "fe-react-components-short_answer",
+    "type": "short_answer",
+    "difficulty": "advanced",
+    "prompt": "为什么可重排输入列表使用数组索引 key 容易出问题？",
+    "explanation": "React 会按 key 复用组件。索引跟随位置而非业务条目，重排后局部状态或输入可能被复用给另一个条目；稳定 ID 能让身份跟随数据。",
+    "referenceAnswer": "React 会按 key 复用组件。索引跟随位置而非业务条目，重排后局部状态或输入可能被复用给另一个条目；稳定 ID 能让身份跟随数据。",
+    "rubric": [
+      "说明复用按 key 判断",
+      "描述重排造成的错位",
+      "给出稳定业务 ID 方案"
+    ]
+  },
+  {
+    "id": "fe-react-components-code_fix",
+    "type": "code_fix",
+    "difficulty": "applied",
+    "prompt": "修复渲染时立即调用处理函数的问题，要求点击才传入当前 ID。",
+    "explanation": "事件属性需要一个可调用处理器，不能在渲染时执行用户动作。",
+    "code": "<button onClick={onSelect(course.id)}>学习</button>",
+    "language": "jsx",
+    "referenceAnswer": "<button onClick={() => onSelect(course.id)}>学习</button>",
+    "rubric": [
+      "传递函数而不是调用结果",
+      "只在点击时调用",
+      "保留当前 course.id"
+    ]
+  },
+  {
+    "id": "fe-react-components-project",
+    "type": "project",
+    "difficulty": "advanced",
+    "prompt": "实现可排序的课程卡片列表，卡片有标题、简述和学习按钮，由父级记录当前课程。",
+    "explanation": "列表用业务 ID 作 key，卡片用 props 接收内容并通过回调回传 ID；改变排序后选择与条目保持一致，不在卡片内修改原课程对象。",
+    "referenceAnswer": "列表用业务 ID 作 key，卡片用 props 接收内容并通过回调回传 ID；改变排序后选择与条目保持一致，不在卡片内修改原课程对象。",
+    "rubric": [
+      "组件职责与输入输出明确",
+      "重排后 ID 和选择仍一致",
+      "操作由事件触发且不修改 props"
+    ]
+  }
+]

@@ -1,0 +1,130 @@
+[
+  {
+    "id": "fe-forms-a11y-single",
+    "type": "single",
+    "difficulty": "basic",
+    "prompt": "普通表单提交时，字段键名主要由哪个属性决定？",
+    "explanation": "name 对应提交数据中的字段名。",
+    "options": [
+      "placeholder",
+      "name",
+      "class",
+      "aria-label"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "fe-forms-a11y-multiple",
+    "type": "multiple",
+    "difficulty": "applied",
+    "prompt": "选择正确的表单做法。",
+    "explanation": "客户端校验和可见说明不能替代服务端校验或持续标签。",
+    "options": [
+      "为输入框关联 label",
+      "用文字说明错误原因",
+      "后端再次校验输入",
+      "只用 placeholder 作为字段说明"
+    ],
+    "correctIndices": [
+      0,
+      2,
+      1
+    ]
+  },
+  {
+    "id": "fe-forms-a11y-boolean",
+    "type": "boolean",
+    "difficulty": "basic",
+    "prompt": "只要前端设置 required，后端就可以完全不校验该字段。",
+    "explanation": "请求可以绕过前端页面，后端必须校验自己的输入。",
+    "options": [
+      "正确",
+      "错误"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "fe-forms-a11y-fill",
+    "type": "fill",
+    "difficulty": "basic",
+    "prompt": "label 的 for 属性应对应输入框的 ____ 属性。",
+    "explanation": "for 与 id 建立标签和控件的关联。",
+    "acceptedAnswers": [
+      "id"
+    ],
+    "caseSensitive": false
+  },
+  {
+    "id": "fe-forms-a11y-order",
+    "type": "order",
+    "difficulty": "applied",
+    "prompt": "在原生交互式表单且约束有效时，按简化提交流程排序。",
+    "explanation": "这里描述的是常规交互式提交；直接调用 form.submit() 等行为有不同细节。",
+    "options": [
+      "未被阻止时提交表单数据",
+      "用户触发提交",
+      "浏览器执行约束校验",
+      "触发 submit 事件"
+    ],
+    "correctOrder": [
+      1,
+      2,
+      3,
+      0
+    ]
+  },
+  {
+    "id": "fe-forms-a11y-code_reading",
+    "type": "code_reading",
+    "difficulty": "applied",
+    "prompt": "普通提交中下列两个字段会提交几个？只填数字。",
+    "explanation": "disabled 字段通常不参与提交；readonly 文本字段仍可提交。",
+    "code": "<input name=\"a\" value=\"1\" disabled>\n<input name=\"b\" value=\"2\" readonly>",
+    "language": "html",
+    "acceptedAnswers": [
+      "1"
+    ],
+    "caseSensitive": true
+  },
+  {
+    "id": "fe-forms-a11y-short_answer",
+    "type": "short_answer",
+    "difficulty": "advanced",
+    "prompt": "为什么 placeholder 不能替代 label？",
+    "explanation": "placeholder 在输入后消失，提示与名称职责不同；清晰且正确关联的 label 有利于持续识别字段、扩大点击区域和辅助技术访问。",
+    "referenceAnswer": "placeholder 在输入后消失，提示与名称职责不同；清晰且正确关联的 label 有利于持续识别字段、扩大点击区域和辅助技术访问。",
+    "rubric": [
+      "指出输入后消失的问题",
+      "区分名称与提示",
+      "说明关联标签对操作或辅助技术的帮助"
+    ]
+  },
+  {
+    "id": "fe-forms-a11y-code_fix",
+    "type": "code_fix",
+    "difficulty": "applied",
+    "prompt": "修复标签关联和提交字段缺失问题。",
+    "explanation": "名称关联和提交键是两件不同的事，需要分别处理。",
+    "code": "<label for=\"mail\">邮箱</label>\n<input id=\"email\" type=\"email\">",
+    "language": "html",
+    "referenceAnswer": "<label for=\"email\">邮箱</label>\n<input id=\"email\" name=\"email\" type=\"email\">",
+    "rubric": [
+      "for 与 id 一致",
+      "添加 name",
+      "保留 email 输入类型"
+    ]
+  },
+  {
+    "id": "fe-forms-a11y-project",
+    "type": "project",
+    "difficulty": "advanced",
+    "prompt": "制作报名表，包含姓名、邮箱、可选备注和一个取消按钮；给无效邮箱提供文字反馈。",
+    "explanation": "使用关联 label 与合适输入类型；提交按钮与普通取消按钮区分 type；错误关联到对应字段，并保留已输入内容。",
+    "referenceAnswer": "使用关联 label 与合适输入类型；提交按钮与普通取消按钮区分 type；错误关联到对应字段，并保留已输入内容。",
+    "rubric": [
+      "字段可见标签且提交键完整",
+      "错误提示可理解并关联到字段",
+      "取消不会误提交且错误后保留输入"
+    ]
+  }
+]

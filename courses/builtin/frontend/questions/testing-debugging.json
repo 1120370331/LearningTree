@@ -1,0 +1,131 @@
+[
+  {
+    "id": "fe-testing-debugging-single",
+    "type": "single",
+    "difficulty": "basic",
+    "prompt": "报告“保存按钮坏了”后，最有帮助的第一步是什么？",
+    "explanation": "先建立可重复证据才能定位问题边界。",
+    "options": [
+      "补齐复现步骤、输入、预期与实际结果",
+      "立刻重写整个组件",
+      "任意增加五秒延时",
+      "删除所有错误日志"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "fe-testing-debugging-multiple",
+    "type": "multiple",
+    "difficulty": "applied",
+    "prompt": "哪些做法可以提高测试价值？",
+    "explanation": "固定睡眠既慢又不稳定，无法说明真正完成条件。",
+    "options": [
+      "所有异步测试都固定睡眠十秒",
+      "为异步操作等待明确条件",
+      "隔离测试数据",
+      "断言用户可见结果"
+    ],
+    "correctIndices": [
+      3,
+      1,
+      2
+    ]
+  },
+  {
+    "id": "fe-testing-debugging-boolean",
+    "type": "boolean",
+    "difficulty": "basic",
+    "prompt": "只断言保存函数被调用，就足以证明数据已成功写入并在刷新后存在。",
+    "explanation": "调用记录不能证明真实持久化与恢复结果，需要覆盖相关边界。",
+    "options": [
+      "正确",
+      "错误"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "fe-testing-debugging-fill",
+    "type": "fill",
+    "difficulty": "basic",
+    "prompt": "调试暂停后，查看函数调用链通常使用开发者工具中的哪个面板信息？填英文。",
+    "explanation": "调用栈展示当前执行路径，结合局部变量理解错误来源。",
+    "acceptedAnswers": [
+      "Call Stack",
+      "call stack"
+    ],
+    "caseSensitive": false
+  },
+  {
+    "id": "fe-testing-debugging-order",
+    "type": "order",
+    "difficulty": "applied",
+    "prompt": "按基于证据的缺陷修复顺序排序。",
+    "explanation": "不要把无关改动和目标修复混在一起。",
+    "options": [
+      "缩小边界并定位原因",
+      "记录可复现的输入和现象",
+      "实施针对原因的修复",
+      "用原复现路径确认结果"
+    ],
+    "correctOrder": [
+      1,
+      0,
+      2,
+      3
+    ]
+  },
+  {
+    "id": "fe-testing-debugging-code_reading",
+    "type": "code_reading",
+    "difficulty": "applied",
+    "prompt": "下面金额函数对给定输入返回多少？",
+    "explanation": "8×3 + 2×2 = 28，断言应针对明确的业务结果。",
+    "code": "function total(items) {\n  return items.reduce((sum, item) => sum + item.price * item.count, 0);\n}\nconsole.log(total([{ price: 8, count: 3 }, { price: 2, count: 2 }]));",
+    "language": "javascript",
+    "acceptedAnswers": [
+      "28"
+    ],
+    "caseSensitive": true
+  },
+  {
+    "id": "fe-testing-debugging-short_answer",
+    "type": "short_answer",
+    "difficulty": "advanced",
+    "prompt": "为什么按钮保存成功的组件测试仍不能单独证明 SQLite 持久化正确？",
+    "explanation": "组件测试可能替换了 API 或只检查提示。真实持久化还涉及请求、服务端事务、数据库写入和重新读取，需要针对该契约的集成路径证据。",
+    "referenceAnswer": "组件测试可能替换了 API 或只检查提示。真实持久化还涉及请求、服务端事务、数据库写入和重新读取，需要针对该契约的集成路径证据。",
+    "rubric": [
+      "说明 mock 或边界限制",
+      "指出数据库写入与重读",
+      "提出最小有代表性的集成路径"
+    ]
+  },
+  {
+    "id": "fe-testing-debugging-code_fix",
+    "type": "code_fix",
+    "difficulty": "applied",
+    "prompt": "这个测试在异步保存完成前读取结果。修复为等待明确完成条件；沿用 Testing Library 风格 API。",
+    "explanation": "用户点击完成并不总意味着所有异步业务已结束。",
+    "code": "await user.click(screen.getByRole(\"button\", { name: \"保存\" }));\nexpect(screen.getByText(\"已保存\")).toBeVisible();",
+    "language": "javascript",
+    "referenceAnswer": "await user.click(screen.getByRole(\"button\", { name: \"保存\" }));\nexpect(await screen.findByText(\"已保存\")).toBeVisible();",
+    "rubric": [
+      "等待异步出现的结果",
+      "不增加任意固定睡眠",
+      "断言用户可观察反馈"
+    ]
+  },
+  {
+    "id": "fe-testing-debugging-project",
+    "type": "project",
+    "difficulty": "advanced",
+    "prompt": "为“刷新后任务消失”写一份缺陷定位记录和最小回归方案。",
+    "explanation": "给出创建任务、保存和刷新步骤，分别观察请求响应、持久化结果和再次加载；定位失败边界，再选择能覆盖该边界的测试。",
+    "referenceAnswer": "给出创建任务、保存和刷新步骤，分别观察请求响应、持久化结果和再次加载；定位失败边界，再选择能覆盖该边界的测试。",
+    "rubric": [
+      "预期与实际及输入可复现",
+      "区分界面、API、数据库和恢复环节",
+      "回归方案保护实际丢失问题而非仅检查函数调用"
+    ]
+  }
+]

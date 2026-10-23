@@ -1,0 +1,130 @@
+[
+  {
+    "id": "fe-box-model-single",
+    "type": "single",
+    "difficulty": "basic",
+    "prompt": "content-box 下，width=200、左右 padding 各 10、边框各 2，边框盒宽多少？",
+    "explanation": "边框盒宽度为 200 + 20 + 4。",
+    "options": [
+      "200px",
+      "224px",
+      "220px",
+      "204px"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "fe-box-model-multiple",
+    "type": "multiple",
+    "difficulty": "applied",
+    "prompt": "哪些内容计入 border-box 的 width？",
+    "explanation": "margin 位于边框盒之外。",
+    "options": [
+      "内容区",
+      "margin",
+      "padding",
+      "border"
+    ],
+    "correctIndices": [
+      0,
+      2,
+      3
+    ]
+  },
+  {
+    "id": "fe-box-model-boolean",
+    "type": "boolean",
+    "difficulty": "basic",
+    "prompt": "position: relative 的元素发生偏移后，通常仍保留原本的布局占位。",
+    "explanation": "relative 偏移视觉位置，不像 absolute 那样直接脱离普通流。",
+    "options": [
+      "正确",
+      "错误"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "fe-box-model-fill",
+    "type": "fill",
+    "difficulty": "basic",
+    "prompt": "让 width 包含内容、padding 和 border，box-sizing 应设为 ____。",
+    "explanation": "border-box 简化组件宽度的整体控制。",
+    "acceptedAnswers": [
+      "border-box"
+    ],
+    "caseSensitive": false
+  },
+  {
+    "id": "fe-box-model-order",
+    "type": "order",
+    "difficulty": "applied",
+    "prompt": "将盒子的组成按从内到外排序。",
+    "explanation": "内边距在内容外，边框在内边距外，外边距位于边框外。",
+    "options": [
+      "padding",
+      "border",
+      "margin",
+      "content"
+    ],
+    "correctOrder": [
+      3,
+      0,
+      1,
+      2
+    ]
+  },
+  {
+    "id": "fe-box-model-code_reading",
+    "type": "code_reading",
+    "difficulty": "applied",
+    "prompt": "该元素的边框盒宽度是多少像素？只填数字。",
+    "explanation": "180 + 12×2 + 3×2 = 210。",
+    "code": ".box { width: 180px; padding: 12px; border: 3px solid; box-sizing: content-box; }",
+    "language": "css",
+    "acceptedAnswers": [
+      "210"
+    ],
+    "caseSensitive": true
+  },
+  {
+    "id": "fe-box-model-short_answer",
+    "type": "short_answer",
+    "difficulty": "advanced",
+    "prompt": "为什么绝对定位的角标常需要父卡片设置 position: relative？",
+    "explanation": "它让卡片成为定位祖先，角标的偏移通常相对卡片计算；卡片本身仍保留普通布局占位。还应确认中间祖先或变换属性没有改变包含块。",
+    "referenceAnswer": "它让卡片成为定位祖先，角标的偏移通常相对卡片计算；卡片本身仍保留普通布局占位。还应确认中间祖先或变换属性没有改变包含块。",
+    "rubric": [
+      "说明定位参照的作用",
+      "说明父卡片仍保留占位",
+      "区分绝对定位与普通布局"
+    ]
+  },
+  {
+    "id": "fe-box-model-code_fix",
+    "type": "code_fix",
+    "difficulty": "applied",
+    "prompt": "让角标相对卡片右上角定位，而非意外相对外层。",
+    "explanation": "定位问题优先查包含块，不要不断试偏移量。",
+    "code": ".card { padding: 20px; }\n.badge { position: absolute; top: 0; right: 0; }",
+    "language": "css",
+    "referenceAnswer": ".card { padding: 20px; position: relative; }\n.badge { position: absolute; top: 0; right: 0; }",
+    "rubric": [
+      "卡片建立定位上下文",
+      "角标保留右上角偏移",
+      "未把所有元素都改成绝对定位"
+    ]
+  },
+  {
+    "id": "fe-box-model-project",
+    "type": "project",
+    "difficulty": "advanced",
+    "prompt": "制作带角标的商品卡片，外宽固定 280px，包含内边距和边框；写出内容区宽度计算。",
+    "explanation": "使用 border-box 管理外宽，relative 卡片承载 absolute 角标；记录各尺寸并解释 margin 不计入 width。",
+    "referenceAnswer": "使用 border-box 管理外宽，relative 卡片承载 absolute 角标；记录各尺寸并解释 margin 不计入 width。",
+    "rubric": [
+      "边框盒外宽确为 280px",
+      "角标位置依赖卡片而非页面",
+      "提供可复算的内容宽度计算"
+    ]
+  }
+]

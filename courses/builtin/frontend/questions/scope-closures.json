@@ -1,0 +1,130 @@
+[
+  {
+    "id": "fe-scope-closures-single",
+    "type": "single",
+    "difficulty": "basic",
+    "prompt": "函数读取外层变量时，主要依据什么寻找作用域？",
+    "explanation": "词法作用域由定义结构决定。",
+    "options": [
+      "函数定义时的词法位置",
+      "浏览器窗口大小",
+      "调用者同名变量的最新值",
+      "文件名的字母顺序"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "fe-scope-closures-multiple",
+    "type": "multiple",
+    "difficulty": "applied",
+    "prompt": "哪些说法正确？",
+    "explanation": "闭包保留可访问的词法环境，不等于固定值快照。",
+    "options": [
+      "两次工厂调用可以产生独立状态",
+      "闭包总会复制外层变量的初始值",
+      "闭包可以延续对外层绑定的访问",
+      "let 具有块作用域"
+    ],
+    "correctIndices": [
+      3,
+      2,
+      0
+    ]
+  },
+  {
+    "id": "fe-scope-closures-boolean",
+    "type": "boolean",
+    "difficulty": "basic",
+    "prompt": "函数返回后，它创建的闭包就绝不可能再读取外层局部变量。",
+    "explanation": "只要闭包仍可达，它所需的词法环境就可能继续存在。",
+    "options": [
+      "正确",
+      "错误"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "fe-scope-closures-fill",
+    "type": "fill",
+    "difficulty": "basic",
+    "prompt": "给循环每次迭代创建独立索引绑定，通常应把 for 中的 var 改成 ____。",
+    "explanation": "for 的 let 绑定可为各次迭代创建不同环境。",
+    "acceptedAnswers": [
+      "let"
+    ],
+    "caseSensitive": false
+  },
+  {
+    "id": "fe-scope-closures-order",
+    "type": "order",
+    "difficulty": "applied",
+    "prompt": "按计数器工厂的一次使用过程排序。",
+    "explanation": "这是一段有明确先后依赖的闭包使用过程。",
+    "options": [
+      "调用 counter 创建局部绑定",
+      "调用返回的函数读取并更新绑定",
+      "返回引用该绑定的函数",
+      "下一次调用观察更新后的绑定"
+    ],
+    "correctOrder": [
+      0,
+      2,
+      1,
+      3
+    ]
+  },
+  {
+    "id": "fe-scope-closures-code_reading",
+    "type": "code_reading",
+    "difficulty": "applied",
+    "prompt": "输出什么？按空格分隔。",
+    "explanation": "两次调用更新的是同一个闭包中的 n。",
+    "code": "function make() { let n = 10; return () => ++n; }\nconst next = make();\nconsole.log(next(), next());",
+    "language": "javascript",
+    "acceptedAnswers": [
+      "11 12"
+    ],
+    "caseSensitive": true
+  },
+  {
+    "id": "fe-scope-closures-short_answer",
+    "type": "short_answer",
+    "difficulty": "advanced",
+    "prompt": "多个定时回调捕获 var 循环索引时为什么容易得到相同值？",
+    "explanation": "var 为循环共享同一个函数作用域绑定。回调延迟执行时读取的是循环结束后的值。使用 let 为各次迭代建立绑定，或通过函数参数显式捕获值。",
+    "referenceAnswer": "var 为循环共享同一个函数作用域绑定。回调延迟执行时读取的是循环结束后的值。使用 let 为各次迭代建立绑定，或通过函数参数显式捕获值。",
+    "rubric": [
+      "指出共享同一个绑定",
+      "解释读取发生的时机",
+      "给出 let 或参数捕获的修复"
+    ]
+  },
+  {
+    "id": "fe-scope-closures-code_fix",
+    "type": "code_fix",
+    "difficulty": "applied",
+    "prompt": "希望回调依次记录 0、1、2。修复共享循环变量问题。",
+    "explanation": "修复变量捕获，而不是把延时改大或改小。",
+    "code": "for (var i = 0; i < 3; i++) {\n  setTimeout(() => console.log(i), 0);\n}",
+    "language": "javascript",
+    "referenceAnswer": "for (let i = 0; i < 3; i++) {\n  setTimeout(() => console.log(i), 0);\n}",
+    "rubric": [
+      "使用每次迭代独立的绑定或等效捕获",
+      "保留异步回调",
+      "能解释原代码为什么打印三个 3"
+    ]
+  },
+  {
+    "id": "fe-scope-closures-project",
+    "type": "project",
+    "difficulty": "advanced",
+    "prompt": "实现两个互不影响的计数器，每个提供 increment 和 getValue 方法。",
+    "explanation": "工厂内部保存 let count，并返回访问它的两个函数。创建两个实例，交替操作并记录结果；不把状态放在全局。",
+    "referenceAnswer": "工厂内部保存 let count，并返回访问它的两个函数。创建两个实例，交替操作并记录结果；不把状态放在全局。",
+    "rubric": [
+      "同一实例的方法共享状态",
+      "两个实例互不影响",
+      "说明状态的词法位置和存活原因"
+    ]
+  }
+]

@@ -1,0 +1,130 @@
+[
+  {
+    "id": "fe-routing-data-single",
+    "type": "single",
+    "difficulty": "basic",
+    "prompt": "需要分享和刷新恢复的搜索词，通常最适合放在哪里？",
+    "explanation": "查询参数自然支持链接分享和刷新恢复。",
+    "options": [
+      "随机生成的 DOM id",
+      "URL 查询参数",
+      "只放一个不可恢复的局部变量",
+      "按钮的 CSS class"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "fe-routing-data-multiple",
+    "type": "multiple",
+    "difficulty": "applied",
+    "prompt": "哪些是可靠的数据页面应考虑的状态？",
+    "explanation": "空结果是成功语义，不等同于请求失败。",
+    "options": [
+      "加载中",
+      "任何失败都伪装成空数组",
+      "成功但没有结果",
+      "失败和重试"
+    ],
+    "correctIndices": [
+      0,
+      2,
+      3
+    ]
+  },
+  {
+    "id": "fe-routing-data-boolean",
+    "type": "boolean",
+    "difficulty": "basic",
+    "prompt": "只要提交按钮在请求中禁用，服务端就永远不会发生重复写入。",
+    "explanation": "重试、多标签页和网络不确定性仍可能产生重复请求，需要服务端保证。",
+    "options": [
+      "正确",
+      "错误"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "fe-routing-data-fill",
+    "type": "fill",
+    "difficulty": "basic",
+    "prompt": "处理 URL 查询参数编码与读取的浏览器内置类是 ____。",
+    "explanation": "不要直接拼接未经编码的任意输入。",
+    "acceptedAnswers": [
+      "URLSearchParams"
+    ],
+    "caseSensitive": false
+  },
+  {
+    "id": "fe-routing-data-order",
+    "type": "order",
+    "difficulty": "applied",
+    "prompt": "按一次保守表单提交流程排序。",
+    "explanation": "错误时保留输入；生产写入还应考虑服务端幂等。",
+    "options": [
+      "校验并读取当前输入",
+      "进入提交中状态并发送请求",
+      "退出提交中状态并给出结果反馈",
+      "根据响应确认成功或保留错误"
+    ],
+    "correctOrder": [
+      0,
+      1,
+      3,
+      2
+    ]
+  },
+  {
+    "id": "fe-routing-data-code_reading",
+    "type": "code_reading",
+    "difficulty": "applied",
+    "prompt": "读取的 q 值是什么？",
+    "explanation": "URLSearchParams 会解码百分号编码。",
+    "code": "const params = new URLSearchParams(\"?q=hello%20world&page=2\");\nconsole.log(params.get(\"q\"));",
+    "language": "jsx",
+    "acceptedAnswers": [
+      "hello world"
+    ],
+    "caseSensitive": true
+  },
+  {
+    "id": "fe-routing-data-short_answer",
+    "type": "short_answer",
+    "difficulty": "advanced",
+    "prompt": "怎样决定筛选词、弹窗展开和课程详情分别放在哪里？",
+    "explanation": "需要分享和历史恢复的筛选词放 URL；纯临时弹窗状态放界面状态；课程内容作为服务端数据，通过路由 ID 读取并管理加载和失败。避免在多个位置维护互相冲突的副本。",
+    "referenceAnswer": "需要分享和历史恢复的筛选词放 URL；纯临时弹窗状态放界面状态；课程内容作为服务端数据，通过路由 ID 读取并管理加载和失败。避免在多个位置维护互相冲突的副本。",
+    "rubric": [
+      "区分三种状态职责",
+      "以分享和恢复需求解释 URL 选择",
+      "说明服务端数据生命周期"
+    ]
+  },
+  {
+    "id": "fe-routing-data-code_fix",
+    "type": "code_fix",
+    "difficulty": "applied",
+    "prompt": "查询词可能包含 & 和空格。修复直接拼接 URL 导致参数错乱的问题。",
+    "explanation": "整条 URL 编码与单个参数编码不同，应使用针对查询参数的工具。",
+    "code": "function buildUrl(query) { return \"/api/search?q=\" + query; }",
+    "language": "jsx",
+    "referenceAnswer": "function buildUrl(query) {\n  const params = new URLSearchParams({ q: query });\n  return `/api/search?${params.toString()}`;\n}",
+    "rubric": [
+      "使用 URLSearchParams 或正确的分量编码",
+      "输入不会注入额外参数",
+      "保留原始查询语义"
+    ]
+  },
+  {
+    "id": "fe-routing-data-project",
+    "type": "project",
+    "difficulty": "advanced",
+    "prompt": "制作课程搜索页和详情页：搜索可分享，刷新详情可恢复，收藏表单失败后保留状态并可重试。",
+    "explanation": "URL 表达搜索词与课程 ID，局部状态管理临时交互；数据层处理加载、空、404 和失败；写操作有提交锁与服务端幂等策略说明。",
+    "referenceAnswer": "URL 表达搜索词与课程 ID，局部状态管理临时交互；数据层处理加载、空、404 和失败；写操作有提交锁与服务端幂等策略说明。",
+    "rubric": [
+      "分享或刷新仍指向同一搜索或详情",
+      "旧请求不覆盖新路由数据",
+      "提交反馈明确且失败不丢失输入"
+    ]
+  }
+]
